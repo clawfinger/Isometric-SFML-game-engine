@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Map.h"
 #include <fstream>
+#include <queue>
 
 MapTile::MapTile(sf::Texture& texture): m_walkable(true)
 {
@@ -70,6 +71,8 @@ void Map::loadMap(std::string fileName, int mapWidth, int mapHeight, const Textu
 				m_mapTiles.push_back(MapTile(textures.get(TextureId::floor1)));
 				break;
 			case 2:
+				MapTile tile(textures.get(TextureId::floor2));
+				tile.setWalkability(false);
 				m_mapTiles.push_back(MapTile(textures.get(TextureId::floor2)));
 				break;
 			}
@@ -112,4 +115,87 @@ int Map::mapHeight()
 MapTile& Map::getMapTile(int x, int y)
 {
 	return m_mapTiles[y * m_mapWidth + x];
+}
+
+void Map::aStarTest(int start, int end)
+{
+	auto heuristic = [&](int start, int end)
+	{
+		sf::Vector2i from = XYfromLinear(start);
+		sf::Vector2i to = XYfromLinear(end);
+		return sqrt(pow((from.x - to.x), 2) + pow((from.y - to.y), 2));
+	};
+
+	std::vector<int> cameFrom(m_mapWidth * m_mapHeight);
+	std::vector<int> costSoFar(m_mapWidth * m_mapHeight);
+
+	auto compareGreater = [](const std::pair<int, int>& left, const std::pair<int, int>& right) -> bool {return left.first > right.first; };
+
+	std::priority_queue < std::pair<int, int>, std::vector<std::pair<int, int>>, decltype(compareGreater)> front(compareGreater);
+
+	front.emplace(0, start);
+	cameFrom[start] = start;
+	costSoFar[start] = 0;
+
+	while (front.size() != 0)
+	{
+		std::pair<int, int> currentTile = front.top();
+		front.pop();
+
+		if (currentTile.second == end)
+			break;
+
+		for (auto next : neighbors(currentTile.second))
+		{
+			int newCost = costSoFar[currentTile.second] + costForTile(next);
+			costSoFar[next] = newCost;
+			int priority = newCost + heuristic(next, end);
+			front.emplace(priority, next);
+			cameFrom[next] = currentTile.second;
+		}
+	}
+}
+
+int Map::linearFromXY(int x, int y)
+{
+	return y * m_mapWidth + x;
+}
+
+sf::Vector2i Map::XYfromLinear(int linear)
+{
+	int y = linear / m_mapWidth;
+	int x = linear % m_mapWidth;
+	return sf::Vector2i(x, y);
+}
+
+std::vector<int> Map::neighbors(int position)
+{
+	std::vector<int> result;
+	sf::Vector2i pos = XYfromLinear(position);
+	std::vector<sf::Vector2i> neighborPoints;
+
+	neighborPoints.push_back(sf::Vector2i(pos.x + 1, pos.y));
+	neighborPoints.push_back(sf::Vector2i(pos.x - 1, pos.y));
+	neighborPoints.push_back(sf::Vector2i(pos.x, pos.y + 1));
+	neighborPoints.push_back(sf::Vector2i(pos.x, pos.y - 1));
+
+	for (auto point : neighborPoints)
+	{
+		if (isWithinMap(point.x, point.y) && getMapTile(point.x, point.y).isWalkable())
+			result.push_back(linearFromXY(point.x, point.y));
+	}
+	return result;
+}
+
+bool Map::isWithinMap(int x, int y)
+{
+	if (x < 0 || x > m_mapWidth - 1 || y < 0 || y > m_mapHeight - 1)
+		return false;
+	else
+		return true;
+}
+
+int Map::costForTile(int linearPos)
+{
+	return 1;
 }

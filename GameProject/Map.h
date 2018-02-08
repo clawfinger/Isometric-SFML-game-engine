@@ -30,6 +30,14 @@ public:
 	int mapWidth();
 	int mapHeight();
 	MapTile& getMapTile(int x, int y);
+	void aStarTest(int start, int end);
+
+private:
+	inline int linearFromXY(int x, int y);
+	inline sf::Vector2i XYfromLinear(int linear);
+	std::vector<int> neighbors(int position);
+	inline bool isWithinMap(int x, int y);
+	int costForTile(int linearPos); // now always return 1; can change this in future
 
 private:
 	std::vector<MapTile> m_mapTiles;
