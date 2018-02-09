@@ -3,6 +3,10 @@
 #include <fstream>
 #include <queue>
 
+MapTile::MapTile(): m_walkable(true)
+{
+}
+
 MapTile::MapTile(sf::Texture& texture): m_walkable(true)
 {
 	m_sprite.setTexture(texture);
@@ -59,6 +63,7 @@ void Map::loadMap(std::string fileName, int mapWidth, int mapHeight, const Textu
 	input.get(character);
 	while (true)
 	{
+		MapTile tile;
 		while (character != '\n')
 		{
 			int tileId = std::stoi(&character);
@@ -68,12 +73,14 @@ void Map::loadMap(std::string fileName, int mapWidth, int mapHeight, const Textu
 				m_mapTiles.push_back(MapTile(textures.get(TextureId::floor0)));
 				break;
 			case 1:
-				m_mapTiles.push_back(MapTile(textures.get(TextureId::floor1)));
+				tile.sprite().setTexture(textures.get(TextureId::floor1));
+				tile.setWalkability(false);
+				m_mapTiles.push_back(tile);
 				break;
 			case 2:
-				MapTile tile(textures.get(TextureId::floor2));
+				tile.sprite().setTexture(textures.get(TextureId::floor2));
 				tile.setWalkability(false);
-				m_mapTiles.push_back(MapTile(textures.get(TextureId::floor2)));
+				m_mapTiles.push_back(tile);
 				break;
 			}
 			input.get(character);
@@ -87,14 +94,9 @@ void Map::loadMap(std::string fileName, int mapWidth, int mapHeight, const Textu
 
 }
 
-sf::Vector2i Map::mapFromScreen(float x, float y)
-{
-	return sf::Vector2i(x / m_mapWidth, y / m_mapHeight);
-}
-
 bool Map::isWalkable(sf::Vector2i tile)
 {
-	return m_mapTiles[tile.x * m_mapWidth + tile.y].isWalkable();
+	return m_mapTiles[tile.y * m_mapWidth + tile.x].isWalkable();
 }
 
 bool Map::isWalkable(int x, int y)
@@ -127,7 +129,8 @@ void Map::aStarTest(int start, int end)
 	};
 
 	std::vector<int> cameFrom(m_mapWidth * m_mapHeight);
-	std::vector<int> costSoFar(m_mapWidth * m_mapHeight);
+	//std::vector<int> costSoFar(m_mapWidth * m_mapHeight);
+	std::map<int, int> costSoFar;
 
 	auto compareGreater = [](const std::pair<int, int>& left, const std::pair<int, int>& right) -> bool {return left.first > right.first; };
 
@@ -148,12 +151,34 @@ void Map::aStarTest(int start, int end)
 		for (auto next : neighbors(currentTile.second))
 		{
 			int newCost = costSoFar[currentTile.second] + costForTile(next);
-			costSoFar[next] = newCost;
-			int priority = newCost + heuristic(next, end);
-			front.emplace(priority, next);
-			cameFrom[next] = currentTile.second;
+			if (costSoFar.find(next) == costSoFar.end() || newCost < costSoFar[next])
+			{
+				costSoFar[next] = newCost;
+				int priority = newCost + heuristic(next, end);
+				front.emplace(priority, next);
+				cameFrom[next] = currentTile.second;
+			}
 		}
 	}
+	std::vector<int> result;
+	result.push_back(end);
+	int prev = cameFrom[end];
+	while (cameFrom[prev] != prev)
+	{
+		result.push_back(prev);
+		prev = cameFrom[prev];
+	}
+	result.push_back(start);
+	for (auto x : result)
+	{
+		std::cout << x << " ";
+	}
+	std::cout << "ok";
+}
+
+int Map::mapFromMouse(int x, int y)
+{
+	return linearFromXY(x / m_tileWidth, y / m_tileHeight);
 }
 
 int Map::linearFromXY(int x, int y)
@@ -181,7 +206,7 @@ std::vector<int> Map::neighbors(int position)
 
 	for (auto point : neighborPoints)
 	{
-		if (isWithinMap(point.x, point.y) && getMapTile(point.x, point.y).isWalkable())
+		if (isWithinMap(point.x, point.y) && isWalkable(point.x, point.y))
 			result.push_back(linearFromXY(point.x, point.y));
 	}
 	return result;

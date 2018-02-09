@@ -5,7 +5,7 @@
 #include <fstream>
 
 
-Game::Game() : isRunning(true), m_map(10, 10)
+Game::Game() : isRunning(true), m_map(64, 64)
 {
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
@@ -58,6 +58,18 @@ void Game::processEvents()
 		case sf::Event::KeyReleased:
 			handlePlayerInput(event.key.code, false);
 			break;
+		case sf::Event::MouseButtonPressed:
+		{
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				sf::Vector2f mouse = m_window.getRenderWindow().mapPixelToCoords(
+					sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+				int mapIndex = m_map.mapFromMouse(mouse.x, mouse.y);
+				if (m_map.isWalkable(m_map.XYfromLinear(mapIndex)));
+					m_map.aStarTest(m_map.linearFromXY(0, 2), mapIndex);
+				break;
+			}
+		}
 		}
 
 

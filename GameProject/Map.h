@@ -6,6 +6,7 @@
 class MapTile
 {
 public:
+	MapTile();
 	MapTile(sf::Texture& texture);
 	bool isWalkable();
 	void setWalkability(bool walkable);
@@ -24,17 +25,17 @@ public:
 	Map(int tileWidth, int tileHeight);
 	void loadMap(std::string fileName, int mapWidth, int mapHeight, const TextureManager& textures);
 	//sf::Vector2i /*map size*/ loadMap(std::string fileName, const TextureManager& textures); //TODO
-	sf::Vector2i mapFromScreen(float x, float y);
 	bool isWalkable(sf::Vector2i tile);
 	bool isWalkable(int x, int y);
 	int mapWidth();
 	int mapHeight();
 	MapTile& getMapTile(int x, int y);
 	void aStarTest(int start, int end);
-
-private:
+	int mapFromMouse(int x, int y);
 	inline int linearFromXY(int x, int y);
 	inline sf::Vector2i XYfromLinear(int linear);
+
+private:
 	std::vector<int> neighbors(int position);
 	inline bool isWithinMap(int x, int y);
 	int costForTile(int linearPos); // now always return 1; can change this in future
