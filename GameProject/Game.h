@@ -29,6 +29,7 @@ private:
 	Window m_window;
 	sf::View view;
 	float m_viewSpeed;
+	float m_playerSpeed;
 	int m_mapHeight;
 	int m_mapWidth;
 	Player m_player;
