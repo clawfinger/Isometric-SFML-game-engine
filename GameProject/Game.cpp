@@ -9,6 +9,7 @@ Game::Game() : isRunning(true), m_map(64, 64)
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
 	m_viewSpeed = 500.f;
+	m_playerSpeed = 100.0;
 	//m_window.resizeView(sf::Vector2f(1280, 720));
 
 	m_textureManager.load(floor0, "images/1.png");
