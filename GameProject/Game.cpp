@@ -4,7 +4,6 @@
 #include <assert.h>
 #include <fstream>
 
-
 Game::Game() : isRunning(true), m_map(64, 64)
 {
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
@@ -15,10 +14,14 @@ Game::Game() : isRunning(true), m_map(64, 64)
 	m_textureManager.load(floor0, "images/1.png");
 	m_textureManager.load(floor1, "images/3.png");
 	m_textureManager.load(floor2, "images/2.png");
+	m_textureManager.load(player, "images/player.png");
 
 	m_map.loadMap("map.txt", 10, 10, m_textureManager);
 	m_mapHeight = m_map.mapHeight();
 	m_mapWidth = m_map.mapWidth();
+	m_player.create(m_textureManager.get(player));
+	//m_player.getSprite().setOrigin(-2, 32);
+	m_player.setPosition(sf::Vector2f(0 * 64, 2 * 64));
 }
 
 void Game::run()
@@ -64,9 +67,19 @@ void Game::processEvents()
 			{
 				sf::Vector2f mouse = m_window.getRenderWindow().mapPixelToCoords(
 					sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-				int mapIndex = m_map.mapFromMouse(mouse.x, mouse.y);
-				if (m_map.isWalkable(m_map.XYfromLinear(mapIndex)));
-					m_map.aStarTest(m_map.linearFromXY(0, 2), mapIndex);
+				int mapIndex = m_map.mapFromWindow(mouse.x, mouse.y);
+				if (m_map.isWalkable(m_map.XYfromLinear(mapIndex)))
+				{
+					if (m_player.getPathEnd() != mapIndex)
+					{
+						sf::Vector2f playerPosition = m_player.getPosition();
+						int linearMapPlayerPosition = m_map.mapFromWindow(playerPosition.x, playerPosition.y);
+						m_player.setPath(m_map.calculatePath(linearMapPlayerPosition, mapIndex), mapIndex);
+						m_player.startMovement();
+					}
+
+
+				}
 				break;
 			}
 		}
@@ -78,16 +91,18 @@ void Game::processEvents()
 
 void Game::update(sf::Time deltaTime)
 {
-	sf::Vector2f movement(0.0f, 0.0f);
+	sf::Vector2f viewMovement(0.0f, 0.0f);
 	if (m_isMovingUp)
-		movement.y -= m_viewSpeed;
+		viewMovement.y -= m_viewSpeed;
 	if (m_isMovingDown)
-		movement.y += m_viewSpeed;
+		viewMovement.y += m_viewSpeed;
 	if (m_isMovingLeft)
-		movement.x -= m_viewSpeed;
+		viewMovement.x -= m_viewSpeed;
 	if (m_isMovingRight)
-		movement.x += m_viewSpeed;
-	m_window.moveView(movement * deltaTime.asSeconds());
+		viewMovement.x += m_viewSpeed;
+	m_window.moveView(viewMovement * deltaTime.asSeconds());
+
+
 }
 
 void Game::render()
@@ -104,7 +119,7 @@ void Game::render()
 			m_window.draw(m_map.getMapTile(x, y).sprite());
 		}
 	}
-
+	m_window.draw(m_player.getSprite());
 	m_window.endDraw();
 	
 }

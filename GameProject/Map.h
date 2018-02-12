@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <stack>
 
 class MapTile
 {
@@ -30,8 +31,13 @@ public:
 	int mapWidth();
 	int mapHeight();
 	MapTile& getMapTile(int x, int y);
-	void aStarTest(int start, int end);
-	int mapFromMouse(int x, int y);
+	std::stack<sf::Vector2i> calculatePath(int start, int end);
+	inline int mapFromWindow(int x, int y);
+	int mapFromWindow(float x, float y);
+
+	inline sf::Vector2i windowFromMap(int x, int y);
+	inline sf::Vector2i windowFromMap(sf::Vector2i);
+
 	inline int linearFromXY(int x, int y);
 	inline sf::Vector2i XYfromLinear(int linear);
 

@@ -10,7 +10,8 @@ enum TextureId
 	floor1,
 	floor2,
 	floor3,
-	floor4
+	floor4,
+	player
 };
 
 class TextureManager

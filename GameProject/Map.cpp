@@ -119,7 +119,7 @@ MapTile& Map::getMapTile(int x, int y)
 	return m_mapTiles[y * m_mapWidth + x];
 }
 
-void Map::aStarTest(int start, int end)
+std::stack<sf::Vector2i> Map::calculatePath(int start, int end)
 {
 	auto heuristic = [&](int start, int end)
 	{
@@ -129,7 +129,6 @@ void Map::aStarTest(int start, int end)
 	};
 
 	std::vector<int> cameFrom(m_mapWidth * m_mapHeight);
-	//std::vector<int> costSoFar(m_mapWidth * m_mapHeight);
 	std::map<int, int> costSoFar;
 
 	auto compareGreater = [](const std::pair<int, int>& left, const std::pair<int, int>& right) -> bool {return left.first > right.first; };
@@ -160,25 +159,36 @@ void Map::aStarTest(int start, int end)
 			}
 		}
 	}
-	std::vector<int> result;
-	result.push_back(end);
+	std::stack<sf::Vector2i> result;
+	result.push(windowFromMap(XYfromLinear(end)));
 	int prev = cameFrom[end];
 	while (cameFrom[prev] != prev)
 	{
-		result.push_back(prev);
+		result.push(windowFromMap(XYfromLinear(prev)));
 		prev = cameFrom[prev];
 	}
-	result.push_back(start);
-	for (auto x : result)
-	{
-		std::cout << x << " ";
-	}
-	std::cout << "ok";
+	result.push(windowFromMap(XYfromLinear(start)));
+	return result;
 }
 
-int Map::mapFromMouse(int x, int y)
+int Map::mapFromWindow(int x, int y)
 {
 	return linearFromXY(x / m_tileWidth, y / m_tileHeight);
+}
+
+int Map::mapFromWindow(float x, float y)
+{
+	return linearFromXY(x / m_tileWidth, y / m_tileHeight);
+}
+
+sf::Vector2i Map::windowFromMap(int x, int y)
+{
+	return sf::Vector2i(x * m_tileWidth, y * m_tileHeight);
+}
+
+sf::Vector2i Map::windowFromMap(sf::Vector2i map)
+{
+	return sf::Vector2i(map.x * m_tileWidth, map.y * m_tileHeight);
 }
 
 int Map::linearFromXY(int x, int y)

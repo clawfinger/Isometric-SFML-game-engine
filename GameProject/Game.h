@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "window.h"
 #include "Map.h"
+#include "Player.h"
 #include <vector>
 #include <list>
 #include <memory>
@@ -30,5 +31,6 @@ private:
 	float m_viewSpeed;
 	int m_mapHeight;
 	int m_mapWidth;
+	Player m_player;
 	Map m_map;
 };
