@@ -94,7 +94,7 @@ void Map::loadMap(std::string fileName, int mapWidth, int mapHeight, const Textu
 
 }
 
-bool Map::isWalkable(sf::Vector2i tile)
+bool Map::isWalkable(sf::Vector2f tile)
 {
 	return m_mapTiles[tile.y * m_mapWidth + tile.x].isWalkable();
 }
@@ -119,12 +119,12 @@ MapTile& Map::getMapTile(int x, int y)
 	return m_mapTiles[y * m_mapWidth + x];
 }
 
-std::stack<sf::Vector2i> Map::calculatePath(int start, int end)
+std::stack<sf::Vector2f> Map::calculatePath(int start, int end)
 {
 	auto heuristic = [&](int start, int end)
 	{
-		sf::Vector2i from = XYfromLinear(start);
-		sf::Vector2i to = XYfromLinear(end);
+		sf::Vector2f from = XYfromLinear(start);
+		sf::Vector2f to = XYfromLinear(end);
 		return sqrt(pow((from.x - to.x), 2) + pow((from.y - to.y), 2));
 	};
 
@@ -159,7 +159,7 @@ std::stack<sf::Vector2i> Map::calculatePath(int start, int end)
 			}
 		}
 	}
-	std::stack<sf::Vector2i> result;
+	std::stack<sf::Vector2f> result;
 	result.push(windowFromMap(XYfromLinear(end)));
 	int prev = cameFrom[end];
 	while (cameFrom[prev] != prev)
@@ -167,13 +167,7 @@ std::stack<sf::Vector2i> Map::calculatePath(int start, int end)
 		result.push(windowFromMap(XYfromLinear(prev)));
 		prev = cameFrom[prev];
 	}
-	result.push(windowFromMap(XYfromLinear(start)));
 	return result;
-}
-
-int Map::mapFromWindow(int x, int y)
-{
-	return linearFromXY(x / m_tileWidth, y / m_tileHeight);
 }
 
 int Map::mapFromWindow(float x, float y)
@@ -181,14 +175,14 @@ int Map::mapFromWindow(float x, float y)
 	return linearFromXY(x / m_tileWidth, y / m_tileHeight);
 }
 
-sf::Vector2i Map::windowFromMap(int x, int y)
+sf::Vector2f Map::windowFromMap(float x, float y)
 {
-	return sf::Vector2i(x * m_tileWidth, y * m_tileHeight);
+	return sf::Vector2f(x * m_tileWidth, y * m_tileHeight);
 }
 
-sf::Vector2i Map::windowFromMap(sf::Vector2i map)
+sf::Vector2f Map::windowFromMap(sf::Vector2f map)
 {
-	return sf::Vector2i(map.x * m_tileWidth, map.y * m_tileHeight);
+	return sf::Vector2f(map.x * m_tileWidth, map.y * m_tileHeight);
 }
 
 int Map::linearFromXY(int x, int y)
@@ -196,17 +190,17 @@ int Map::linearFromXY(int x, int y)
 	return y * m_mapWidth + x;
 }
 
-sf::Vector2i Map::XYfromLinear(int linear)
+sf::Vector2f Map::XYfromLinear(int linear)
 {
-	int y = linear / m_mapWidth;
-	int x = linear % m_mapWidth;
-	return sf::Vector2i(x, y);
+	float y = linear / m_mapWidth;
+	float x = linear % m_mapWidth;
+	return sf::Vector2f(x, y);
 }
 
 std::vector<int> Map::neighbors(int position)
 {
 	std::vector<int> result;
-	sf::Vector2i pos = XYfromLinear(position);
+	sf::Vector2f pos = XYfromLinear(position);
 	std::vector<sf::Vector2i> neighborPoints;
 
 	neighborPoints.push_back(sf::Vector2i(pos.x + 1, pos.y));

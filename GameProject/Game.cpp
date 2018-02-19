@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "game.h"
+#include "utility.h"
 #include <iostream>
 #include <assert.h>
 #include <fstream>
@@ -9,7 +10,7 @@ Game::Game() : isRunning(true), m_map(64, 64)
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
 	m_viewSpeed = 500.f;
-	m_playerSpeed = 100.0;
+	m_playerSpeed = 200.0;
 	//m_window.resizeView(sf::Vector2f(1280, 720));
 
 	m_textureManager.load(floor0, "images/1.png");
@@ -35,10 +36,8 @@ void Game::run()
 		timeSinceLastUpdate += clock.restart();
 		while (timeSinceLastUpdate > m_timePerFrame)
 		{
-			timeSinceLastUpdate -= m_timePerFrame;
-			processEvents();
-			update(m_timePerFrame);
-
+			update(timeSinceLastUpdate);
+			timeSinceLastUpdate = sf::Time::Zero;
 		}
 		render();
 	}
@@ -76,7 +75,6 @@ void Game::processEvents()
 						sf::Vector2f playerPosition = m_player.getPosition();
 						int linearMapPlayerPosition = m_map.mapFromWindow(playerPosition.x, playerPosition.y);
 						m_player.setPath(m_map.calculatePath(linearMapPlayerPosition, mapIndex), mapIndex);
-						m_player.startMovement();
 					}
 
 
@@ -103,7 +101,24 @@ void Game::update(sf::Time deltaTime)
 		viewMovement.x += m_viewSpeed;
 	m_window.moveView(viewMovement * deltaTime.asSeconds());
 
-
+	if (m_player.isPathSet())
+	{
+		if (m_player.getPath().top() != m_player.getPosition())
+		{
+			sf::Vector2f playerMoveVector = m_player.getPath().top() - m_player.getPosition();
+			sf::Vector2f normalazedVector = Vector::normalize<sf::Vector2f>(playerMoveVector);
+			sf::Vector2f movement = normalazedVector * deltaTime.asSeconds() * m_playerSpeed;
+			if (Vector::length<sf::Vector2f>(playerMoveVector) < Vector::length<sf::Vector2f>(movement))
+			{
+				m_player.setPosition(m_player.getPath().top());
+				m_player.getPath().pop();
+			}
+			else
+				m_player.move(movement);
+		}
+		else		
+			m_player.getPath().pop();
+	}
 }
 
 void Game::render()
@@ -114,8 +129,8 @@ void Game::render()
 	{
 		for (int x = 0; x < m_mapWidth; x++)
 		{
-			// TODO: remove sprite size hardcode
-			sf::Vector2f position(x * 64, y * 64);
+			// TODO: remove sprite size hard code
+			sf::Vector2f position(float(x * 64), float(y * 64));
 			m_map.getMapTile(x, y).setPosition(position);
 			m_window.draw(m_map.getMapTile(x, y).sprite());
 		}

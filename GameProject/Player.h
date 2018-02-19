@@ -8,20 +8,17 @@ class Player
 public:
 	void create(sf::Texture& texture);
 	sf::Vector2f getPosition();
-	void setPosition(sf::Vector2f position);
+	void setPosition(const sf::Vector2f& position);
 	sf::Sprite& getSprite();
-	void setPath(std::stack<sf::Vector2i> path, int pathEnd);
-	sf::Vector2i getTargetTile();
-	bool startMovement();
+	void setPath(std::stack<sf::Vector2f> path, int pathEnd);
 	int getPathEnd();
-
-private:
-	void setTargetTile(sf::Vector2i target);
+	void move(const sf::Vector2f& movement);
+	bool isPathSet();
+	std::stack<sf::Vector2f>& getPath();
 
 private:
 	sf::Sprite m_sprite;
 	sf::Vector2f m_position;
-	std::stack<sf::Vector2i> m_currentPath;
-	sf::Vector2i m_targetTile;
+	std::stack<sf::Vector2f> m_currentPath;
 	int m_pathEnd;
 };

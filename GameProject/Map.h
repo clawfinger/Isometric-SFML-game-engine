@@ -26,20 +26,19 @@ public:
 	Map(int tileWidth, int tileHeight);
 	void loadMap(std::string fileName, int mapWidth, int mapHeight, const TextureManager& textures);
 	//sf::Vector2i /*map size*/ loadMap(std::string fileName, const TextureManager& textures); //TODO
-	bool isWalkable(sf::Vector2i tile);
+	bool isWalkable(sf::Vector2f tile);
 	bool isWalkable(int x, int y);
 	int mapWidth();
 	int mapHeight();
 	MapTile& getMapTile(int x, int y);
-	std::stack<sf::Vector2i> calculatePath(int start, int end);
-	inline int mapFromWindow(int x, int y);
+	std::stack<sf::Vector2f> calculatePath(int start, int end);
 	int mapFromWindow(float x, float y);
 
-	inline sf::Vector2i windowFromMap(int x, int y);
-	inline sf::Vector2i windowFromMap(sf::Vector2i);
+	inline sf::Vector2f windowFromMap(float x, float y);
+	inline sf::Vector2f windowFromMap(sf::Vector2f);
 
 	inline int linearFromXY(int x, int y);
-	inline sf::Vector2i XYfromLinear(int linear);
+	inline sf::Vector2f XYfromLinear(int linear);
 
 private:
 	std::vector<int> neighbors(int position);

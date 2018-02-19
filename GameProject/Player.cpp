@@ -11,10 +11,10 @@ sf::Vector2f Player::getPosition()
 	return m_position;
 }
 
-void Player::setPosition(sf::Vector2f position)
+void Player::setPosition(const sf::Vector2f& position)
 {
 	m_position = position;
-	m_sprite.setPosition(position);
+	m_sprite.setPosition(position.x, position.y);
 }
 
 sf::Sprite & Player::getSprite()
@@ -22,37 +22,31 @@ sf::Sprite & Player::getSprite()
 	return m_sprite;
 }
 
-void Player::setPath(std::stack<sf::Vector2i> path, int pathEnd)
+void Player::setPath(std::stack<sf::Vector2f> path, int pathEnd)
 {
 	m_currentPath = path;
 	m_pathEnd = pathEnd;
 }
 
-void Player::setTargetTile(sf::Vector2i target)
-{
-	m_targetTile = target;
-}
-
-sf::Vector2i Player::getTargetTile()
-{
-	return m_targetTile;
-}
-
-bool Player::startMovement()
-{
-	if (m_currentPath.empty())
-		return false;
-	else
-	{
-		m_targetTile = m_currentPath.top();
-		m_currentPath.pop();
-		return true;
-	}
-}
-
 int Player::getPathEnd()
 {
 	return m_pathEnd;
+}
+
+void Player::move(const sf::Vector2f & movement)
+{
+	m_position += movement;
+	m_sprite.move(movement.x, movement.y);
+}
+
+bool Player::isPathSet()
+{
+	return !m_currentPath.empty();
+}
+
+std::stack<sf::Vector2f>& Player::getPath()
+{
+	return m_currentPath;
 }
 
 
