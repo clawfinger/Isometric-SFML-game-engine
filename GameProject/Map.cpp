@@ -167,6 +167,7 @@ std::stack<sf::Vector2f> Map::calculatePath(int start, int end)
 		result.push(windowFromMap(XYfromLinear(prev)));
 		prev = cameFrom[prev];
 	}
+	result.push(windowFromMap(XYfromLinear(start)));
 	return result;
 }
 
