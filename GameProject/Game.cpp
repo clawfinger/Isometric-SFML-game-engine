@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "game.h"
-#include "utility.h"
 #include <iostream>
 #include <assert.h>
 #include <fstream>
@@ -10,7 +9,6 @@ Game::Game() : isRunning(true), m_map(64, 64)
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
 	m_viewSpeed = 500.f;
-	m_playerSpeed = 200.0;
 	//m_window.resizeView(sf::Vector2f(1280, 720));
 
 	m_textureManager.load(floor0, "images/1.png");
@@ -22,8 +20,8 @@ Game::Game() : isRunning(true), m_map(64, 64)
 	m_mapHeight = m_map.mapHeight();
 	m_mapWidth = m_map.mapWidth();
 	m_player.create(m_textureManager.get(player));
-	//m_player.getSprite().setOrigin(-2, 32);
 	m_player.setPosition(sf::Vector2f(0 * 64, 2 * 64));
+
 }
 
 void Game::run()
@@ -36,8 +34,10 @@ void Game::run()
 		timeSinceLastUpdate += clock.restart();
 		while (timeSinceLastUpdate > m_timePerFrame)
 		{
-			update(timeSinceLastUpdate);
-			timeSinceLastUpdate = sf::Time::Zero;
+			processEvents();
+			update(m_timePerFrame);
+
+			timeSinceLastUpdate -= m_timePerFrame;
 		}
 		render();
 	}
@@ -101,24 +101,7 @@ void Game::update(sf::Time deltaTime)
 		viewMovement.x += m_viewSpeed;
 	m_window.moveView(viewMovement * deltaTime.asSeconds());
 
-	if (m_player.isPathSet())
-	{
-		if (m_player.getPath().top() != m_player.getPosition())
-		{
-			sf::Vector2f playerMoveVector = m_player.getPath().top() - m_player.getPosition();
-			sf::Vector2f normalazedVector = Vector::normalize<sf::Vector2f>(playerMoveVector);
-			sf::Vector2f movement = normalazedVector * deltaTime.asSeconds() * m_playerSpeed;
-			if (Vector::length<sf::Vector2f>(playerMoveVector) < Vector::length<sf::Vector2f>(movement))
-			{
-				m_player.setPosition(m_player.getPath().top());
-				m_player.getPath().pop();
-			}
-			else
-				m_player.move(movement);
-		}
-		else		
-			m_player.getPath().pop();
-	}
+	m_player.update(deltaTime);
 }
 
 void Game::render()
