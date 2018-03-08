@@ -1,5 +1,6 @@
 #pragma once
 #include "TextureManager.h"
+#include "CommandDispatcher.h"
 #include "window.h"
 #include "Map.h"
 #include "Player.h"
@@ -33,4 +34,5 @@ private:
 	int m_mapWidth;
 	Player m_player;
 	Map m_map;
+	CommandDispatcher m_commandDispatcher;
 };

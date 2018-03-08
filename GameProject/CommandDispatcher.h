@@ -7,8 +7,8 @@
 class CommandDispatcher
 {
 public:
-	CommandDispatcher();
+	CommandDispatcher(Map& map);
 	void execute(ICommand* command);
 private:
-	std::map<std::string, std::unique_ptr<ICommandExecutor>> m_executors;
+	std::map<std::string, ICommandExecutor*> m_executors;
 };

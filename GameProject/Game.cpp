@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <fstream>
 
-Game::Game() : isRunning(true), m_map(64, 64)
+Game::Game() : isRunning(true), m_map(64, 64), m_commandDispatcher(m_map)
 {
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
@@ -70,14 +70,8 @@ void Game::processEvents()
 				int mapIndex = m_map.mapFromWindow(mouse.x, mouse.y);
 				if (m_map.isWalkable(m_map.XYfromLinear(mapIndex)))
 				{
-					if (m_player.getPathEnd() != mapIndex)
-					{
-						sf::Vector2f playerPosition = m_player.getPosition();
-						int linearMapPlayerPosition = m_map.mapFromWindow(playerPosition.x, playerPosition.y);
-						m_player.setPath(m_map.calculatePath(linearMapPlayerPosition, mapIndex), mapIndex);
-					}
-
-
+					SetPathCommand command(&m_player, mapIndex);
+					m_commandDispatcher.execute(&command);
 				}
 				break;
 			}

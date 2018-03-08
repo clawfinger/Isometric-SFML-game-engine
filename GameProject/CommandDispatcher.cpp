@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "CommandDispatcher.h"
 
-CommandDispatcher::CommandDispatcher()
+CommandDispatcher::CommandDispatcher(Map& map)
 {
 	// create executor and insert to m_executors, key is command.name()
-
+	m_executors[TypeNameResolver<SetPathCommand>::typeName()] = new SetPathCommandExecutor(map);
 }
 
 void CommandDispatcher::execute(ICommand* command)

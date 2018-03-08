@@ -19,12 +19,11 @@ public:
 class SetPathCommandExecutor : public ICommandExecutor
 {
 public:
-	SetPathCommandExecutor(const Map& map)
+	SetPathCommandExecutor(Map& map): m_map(map)
 	{
-		m_map = map;
 	};
 	void execute(ICommand* command);
 
 private:
-	Map m_map;
+	Map& m_map;
 };
