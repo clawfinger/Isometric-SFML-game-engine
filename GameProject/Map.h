@@ -19,12 +19,18 @@ private:
 	bool m_walkable;
 };
 
+enum LevelNames
+{
+	dungeon = 1,
+	forest
+};
+
 class Map
 {
 public:
-	Map();
-	Map(int tileWidth, int tileHeight);
+	Map(TextureManager* textures);
 	void loadMap(std::string fileName, int mapWidth, int mapHeight, const TextureManager& textures);
+	void loadLevel(LevelNames name);
 	//sf::Vector2i /*map size*/ loadMap(std::string fileName, const TextureManager& textures); //TODO
 	bool isWalkable(sf::Vector2f tile);
 	bool isWalkable(int x, int y);
@@ -46,6 +52,7 @@ private:
 	int costForTile(int linearPos); // now always return 1; can change this in future
 
 private:
+	TextureManager* m_textureManager;
 	std::vector<MapTile> m_mapTiles;
 	int m_mapWidth;
 	int m_mapHeight;

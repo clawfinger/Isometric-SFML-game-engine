@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <fstream>
 
-Game::Game() : isRunning(true), m_map(64, 64), m_commandDispatcher(m_map)
+Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_map)
 {
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
@@ -16,7 +16,7 @@ Game::Game() : isRunning(true), m_map(64, 64), m_commandDispatcher(m_map)
 	m_textureManager.load(floor2, "images/2.png");
 	m_textureManager.load(player, "images/player.png");
 
-	m_map.loadMap("map.txt", 10, 10, m_textureManager);
+	m_map.loadLevel(LevelNames::dungeon);
 	m_mapHeight = m_map.mapHeight();
 	m_mapWidth = m_map.mapWidth();
 	m_player.create(m_textureManager.get(player));

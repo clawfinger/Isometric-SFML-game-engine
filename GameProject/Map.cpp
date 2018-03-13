@@ -2,8 +2,17 @@
 #include "Map.h"
 #include <fstream>
 #include <queue>
+#include <sstream>
 
 MapTile::MapTile(): m_walkable(true)
+{
+}
+
+
+Map::Map(TextureManager* textures) :
+	m_mapHeight(0), m_mapWidth(0),
+	m_tileHeight(64), m_tileWidth(64),
+	m_textureManager(textures)
 {
 }
 
@@ -35,16 +44,6 @@ void MapTile::setPosition(float x, float y)
 sf::Sprite& MapTile::sprite()
 {
 	return m_sprite;
-}
-
-Map::Map(): m_mapHeight(10), m_mapWidth(10), m_tileHeight(64), m_tileWidth(64)
-{
-}
-
-Map::Map(int tileWidth, int tileHeight): m_mapHeight(10), m_mapWidth(10),
-			m_tileHeight(tileHeight), m_tileWidth(tileWidth)
-{
-
 }
 
 void Map::loadMap(std::string fileName, int mapWidth, int mapHeight, const TextureManager& textures)
@@ -92,6 +91,69 @@ void Map::loadMap(std::string fileName, int mapWidth, int mapHeight, const Textu
 	}
 	input.close();
 
+}
+
+void Map::loadLevel(LevelNames name)
+{
+	std::ifstream mapFile;
+	std::string levelFileName;
+	switch (name)
+	{
+	case LevelNames::dungeon:
+		levelFileName = "map.txt";
+		break;
+	}
+	mapFile.open(levelFileName);
+	if (!mapFile)
+	{
+		std::cout << "ERROR: Level file " << levelFileName << " failed to load!" << std::endl;
+		return;
+	}
+	std::stringstream s_stream;
+
+	s_stream << mapFile.rdbuf();
+
+	std::string tag;
+	s_stream >> tag;
+	if (tag == "mapSize")
+	{
+		s_stream >> m_mapWidth >> m_mapHeight;
+	}
+	else
+	{
+		std::cout << "ERROR: missing tag mapSize in level map file. Level size is set to Zero" << std::endl;
+	}
+	s_stream >> tag;
+	if (tag == "mapTiles")
+	{
+		int tileId;
+		MapTile tile;
+		for (int i = 0; i < m_mapWidth * m_mapHeight; i++)
+		{
+			s_stream >> tileId;
+			switch (tileId)
+			{
+			case 0:
+				m_mapTiles.push_back(MapTile(m_textureManager->get(TextureId::floor0)));
+				break;
+			case 1:
+				tile.sprite().setTexture(m_textureManager->get(TextureId::floor1));
+				tile.setWalkability(false);
+				m_mapTiles.push_back(tile);
+				break;
+			case 2:
+				tile.sprite().setTexture(m_textureManager->get(TextureId::floor2));
+				tile.setWalkability(false);
+				m_mapTiles.push_back(tile);
+				break;
+			}
+		}
+	}
+	else
+	{
+		std::cout << "ERROR: missing tag mapTiles in level map file. Level not loaded" << std::endl;
+	}
+	mapFile.close();
 }
 
 bool Map::isWalkable(sf::Vector2f tile)
