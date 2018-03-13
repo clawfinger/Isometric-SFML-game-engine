@@ -5,6 +5,7 @@
 #include <memory>
 #include "Map.h"
 #include "Commands.h"
+#include "Window.h"
 
 class ICommand;
 class PathFollower;
@@ -26,4 +27,16 @@ public:
 
 private:
 	Map& m_map;
+};
+
+class ViewMoveCommandExecutor : public ICommandExecutor
+{
+public:
+	ViewMoveCommandExecutor(Window& window) :m_window(window)
+	{
+	};
+	void execute(ICommand* command);
+private:
+	Window& m_window;
+
 };

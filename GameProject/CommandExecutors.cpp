@@ -19,5 +19,19 @@ void SetPathCommandExecutor::execute(ICommand* command)
 			concreteCommand->m_unit->pathComponent().setPath(m_map.calculatePath(linearMapPlayerPosition, concreteCommand->m_destination), concreteCommand->m_destination);
 		}
 	}
-	//delete concreteCommand;
+}
+
+void ViewMoveCommandExecutor::execute(ICommand * command)
+{
+	ViewMoveCommand* concreteCommand = static_cast<ViewMoveCommand*>(command);
+	if (concreteCommand == nullptr)
+	{
+		std::cout << "ERROR: Wrong command passed to ViewMoveCommandExecutor" << std::endl;
+	}
+	else
+	{
+		sf::Vector2f viewMovement(0.0f, 0.0f);
+		viewMovement += (sf::Vector2f(concreteCommand->x_movement, concreteCommand->y_movement) * concreteCommand->m_speed);
+		m_window.moveView(viewMovement);
+	}
 }

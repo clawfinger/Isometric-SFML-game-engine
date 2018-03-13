@@ -29,9 +29,7 @@ class Map
 {
 public:
 	Map(TextureManager* textures);
-	void loadMap(std::string fileName, int mapWidth, int mapHeight, const TextureManager& textures);
 	void loadLevel(LevelNames name);
-	//sf::Vector2i /*map size*/ loadMap(std::string fileName, const TextureManager& textures); //TODO
 	bool isWalkable(sf::Vector2f tile);
 	bool isWalkable(int x, int y);
 	int mapWidth();

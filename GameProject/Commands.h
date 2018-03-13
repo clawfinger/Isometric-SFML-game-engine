@@ -20,11 +20,9 @@ class ICommand
 {
 public:
 	virtual std::string name() = 0;
-	virtual ~ICommand();
+	virtual ~ICommand() {};
 };
 
-class SetPathCommand;
-REGISTER_TYPENAME(SetPathCommand)
 class SetPathCommand: public ICommand
 {
 public:
@@ -34,4 +32,15 @@ public:
 	int m_destination;
 	Actor* m_unit;
 };
+REGISTER_TYPENAME(SetPathCommand)
 
+class ViewMoveCommand : public ICommand
+{
+public:
+	ViewMoveCommand(float x, float y, float speed);
+	std::string name();
+	float x_movement;
+	float y_movement;
+	float m_speed;
+};
+REGISTER_TYPENAME(ViewMoveCommand)

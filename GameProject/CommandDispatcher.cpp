@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "CommandDispatcher.h"
 
-CommandDispatcher::CommandDispatcher(Map& map)
+CommandDispatcher::CommandDispatcher(Map& map, Window& window)
 {
 	// create executor and insert to m_executors, key is command.name()
 	m_executors[TypeNameResolver<SetPathCommand>::typeName()] = new SetPathCommandExecutor(map);
+	m_executors[TypeNameResolver<ViewMoveCommand>::typeName()] = new ViewMoveCommandExecutor(window);
 }
 
 void CommandDispatcher::execute(ICommand* command)

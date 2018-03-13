@@ -46,53 +46,6 @@ sf::Sprite& MapTile::sprite()
 	return m_sprite;
 }
 
-void Map::loadMap(std::string fileName, int mapWidth, int mapHeight, const TextureManager& textures)
-{
-	m_mapWidth = mapWidth;
-	m_mapHeight = mapHeight;
-
-	std::ifstream input(fileName);
-
-	if (!input.is_open())
-	{
-		std::cout << "File open failure" << std::endl;
-		return;
-	}
-	char character;
-	input.get(character);
-	while (true)
-	{
-		MapTile tile;
-		while (character != '\n')
-		{
-			int tileId = std::stoi(&character);
-			switch (tileId)
-			{
-			case 0:
-				m_mapTiles.push_back(MapTile(textures.get(TextureId::floor0)));
-				break;
-			case 1:
-				tile.sprite().setTexture(textures.get(TextureId::floor1));
-				tile.setWalkability(false);
-				m_mapTiles.push_back(tile);
-				break;
-			case 2:
-				tile.sprite().setTexture(textures.get(TextureId::floor2));
-				tile.setWalkability(false);
-				m_mapTiles.push_back(tile);
-				break;
-			}
-			input.get(character);
-		}
-		input.get(character);
-		if (input.peek() == EOF)
-			break;
-
-	}
-	input.close();
-
-}
-
 void Map::loadLevel(LevelNames name)
 {
 	std::ifstream mapFile;
@@ -104,7 +57,7 @@ void Map::loadLevel(LevelNames name)
 		break;
 	}
 	mapFile.open(levelFileName);
-	if (!mapFile)
+	if (!mapFile.is_open())
 	{
 		std::cout << "ERROR: Level file " << levelFileName << " failed to load!" << std::endl;
 		return;

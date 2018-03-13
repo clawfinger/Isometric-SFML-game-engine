@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <fstream>
 
-Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_map)
+Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_map, m_window)
 {
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
