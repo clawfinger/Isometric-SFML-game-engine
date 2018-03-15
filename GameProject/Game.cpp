@@ -8,7 +8,7 @@ Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_
 {
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
-	m_viewSpeed = 500.f;
+	m_viewSpeed = 300.f;
 	//m_window.resizeView(sf::Vector2f(1280, 720));
 
 	m_textureManager.load(floor0, "images/1.png");
@@ -30,7 +30,7 @@ void Game::run()
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	while (isRunning)
 	{
-		processEvents();
+		//processEvents();
 		timeSinceLastUpdate += clock.restart();
 		while (timeSinceLastUpdate > m_timePerFrame)
 		{
@@ -84,17 +84,7 @@ void Game::processEvents()
 
 void Game::update(sf::Time deltaTime)
 {
-	sf::Vector2f viewMovement(0.0f, 0.0f);
-	if (m_isMovingUp)
-		viewMovement.y -= m_viewSpeed;
-	if (m_isMovingDown)
-		viewMovement.y += m_viewSpeed;
-	if (m_isMovingLeft)
-		viewMovement.x -= m_viewSpeed;
-	if (m_isMovingRight)
-		viewMovement.x += m_viewSpeed;
-	m_window.moveView(viewMovement * deltaTime.asSeconds());
-
+	m_window.update(deltaTime);
 	m_player.update(deltaTime);
 }
 
@@ -119,14 +109,34 @@ void Game::render()
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 {
-	if (key == sf::Keyboard::Up)
-		m_isMovingUp = isPressed;
-	if (key == sf::Keyboard::Down)
-		m_isMovingDown = isPressed;
-	if (key == sf::Keyboard::Left)
-		m_isMovingLeft = isPressed;
-	if (key == sf::Keyboard::Right)
-		m_isMovingRight = isPressed;
+	ViewMoveCommand moveCommand;
+
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		moveCommand.y_direction = -1;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		moveCommand.y_direction = 1;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		moveCommand.x_direction = -1;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		moveCommand.x_direction = 1;
+	//if (key == sf::Keyboard::Up)
+	//{
+	//	moveCommand.y_direction = -1;
+	//}
+	//if (key == sf::Keyboard::Down)
+	//{
+	//	moveCommand.y_direction = 1;
+	//}
+	//if (key == sf::Keyboard::Left)
+	//{
+	//	moveCommand.x_direction = -1;
+	//}
+	//if (key == sf::Keyboard::Right)
+	//{
+	//	moveCommand.x_direction = 1;
+	//}
+	moveCommand.m_speed = m_viewSpeed;
+	m_commandDispatcher.execute(&moveCommand);
 }
 
 

@@ -37,10 +37,11 @@ REGISTER_TYPENAME(SetPathCommand)
 class ViewMoveCommand : public ICommand
 {
 public:
+	ViewMoveCommand();
 	ViewMoveCommand(float x, float y, float speed);
 	std::string name();
-	float x_movement;
-	float y_movement;
+	float x_direction;
+	float y_direction;
 	float m_speed;
 };
 REGISTER_TYPENAME(ViewMoveCommand)

@@ -19,9 +19,11 @@ public:
 	void toggleFullScreen();
 	void draw(sf::Drawable& drawable);
 	void moveView(sf::Vector2f& movement);
+	void update(sf::Time deltaTime);
 	void resizeView(sf::Vector2f& newSize);
 	sf::RenderWindow& getRenderWindow();
 	void setup(const std::string& windowTitle, const sf::Vector2u& size);
+	void setViewMoveVector(const sf::Vector2f& moveVector);
 
 private:
 	void destroy();
@@ -34,4 +36,5 @@ private:
 	std::string m_windowTitle;
 	sf::Vector2u m_windowSize;
 	sf::View m_mainView;
+	sf::Vector2f m_viewMoveVector;
 };
