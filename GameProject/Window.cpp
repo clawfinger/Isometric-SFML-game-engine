@@ -112,18 +112,3 @@ void Window::create()
 	m_window.create({ m_windowSize.x, m_windowSize.y, 32 }, m_windowTitle, style);
 	m_window.setFramerateLimit(60);
 }
-
-//void Window::update()
-//{
-//	sf::Event event;
-//	while (m_window.pollEvent(event))
-//	{
-//		if (event.type == sf::Event::Closed)
-//			m_isDone = true;
-//		else if (event.type == sf::Event::KeyPressed &&
-//			event.key.code == sf::Keyboard::F12)
-//		{
-//			toggleFullScreen();
-//		}
-//	}
-//}

@@ -17,11 +17,12 @@ Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_
 	m_textureManager.load(player, "images/player.png");
 
 	m_map.loadLevel(LevelNames::dungeon);
+
 	m_mapHeight = m_map.mapHeight();
 	m_mapWidth = m_map.mapWidth();
+
 	m_player.create(m_textureManager.get(player));
 	m_player.setPosition(sf::Vector2f(0 * 64, 2 * 64));
-
 }
 
 void Game::run()
@@ -30,7 +31,6 @@ void Game::run()
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	while (isRunning)
 	{
-		//processEvents();
 		timeSinceLastUpdate += clock.restart();
 		while (timeSinceLastUpdate > m_timePerFrame)
 		{
@@ -54,12 +54,12 @@ void Game::processEvents()
 			isRunning = false;
 			break;
 		case sf::Event::KeyPressed:
-			handlePlayerInput(event.key.code, true);
+			handlePlayerInput(event.key.code);
 			if (event.key.code == sf::Keyboard::F12)
 				m_window.toggleFullScreen();
 			break;
 		case sf::Event::KeyReleased:
-			handlePlayerInput(event.key.code, false);
+			handlePlayerInput(event.key.code);
 			break;
 		case sf::Event::MouseButtonPressed:
 		{
@@ -107,7 +107,7 @@ void Game::render()
 	
 }
 
-void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
+void Game::handlePlayerInput(sf::Keyboard::Key key)
 {
 	ViewMoveCommand moveCommand;
 
@@ -119,22 +119,7 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 		moveCommand.x_direction = -1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		moveCommand.x_direction = 1;
-	//if (key == sf::Keyboard::Up)
-	//{
-	//	moveCommand.y_direction = -1;
-	//}
-	//if (key == sf::Keyboard::Down)
-	//{
-	//	moveCommand.y_direction = 1;
-	//}
-	//if (key == sf::Keyboard::Left)
-	//{
-	//	moveCommand.x_direction = -1;
-	//}
-	//if (key == sf::Keyboard::Right)
-	//{
-	//	moveCommand.x_direction = 1;
-	//}
+
 	moveCommand.m_speed = m_viewSpeed;
 	m_commandDispatcher.execute(&moveCommand);
 }

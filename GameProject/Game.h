@@ -18,12 +18,8 @@ private:
 	void processEvents();
 	void update(sf::Time deltaTime);
 	void render();
-	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+	void handlePlayerInput(sf::Keyboard::Key key);
 private:
-	bool m_isMovingUp;
-	bool m_isMovingDown;
-	bool m_isMovingLeft;
-	bool m_isMovingRight;
 	bool isRunning;
 	TextureManager m_textureManager;
 	sf::Time m_timePerFrame;
