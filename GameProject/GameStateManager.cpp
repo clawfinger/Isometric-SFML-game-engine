@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameStateManager.h"
-
+#include "GameLevelState.h"
 
 GameStateManager::GameStateManager()
 {
@@ -9,6 +9,7 @@ GameStateManager::GameStateManager()
 
 GameStateManager::~GameStateManager()
 {
+	registerStateFactory<GameLevelState>(GameStateType::level);
 }
 
 GameStateBase * GameStateManager::currentState()
@@ -17,6 +18,11 @@ GameStateBase * GameStateManager::currentState()
 		return nullptr;
 	else
 		return m_statesStack.top();
+}
+
+void GameStateManager::setSharedContext(StateSharedContext context)
+{
+	m_sharedContext = context;
 }
 
 void GameStateManager::activateState(GameStateType state)

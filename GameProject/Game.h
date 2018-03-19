@@ -4,6 +4,7 @@
 #include "window.h"
 #include "Map.h"
 #include "Player.h"
+#include "GameStateManager.h"
 #include <vector>
 #include <list>
 #include <memory>
@@ -31,4 +32,5 @@ private:
 	Player m_player;
 	Map m_map;
 	CommandDispatcher m_commandDispatcher;
+	GameStateManager m_stateManager;
 };
