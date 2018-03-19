@@ -4,12 +4,12 @@
 
 GameStateManager::GameStateManager()
 {
+	registerStateFactory<GameLevelState>(GameStateType::level);
 }
 
 
 GameStateManager::~GameStateManager()
 {
-	registerStateFactory<GameLevelState>(GameStateType::level);
 }
 
 GameStateBase * GameStateManager::currentState()
