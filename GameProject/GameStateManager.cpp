@@ -27,8 +27,11 @@ void GameStateManager::setSharedContext(StateSharedContext context)
 
 void GameStateManager::activateState(GameStateType state)
 {
-	auto stateFactory = m_stateFactories[state];
-	m_statesStack.push(stateFactory());
+	auto stateFactory = m_stateFactories.find(state);
+	if (stateFactory == m_stateFactories.end())
+		std::cout << "ERROR: Cannot find factory for state: " << state << std::endl;
+	else
+		m_statesStack.push(stateFactory->second());
 }
 
 void GameStateManager::deactivateState()
