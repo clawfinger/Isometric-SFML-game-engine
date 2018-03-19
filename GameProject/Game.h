@@ -19,16 +19,13 @@ private:
 	void processEvents();
 	void update(sf::Time deltaTime);
 	void render();
-	void handlePlayerInput(sf::Keyboard::Key key);
+
 private:
 	bool isRunning;
 	TextureManager m_textureManager;
 	sf::Time m_timePerFrame;
 	Window m_window;
 	sf::View view;
-	float m_viewSpeed;
-	int m_mapHeight;
-	int m_mapWidth;
 	Player m_player;
 	Map m_map;
 	CommandDispatcher m_commandDispatcher;

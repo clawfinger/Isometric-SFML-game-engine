@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "GameLevelState.h"
 #include "game.h"
 #include <iostream>
 #include <assert.h>
@@ -8,8 +9,15 @@ Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_
 {
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
-	m_viewSpeed = 300.f;
-	//m_window.resizeView(sf::Vector2f(1280, 720));
+
+	StateSharedContext context;
+	context.commandDispatcher = &m_commandDispatcher;
+	context.window = &m_window;
+	context.player = &m_player;
+	context.map = &m_map;
+
+	m_stateManager.setSharedContext(context);
+	m_stateManager.activateState(GameStateType::level);
 
 	m_textureManager.load(floor0, "images/1.png");
 	m_textureManager.load(floor1, "images/3.png");
@@ -17,9 +25,6 @@ Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_
 	m_textureManager.load(player, "images/player.png");
 
 	m_map.loadLevel(LevelNames::dungeon);
-
-	m_mapHeight = m_map.mapHeight();
-	m_mapWidth = m_map.mapWidth();
 
 	m_player.create(m_textureManager.get(player));
 	m_player.setPosition(sf::Vector2f(0 * 64, 2 * 64));
@@ -48,80 +53,23 @@ void Game::processEvents()
 	sf::Event event;
 	while (m_window.getRenderWindow().pollEvent(event))
 	{
-		switch (event.type)
+		if (event.type == sf::Event::Closed)
 		{
-		case sf::Event::Closed:
 			isRunning = false;
-			break;
-		case sf::Event::KeyPressed:
-			handlePlayerInput(event.key.code);
-			if (event.key.code == sf::Keyboard::F12)
-				m_window.toggleFullScreen();
-			break;
-		case sf::Event::KeyReleased:
-			handlePlayerInput(event.key.code);
-			break;
-		case sf::Event::MouseButtonPressed:
-		{
-			if (event.mouseButton.button == sf::Mouse::Left)
-			{
-				sf::Vector2f mouse = m_window.getRenderWindow().mapPixelToCoords(
-					sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-				int mapIndex = m_map.mapFromWindow(mouse.x, mouse.y);
-				if (m_map.isWalkable(m_map.XYfromLinear(mapIndex)))
-				{
-					SetPathCommand command(&m_player, mapIndex);
-					m_commandDispatcher.execute(&command);
-				}
-				break;
-			}
+			return;
 		}
-		}
-
-
+		m_stateManager.currentState()->handlePlayerInput(event);
 	}
 }
 
 void Game::update(sf::Time deltaTime)
 {
-	m_window.update(deltaTime);
-	m_player.update(deltaTime);
+	m_stateManager.currentState()->update(deltaTime);
 }
 
 void Game::render()
 {
-	m_window.beginDraw();
-
-	for (int y = 0; y < m_mapHeight; y++)
-	{
-		for (int x = 0; x < m_mapWidth; x++)
-		{
-			// TODO: remove sprite size hard code
-			sf::Vector2f position(float(x * 64), float(y * 64));
-			m_map.getMapTile(x, y).setPosition(position);
-			m_window.draw(m_map.getMapTile(x, y).sprite());
-		}
-	}
-	m_window.draw(m_player.getSprite());
-	m_window.endDraw();
-	
-}
-
-void Game::handlePlayerInput(sf::Keyboard::Key key)
-{
-	ViewMoveCommand moveCommand;
-
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		moveCommand.y_direction = -1;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		moveCommand.y_direction = 1;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		moveCommand.x_direction = -1;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		moveCommand.x_direction = 1;
-
-	moveCommand.m_speed = m_viewSpeed;
-	m_commandDispatcher.execute(&moveCommand);
+	m_stateManager.currentState()->render();	
 }
 
 
