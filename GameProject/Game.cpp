@@ -19,8 +19,8 @@ Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_
 	m_stateManager.setSharedContext(context);
 	m_stateManager.activateState(GameStateType::level);
 
-	m_textureManager.load(floor0, "images/1.png");
-	m_textureManager.load(floor1, "images/3.png");
+	m_textureManager.load(wall, "images/3.png");
+	m_textureManager.load(floor1, "images/1.png");
 	m_textureManager.load(floor2, "images/2.png");
 	m_textureManager.load(player, "images/player.png");
 

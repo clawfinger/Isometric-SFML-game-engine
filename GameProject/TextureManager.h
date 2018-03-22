@@ -6,7 +6,7 @@
 
 enum TextureId
 {
-	floor0,
+	wall,
 	floor1,
 	floor2,
 	floor3,

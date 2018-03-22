@@ -2,8 +2,7 @@
 #include "GameStateBase.h"
 #include "SharedContext.h"
 
-class GameLevelState :
-	public GameStateBase
+class GameLevelState : public GameStateBase
 {
 public:
 	GameLevelState(StateSharedContext& context);
