@@ -3,7 +3,7 @@
 #include <functional>
 #include "Player.h"
 #include "SharedContext.h"
-#include "TeamAndEnemies.h"
+#include "ActorsIds.h"
 
 class ActorManager
 {
