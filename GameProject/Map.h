@@ -43,6 +43,7 @@ public:
 
 	inline int linearFromXY(int x, int y);
 	inline sf::Vector2f XYfromLinear(int linear);
+	sf::Vector2f getPlayerSpawnCoordinate();
 
 private:
 	std::vector<int> neighbors(int position);
@@ -56,4 +57,5 @@ private:
 	int m_mapHeight;
 	int m_tileWidth;
 	int m_tileHeight;
+	sf::Vector2f m_playerSpawnPosition;
 };

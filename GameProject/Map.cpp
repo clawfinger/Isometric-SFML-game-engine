@@ -11,7 +11,7 @@ MapTile::MapTile(): m_walkable(true)
 
 Map::Map(TextureManager* textures) :
 	m_mapHeight(0), m_mapWidth(0),
-	m_tileHeight(64), m_tileWidth(64),
+	m_tileHeight(0), m_tileWidth(0),
 	m_textureManager(textures)
 {
 }
@@ -77,6 +77,15 @@ void Map::loadLevel(LevelNames name)
 		std::cout << "ERROR: missing tag mapSize in level map file. Level size is set to Zero" << std::endl;
 	}
 	s_stream >> tag;
+	if (tag == "tileSize")
+	{
+		s_stream >> m_tileWidth >> m_tileHeight;
+	}
+	else
+	{
+		std::cout << "ERROR: missing tag tileSize in level map file. Tile size is set to Zero" << std::endl;
+	}
+	s_stream >> tag;
 	if (tag == "mapTiles")
 	{
 		int tileId;
@@ -107,6 +116,12 @@ void Map::loadLevel(LevelNames name)
 	else
 	{
 		std::cout << "ERROR: missing tag mapTiles in level map file. Level not loaded" << std::endl;
+
+	}
+	s_stream >> tag;
+	if (tag == "playerSpawnPosition")
+	{
+		s_stream >> m_playerSpawnPosition.x >> m_playerSpawnPosition.y;
 	}
 	mapFile.close();
 }
@@ -213,6 +228,11 @@ sf::Vector2f Map::XYfromLinear(int linear)
 	float y = linear / m_mapWidth;
 	float x = linear % m_mapWidth;
 	return sf::Vector2f(x, y);
+}
+
+sf::Vector2f Map::getPlayerSpawnCoordinate()
+{
+	return windowFromMap(m_playerSpawnPosition);
 }
 
 std::vector<int> Map::neighbors(int position)
