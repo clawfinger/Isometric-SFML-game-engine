@@ -3,24 +3,24 @@
 #include <map>
 #include <iostream>
 #include <memory>
+#include "ActorsIds.h"
 
-enum TextureId
+namespace TextureId
 {
-	wall,
-	floor1,
-	floor2,
-	floor3,
-	floor4,
-	player
-};
+	static std::string wall() { return std::string("wall"); };
+	static std::string floor1() { return std::string("floor1"); };
+	static std::string floor2() { return std::string("floor2"); };
+	static std::string floor3() { return std::string("floor3"); };
+	static std::string floor4() { return std::string("floor4"); };
+}
 
 class TextureManager
 {
 public:
 	TextureManager() {};
-	void load(TextureId id, const std::string& filename);
-	sf::Texture& get(TextureId id);
-	sf::Texture& get(TextureId id) const;
+	void load(std::string id, const std::string& filename);
+	sf::Texture& get(std::string id);
+	sf::Texture& get(std::string id) const;
 private:
-	std::map<TextureId, std::unique_ptr<sf::Texture>> m_textureCache;
+	std::map<std::string, std::unique_ptr<sf::Texture>> m_textureCache;
 };

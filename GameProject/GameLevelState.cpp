@@ -8,7 +8,7 @@
 
 GameLevelState::GameLevelState(StateSharedContext& context): m_sharedContext(context)
 {
-	m_sharedContext.player->create(m_sharedContext.textureManager->get(player));
+	m_sharedContext.player->create(m_sharedContext.textureManager->get(CharacterId::swordsman()));
 	m_sharedContext.player->setPosition(m_sharedContext.map->getPlayerSpawnCoordinate());
 }
 

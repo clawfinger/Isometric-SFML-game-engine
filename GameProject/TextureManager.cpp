@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TextureManager.h"
 
-void TextureManager::load(TextureId id, const std::string & filename)
+void TextureManager::load(std::string id, const std::string & filename)
 {
 	std::unique_ptr<sf::Texture> newTexture(new sf::Texture());
 	if (!newTexture->loadFromFile(filename))
@@ -12,12 +12,12 @@ void TextureManager::load(TextureId id, const std::string & filename)
 	m_textureCache.insert(std::make_pair(id, std::move(newTexture)));
 }
 
-sf::Texture& TextureManager::get(TextureId id)
+sf::Texture& TextureManager::get(std::string id)
 {
 	return static_cast<const TextureManager&>(*this).get(id);
 }
 
-sf::Texture& TextureManager::get(TextureId id) const
+sf::Texture& TextureManager::get(std::string id) const
 {
 	auto found = m_textureCache.find(id);
 	if (found != m_textureCache.end())
