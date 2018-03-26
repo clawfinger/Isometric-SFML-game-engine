@@ -13,11 +13,12 @@ Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_
 	StateSharedContext context;
 	context.commandDispatcher = &m_commandDispatcher;
 	context.window = &m_window;
-	context.player = &m_player;
+	context.actorManager = &m_actorManager;
 	context.map = &m_map;
 	context.textureManager = &m_textureManager;
 
 	m_stateManager.setSharedContext(context);
+	m_actorManager.setSharedContext(context);
 
 	m_textureManager.load(TextureId::wall(), "images/3.png");
 	m_textureManager.load(TextureId::floor1(), "images/1.png");

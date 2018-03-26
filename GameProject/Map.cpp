@@ -128,7 +128,10 @@ void Map::loadLevel(LevelNames name)
 
 bool Map::isWalkable(sf::Vector2f tile)
 {
-	return m_mapTiles[tile.y * m_mapWidth + tile.x].isWalkable();
+	if (isWithinMap(tile.x, tile.y))
+		return m_mapTiles[tile.y * m_mapWidth + tile.x].isWalkable();
+	else
+		return false;
 }
 
 bool Map::isWalkable(int x, int y)

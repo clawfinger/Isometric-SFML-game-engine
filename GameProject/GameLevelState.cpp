@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameLevelState.h"
 #include "Commands.h"
+#include "ActorManager.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
@@ -8,8 +9,7 @@
 
 GameLevelState::GameLevelState(StateSharedContext& context): m_sharedContext(context)
 {
-	m_sharedContext.player->create(m_sharedContext.textureManager->get(CharacterId::swordsman()));
-	m_sharedContext.player->setPosition(m_sharedContext.map->getPlayerSpawnCoordinate());
+	m_sharedContext.actorManager->setActiveCharacter(CharacterId::swordsman());
 }
 
 
@@ -20,7 +20,7 @@ GameLevelState::~GameLevelState()
 void GameLevelState::update(sf::Time deltaTime)
 {
 	m_sharedContext.window->update(deltaTime);
-	m_sharedContext.player->update(deltaTime);
+	m_sharedContext.actorManager->activeCharacter()->update(deltaTime);
 }
 
 void GameLevelState::render()
@@ -40,7 +40,7 @@ void GameLevelState::render()
 			m_sharedContext.window->draw(m_sharedContext.map->getMapTile(x, y).sprite());
 		}
 	}
-	m_sharedContext.window->draw(m_sharedContext.player->getSprite());
+	m_sharedContext.window->draw(m_sharedContext.actorManager->activeCharacter()->getSprite());
 	m_sharedContext.window->endDraw();
 }
 
@@ -65,7 +65,7 @@ void GameLevelState::handlePlayerInput(sf::Event& event)
 			int mapIndex = m_sharedContext.map->mapFromWindow(mouse.x, mouse.y);
 			if (m_sharedContext.map->isWalkable(m_sharedContext.map->XYfromLinear(mapIndex)))
 			{
-				SetPathCommand command(m_sharedContext.player, mapIndex);
+				SetPathCommand command(m_sharedContext.actorManager->activeCharacter(), mapIndex);
 				m_sharedContext.commandDispatcher->execute(&command);
 			}
 			break;

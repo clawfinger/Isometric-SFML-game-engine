@@ -8,7 +8,7 @@
 class ActorManager
 {
 public:
-	ActorManager(StateSharedContext& context);
+	ActorManager();
 	~ActorManager();
 	template <typename T>
 	void registerCharacterFactory(std::string id);
@@ -17,6 +17,8 @@ public:
 	void createCharacter(std::string id);
 	void setActiveCharacter(std::string id);
 	Actor* activeCharacter();
+	void setSharedContext(StateSharedContext context);
+
 private:
 	Actor* m_activeCharacter;
 	std::unordered_map<std::string, Actor*> m_team;

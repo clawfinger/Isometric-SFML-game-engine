@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ActorManager.h"
 
-ActorManager::ActorManager(StateSharedContext & context): m_sharedContext(context)
+ActorManager::ActorManager()
 {
 	registerCharacterFactory<Player>(CharacterId::swordsman());
 }
@@ -17,6 +17,12 @@ void ActorManager::createCharacter(std::string id)
 	if (factory != m_characterFactories.end())
 	{
 		character = factory->second();
+		if (id == CharacterId::swordsman())
+		{
+			character->create(m_sharedContext.textureManager->get(CharacterId::swordsman()));
+			character->setPosition(m_sharedContext.map->getPlayerSpawnCoordinate());
+		}
+		m_team[id] = character;
 	}
 	else
 	{
@@ -43,4 +49,9 @@ Actor * ActorManager::activeCharacter()
 		std::cout << "ERROR: cannot get active character! Returned nullptr" << std::endl;
 
 	return m_activeCharacter;
+}
+
+void ActorManager::setSharedContext(StateSharedContext context)
+{
+	m_sharedContext = context;
 }
