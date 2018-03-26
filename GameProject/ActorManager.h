@@ -11,35 +11,35 @@ public:
 	ActorManager(StateSharedContext& context);
 	~ActorManager();
 	template <typename T>
-	void registerCharacterFactory(CharacterId id);
+	void registerCharacterFactory(std::string id);
 	template <typename T>
-	void registerEnemyFactory(EnemyId id);
-	void createCharacter(CharacterId id);
-	void setActiveCharacter(CharacterId id);
+	void registerEnemyFactory(std::string id);
+	void createCharacter(std::string id);
+	void setActiveCharacter(std::string id);
 	Actor* activeCharacter();
 private:
 	Actor* m_activeCharacter;
-	std::unordered_map<CharacterId, Actor*> m_team;
-	std::unordered_map<EnemyId, Actor*> m_enemies;
+	std::unordered_map<std::string, Actor*> m_team;
+	std::unordered_map<std::string, Actor*> m_enemies;
 	StateSharedContext m_sharedContext;
-	std::unordered_map<CharacterId, std::function<Actor*()>> m_characterFactories;
-	std::unordered_map<EnemyId, std::function<Actor*()>> m_enemyFactories;
+	std::unordered_map<std::string, std::function<Actor*()>> m_characterFactories;
+	std::unordered_map<std::string, std::function<Actor*()>> m_enemyFactories;
 };
 
 template<typename T>
-inline void ActorManager::registerCharacterFactory(CharacterId id)
+inline void ActorManager::registerCharacterFactory(std::string id)
 {
 	m_characterFactories[id] = []()->Actor*
 	{
 		return new T();
-	}
+	};
 }
 
 template<typename T>
-inline void ActorManager::registerEnemyFactory(EnemyId id)
+inline void ActorManager::registerEnemyFactory(std::string id)
 {
 	m_enemyFactories[id] = []()->Actor*
 	{
 		return new T();
-	}
+	};
 }

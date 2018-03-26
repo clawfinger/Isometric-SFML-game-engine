@@ -3,14 +3,14 @@
 
 ActorManager::ActorManager(StateSharedContext & context): m_sharedContext(context)
 {
-	registerCharacterFactory<Player>(CharacterId::swordsman);
+	registerCharacterFactory<Player>(CharacterId::swordsman());
 }
 
 ActorManager::~ActorManager()
 {
 }
 
-void ActorManager::createCharacter(CharacterId id)
+void ActorManager::createCharacter(std::string id)
 {
 	Actor* character = nullptr;
 	auto factory = m_characterFactories.find(id);
@@ -24,7 +24,7 @@ void ActorManager::createCharacter(CharacterId id)
 	}
 }
 
-void ActorManager::setActiveCharacter(CharacterId id)
+void ActorManager::setActiveCharacter(std::string id)
 {
 	auto character = m_team.find(id);
 	if (character != m_team.end())

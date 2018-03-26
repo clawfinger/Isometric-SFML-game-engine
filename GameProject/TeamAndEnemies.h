@@ -1,11 +1,12 @@
 #pragma once
 
-enum CharacterId
+namespace EnemyId
 {
-	swordsman = 0
+	static std::string rat() { return std::string("rat"); };
+
 };
 
-enum EnemyId
+namespace CharacterId
 {
-	rat = 0
-};
+	static std::string swordsman() { return std::string("swordsman"); };
+}
