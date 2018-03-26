@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "PathFollower.h"
 #include "Actor.h"
 
 class Map;
