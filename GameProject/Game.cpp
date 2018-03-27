@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "GameLevelState.h"
+#include "State/GameLevelState.h"
 #include "game.h"
 #include <iostream>
 #include <assert.h>
@@ -24,6 +24,7 @@ Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_
 	m_textureManager.load(TextureId::floor1(), "images/1.png");
 	m_textureManager.load(TextureId::floor2(), "images/2.png");
 	m_textureManager.load(CharacterId::swordsman(), "images/player.png");
+	m_textureManager.load(EnemyId::enemy(), "images/enemy.png");
 
 	m_map.loadLevel(LevelNames::dungeon);
 	m_stateManager.activateState(GameStateType::level);

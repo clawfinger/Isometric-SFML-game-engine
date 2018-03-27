@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Actor.h"
+#include "..\Actor.h"
 
 template <typename TCommand>
 class TypeNameResolver

@@ -1,9 +1,13 @@
 #include "stdafx.h"
+#include <iostream>
+#include "TextureManager.h"
+#include "Map.h"
 #include "ActorManager.h"
 
 ActorManager::ActorManager()
 {
 	registerCharacterFactory<Player>(CharacterId::swordsman());
+	registerEnemyFactory<Enemy>(EnemyId::enemy());
 }
 
 ActorManager::~ActorManager()

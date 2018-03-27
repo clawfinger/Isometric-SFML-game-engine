@@ -2,7 +2,7 @@
 #include <stack>
 #include <map>
 #include <functional>
-#include "SharedContext.h"
+#include "../SharedContext.h"
 
 class GameStateBase;
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "GameStateBase.h"
-#include "SharedContext.h"
+#include "../SharedContext.h"
+#include "SFML/Graphics.hpp"
 
 class GameLevelState : public GameStateBase
 {

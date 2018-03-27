@@ -1,9 +1,9 @@
 #pragma once
 #include "TextureManager.h"
-#include "CommandDispatcher.h"
+#include "Command/CommandDispatcher.h"
 #include "window.h"
 #include "Map.h"
-#include "GameStateManager.h"
+#include "State/GameStateManager.h"
 #include "ActorManager.h"
 #include <vector>
 #include <list>

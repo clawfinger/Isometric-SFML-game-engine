@@ -1,7 +1,10 @@
 #include "stdafx.h"
+#include "../Window.h"
+#include "../Map.h"
 #include "GameLevelState.h"
-#include "Commands.h"
-#include "ActorManager.h"
+#include "../Command/CommandDispatcher.h"
+#include "../Command/Commands.h"
+#include "../ActorManager.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
