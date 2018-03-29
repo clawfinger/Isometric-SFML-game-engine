@@ -123,6 +123,11 @@ void Map::loadLevel(LevelNames name)
 	{
 		s_stream >> m_playerSpawnPosition.x >> m_playerSpawnPosition.y;
 	}
+	s_stream >> tag;
+	if (tag == "enemySpawnPosition")
+	{
+		s_stream >> m_enemySpawnPosition.x >> m_enemySpawnPosition.y;
+	}
 	mapFile.close();
 }
 
@@ -236,6 +241,26 @@ sf::Vector2f Map::XYfromLinear(int linear)
 sf::Vector2f Map::getPlayerSpawnCoordinate()
 {
 	return windowFromMap(m_playerSpawnPosition);
+}
+
+sf::Vector2f Map::getEnemySpawnCoordinate()
+{
+	return windowFromMap(m_enemySpawnPosition);
+
+}
+
+void Map::draw(sf::RenderWindow & window)
+{
+	for (int y = 0; y < m_mapHeight; y++)
+	{
+		for (int x = 0; x < m_mapWidth; x++)
+		{
+			// TODO: remove sprite size hard code
+			sf::Vector2f position(float(x * 64), float(y * 64));
+			getMapTile(x, y).setPosition(position);
+			window.draw(getMapTile(x, y).sprite());
+		}
+	}
 }
 
 std::vector<int> Map::neighbors(int position)

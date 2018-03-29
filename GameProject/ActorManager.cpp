@@ -34,6 +34,25 @@ void ActorManager::createCharacter(std::string id)
 	}
 }
 
+Actor * ActorManager::createEnemy(std::string id)
+{
+	Actor* enemy = nullptr;
+	auto factory = m_enemyFactories.find(id);
+	if (factory != m_enemyFactories.end())
+	{
+		enemy = factory->second();
+		if (id == EnemyId::enemy())
+		{
+			enemy->create(m_sharedContext.textureManager->get(EnemyId::enemy()));
+		}
+	}
+	else
+	{
+		std::cout << "ERROR: cannot find factory for character id=" << id << std::endl;
+	}
+	return enemy;
+}
+
 void ActorManager::setActiveCharacter(std::string id)
 {
 	auto character = m_team.find(id);

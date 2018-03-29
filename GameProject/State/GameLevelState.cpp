@@ -13,6 +13,10 @@
 GameLevelState::GameLevelState(StateSharedContext& context): m_sharedContext(context)
 {
 	m_sharedContext.actorManager->setActiveCharacter(CharacterId::swordsman());
+	sf::Vector2f enemySpawn = m_sharedContext.map->getEnemySpawnCoordinate();
+	Actor* enemy = m_sharedContext.actorManager->createEnemy(EnemyId::enemy());
+	enemy->setPosition(enemySpawn);
+	m_enemies.insert({ EnemyId::enemy(), enemy });
 }
 
 
@@ -24,26 +28,24 @@ void GameLevelState::update(sf::Time deltaTime)
 {
 	m_sharedContext.window->update(deltaTime);
 	m_sharedContext.actorManager->activeCharacter()->update(deltaTime);
+	for (auto& enemy : m_enemies)
+	{
+		enemy.second->update(deltaTime);
+	}
 }
 
 void GameLevelState::render()
 {
 	m_sharedContext.window->beginDraw();
+	m_sharedContext.map->draw(m_sharedContext.window->getRenderWindow());
 
-	int mapHeight = m_sharedContext.map->mapHeight();
-	int mapWidth = m_sharedContext.map->mapWidth();
+	m_sharedContext.actorManager->activeCharacter()->draw(m_sharedContext.window->getRenderWindow());
 
-	for (int y = 0; y < mapHeight; y++)
+	for (auto& enemy : m_enemies)
 	{
-		for (int x = 0; x < mapWidth; x++)
-		{
-			// TODO: remove sprite size hard code
-			sf::Vector2f position(float(x * 64), float(y * 64));
-			m_sharedContext.map->getMapTile(x, y).setPosition(position);
-			m_sharedContext.window->draw(m_sharedContext.map->getMapTile(x, y).sprite());
-		}
+		enemy.second->draw(m_sharedContext.window->getRenderWindow());
 	}
-	m_sharedContext.window->draw(m_sharedContext.actorManager->activeCharacter()->getSprite());
+
 	m_sharedContext.window->endDraw();
 }
 

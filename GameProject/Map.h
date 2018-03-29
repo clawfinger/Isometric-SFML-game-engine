@@ -44,6 +44,8 @@ public:
 	inline int linearFromXY(int x, int y);
 	inline sf::Vector2f XYfromLinear(int linear);
 	sf::Vector2f getPlayerSpawnCoordinate();
+	sf::Vector2f getEnemySpawnCoordinate();
+	void draw(sf::RenderWindow& window);
 
 private:
 	std::vector<int> neighbors(int position);
@@ -58,4 +60,5 @@ private:
 	int m_tileWidth;
 	int m_tileHeight;
 	sf::Vector2f m_playerSpawnPosition;
+	sf::Vector2f m_enemySpawnPosition;
 };
