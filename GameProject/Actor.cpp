@@ -16,6 +16,11 @@ void Actor::setActorSpeed(float speed)
 	m_actorSpeed = speed;
 }
 
+void Actor::draw(sf::RenderWindow & window)
+{
+	window.draw(getSprite());
+}
+
 PathFollower& Actor::pathComponent()
 {
 	return m_PathComponent;

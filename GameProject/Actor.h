@@ -10,6 +10,7 @@ public:
 	Actor();
 	float getActorSpeed();
 	void setActorSpeed(float speed);
+	void draw(sf::RenderWindow& window);
 	PathFollower& pathComponent();
 private:
 	PathFollower m_PathComponent;

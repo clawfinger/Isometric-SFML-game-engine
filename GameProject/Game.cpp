@@ -10,15 +10,13 @@ Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_
 	m_window.setup("SFML", sf::Vector2u(1280, 720));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
 
-	StateSharedContext context;
-	context.commandDispatcher = &m_commandDispatcher;
-	context.window = &m_window;
-	context.actorManager = &m_actorManager;
-	context.map = &m_map;
-	context.textureManager = &m_textureManager;
+	StateSharedContext* context = new StateSharedContext;
+	context->commandDispatcher = &m_commandDispatcher;
+	context->window = &m_window;
+	context->map = &m_map;
+	context->textureManager = &m_textureManager;
 
 	m_stateManager.setSharedContext(context);
-	m_actorManager.setSharedContext(context);
 
 	m_textureManager.load(TextureId::wall(), "images/3.png");
 	m_textureManager.load(TextureId::floor1(), "images/1.png");

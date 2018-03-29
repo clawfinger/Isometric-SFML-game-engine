@@ -18,13 +18,13 @@ public:
 	GameStateManager();
 	~GameStateManager();
 	GameStateBase* currentState();
-	void setSharedContext(StateSharedContext context);
+	void setSharedContext(StateSharedContext* context);
 	void activateState(GameStateType state);
 	void deactivateState();
 	template<typename T>
 	void registerStateFactory(GameStateType state);
 private:
-	StateSharedContext m_sharedContext;
+	StateSharedContext* m_sharedContext;
 	std::stack<GameStateBase*> m_statesStack;
 	std::map<GameStateType, std::function<GameStateBase* (void)>> m_stateFactories;
 };

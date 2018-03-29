@@ -21,7 +21,7 @@ GameStateBase * GameStateManager::currentState()
 		return m_statesStack.top();
 }
 
-void GameStateManager::setSharedContext(StateSharedContext context)
+void GameStateManager::setSharedContext(StateSharedContext* context)
 {
 	m_sharedContext = context;
 }

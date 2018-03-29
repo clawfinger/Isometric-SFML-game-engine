@@ -4,19 +4,21 @@
 #include "../SharedContext.h"
 #include "SFML/Graphics.hpp"
 #include "../Actor.h"
+#include "../GameEngine.h"
 
 class GameLevelState : public GameStateBase
 {
 public:
-	GameLevelState(StateSharedContext& context);
+	GameLevelState(StateSharedContext* context);
 	~GameLevelState();
 	void update(sf::Time deltaTime);
 	void render();
 	void handlePlayerInput(sf::Event& event);
 private:
 	void handleKeyboardInput(sf::Keyboard::Key key);
+	void handleMouseInput(sf::Vector2i mouseCoords);
 private:
-	StateSharedContext m_sharedContext;
-	std::unordered_map<std::string, Actor*> m_enemies;
+	StateSharedContext* m_sharedContext;
+	GameEngine m_gameEngine;
 };
 

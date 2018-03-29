@@ -8,13 +8,10 @@
 class ActorManager
 {
 public:
-	ActorManager();
+	ActorManager(StateSharedContext* context);
 	~ActorManager();
-	void createCharacter(std::string id);
+	Actor* createCharacter(std::string id);
 	Actor* createEnemy(std::string id);
-	void setActiveCharacter(std::string id);
-	Actor* activeCharacter();
-	void setSharedContext(StateSharedContext context);
 
 private:
 	template <typename T>
@@ -23,9 +20,7 @@ private:
 	void registerEnemyFactory(std::string id);
 
 private:
-	Actor* m_activeCharacter;
-	std::unordered_map<std::string, Actor*> m_team;
-	StateSharedContext m_sharedContext;
+	StateSharedContext* m_sharedContext;
 	std::unordered_map<std::string, std::function<Actor*()>> m_characterFactories;
 	std::unordered_map<std::string, std::function<Actor*()>> m_enemyFactories;
 };

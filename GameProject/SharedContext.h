@@ -8,7 +8,6 @@ class Window;
 class Map;
 class CommandDispatcher;
 class TextureManager;
-class ActorManager;
 
 struct StateSharedContext
 {
@@ -16,5 +15,4 @@ struct StateSharedContext
 	Map* map;
 	CommandDispatcher* commandDispatcher;
 	TextureManager* textureManager;
-	ActorManager* actorManager;
 };
