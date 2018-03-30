@@ -3,7 +3,7 @@
 #include "utility.h"
 #include "Actor.h"
 
-PathFollower::PathFollower()
+PathFollower::PathFollower(Actor* actor) : m_actor(actor)
 {
 }
 
@@ -28,27 +28,29 @@ std::stack<sf::Vector2f>& PathFollower::getPath()
 	return m_currentPath;
 }
 
-void PathFollower::update(Actor& actor, sf::Time elapsed)
+void PathFollower::update(sf::Time elapsed)
 {
 	if (isPathSet())
 	{
-		if (getPath().top() != actor.getPosition())
+		if (getPath().top() != m_actor->getPosition())
 		{
-			sf::Vector2f playerMoveVector = getPath().top() - actor.getPosition();
+			sf::Vector2f playerMoveVector = getPath().top() - m_actor->getPosition();
 			sf::Vector2f normalazedVector = Vector::normalize<sf::Vector2f>(playerMoveVector);
-			sf::Vector2f movement = normalazedVector * elapsed.asSeconds() * actor.getActorSpeed();
+			sf::Vector2f movement = normalazedVector * elapsed.asSeconds() * m_actor->getActorSpeed();
 			if (Vector::length<sf::Vector2f>(playerMoveVector) < Vector::length<sf::Vector2f>(movement))
 			{
-				actor.setPosition(getPath().top());
+				m_actor->setPosition(getPath().top());
 				getPath().pop();
 			}
 			else
 			{
-				actor.move(movement);
+				m_actor->move(movement);
 			}
 
 		}
 		else
+		{
 			getPath().pop();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "PathFollower.h"
 
 Player::Player(): Actor()
 {
@@ -7,7 +8,7 @@ Player::Player(): Actor()
 
 void Player::update(sf::Time deltaTime)
 {
-	Actor::pathComponent().update(*this, deltaTime);
+	Actor::pathComponent()->update(deltaTime);
 }
 
 Enemy::Enemy() : Actor()
@@ -16,5 +17,5 @@ Enemy::Enemy() : Actor()
 
 void Enemy::update(sf::Time deltaTime)
 {
-	Actor::pathComponent().update(*this, deltaTime);
+	Actor::pathComponent()->update(deltaTime);
 }
