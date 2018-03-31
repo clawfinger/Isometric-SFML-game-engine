@@ -4,8 +4,8 @@
 CommandDispatcher::CommandDispatcher(Map& map, Window& window)
 {
 	// create executor and insert to m_executors, key is command.name()
-	m_executors[TypeNameResolver<SetPathCommand>::typeName()] = new SetPathCommandExecutor(map);
-	m_executors[TypeNameResolver<ViewMoveCommand>::typeName()] = new ViewMoveCommandExecutor(window);
+	m_executors[typeName<SetPathCommand>()] = new SetPathCommandExecutor(map);
+	m_executors[typeName<ViewMoveCommand>()] = new ViewMoveCommandExecutor(window);
 }
 
 CommandDispatcher::~CommandDispatcher()

@@ -3,7 +3,7 @@
 
 std::string SetPathCommand::name()
 {
-	return TypeNameResolver<SetPathCommand>::typeName();
+	return typeName<SetPathCommand>();
 }
 
 SetPathCommand::SetPathCommand(Actor* unit, int destination)
@@ -25,5 +25,5 @@ ViewMoveCommand::ViewMoveCommand(float x, float y, float speed):
 
 std::string ViewMoveCommand::name()
 {
-	return TypeNameResolver<ViewMoveCommand>::typeName();
+	return typeName<ViewMoveCommand>();
 }
