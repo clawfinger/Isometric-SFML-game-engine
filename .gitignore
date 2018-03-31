@@ -243,3 +243,8 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+GameProject/sfml-window-d-2.dll
+GameProject/sfml-system-d-2.dll
+GameProject/GameProject.vcxproj.filters
+GameProject/sfml-graphics-d-2.dll
+GameProject/GameProject.vcxproj
