@@ -15,7 +15,7 @@ Subscription::~Subscription()
 void Subscription::addObserver(Observer * observer)
 {
 	if ((std::find_if(m_observers.begin(), m_observers.end(),
-		[&](Observer* obs)->bool {observer == obs; }) != m_observers.end()))
+		[&](Observer* obs)->bool {return observer == obs; }) != m_observers.end()))
 	{
 		m_observers.push_back(observer);
 	}
@@ -28,7 +28,7 @@ void Subscription::addObserver(Observer * observer)
 void Subscription::removeObserver(Observer * observer)
 {
 	auto toRemove = (std::find_if(m_observers.begin(), m_observers.end(),
-		[&](Observer* obs)->bool {observer == obs; }));
+		[&](Observer* obs)->bool {return observer == obs; }));
 	if (toRemove != m_observers.end())
 	{
 		m_observers.erase(toRemove);

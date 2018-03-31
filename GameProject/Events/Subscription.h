@@ -2,7 +2,7 @@
 #include "Observer.h"
 #include <vector>
 
-class Subscription : public Observer
+class Subscription
 {
 public:
 	Subscription();

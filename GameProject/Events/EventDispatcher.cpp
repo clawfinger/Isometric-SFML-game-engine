@@ -25,7 +25,7 @@ void EventDispatcher::unsubscribe(std::string eventName, Observer * observer)
 		subscription->second.removeObserver(observer);
 	}
 	else
-		std::cout << 
+		std::cout << "No subscribers for " << eventName << std::endl;
 }
 
 void EventDispatcher::dispatch(IEvent * event)
