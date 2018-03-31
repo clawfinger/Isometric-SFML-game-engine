@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <stack>
+class Window;
 
 class MapTile
 {
@@ -45,7 +46,7 @@ public:
 	inline sf::Vector2f XYfromLinear(int linear);
 	sf::Vector2f getPlayerSpawnCoordinate();
 	sf::Vector2f getEnemySpawnCoordinate();
-	void draw(sf::RenderWindow& window);
+	void draw(Window* window);
 
 private:
 	std::vector<int> neighbors(int position);

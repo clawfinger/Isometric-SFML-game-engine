@@ -3,6 +3,7 @@
 #include "Entity.h"
 
 class PathFollower;
+class Window;
 
 class Actor : public Entity
 {
@@ -11,7 +12,7 @@ public:
 	~Actor();
 	float getActorSpeed();
 	void setActorSpeed(float speed);
-	void draw(sf::RenderWindow& window);
+	void draw(Window* window);
 	PathFollower* pathComponent();
 private:
 	PathFollower* m_PathComponent;

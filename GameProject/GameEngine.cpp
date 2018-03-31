@@ -20,15 +20,15 @@ GameEngine::~GameEngine()
 {
 }
 
-void GameEngine::draw(sf::RenderWindow & window)
+void GameEngine::draw(Window* window)
 {
 	for (auto& enemy : m_enemies)
 	{
-		enemy.second->draw(m_sharedContext->window->getRenderWindow());
+		enemy.second->draw(m_sharedContext->window);
 	}
 	for (auto& character : m_team)
 	{
-		character.second->draw(m_sharedContext->window->getRenderWindow());
+		character.second->draw(m_sharedContext->window);
 	}
 }
 

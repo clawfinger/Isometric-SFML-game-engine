@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "PathFollower.h"
-#include "utility.h"
+#include "Utils/utility.h"
 #include "Actor.h"
 
 PathFollower::PathFollower(Actor* actor) : m_actor(actor)

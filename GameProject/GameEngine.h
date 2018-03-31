@@ -3,13 +3,14 @@
 #include "SharedContext.h"
 #include "Actor.h"
 #include "ActorManager.h"
+class Window;
 
 class GameEngine
 {
 public:
 	GameEngine(StateSharedContext* context);
 	~GameEngine();
-	void draw(sf::RenderWindow& window);
+	void draw(Window* window);
 	void update(sf::Time deltaTime);
 	void setActiveCharacter(std::string id);
 	void createCharacter(std::string id);

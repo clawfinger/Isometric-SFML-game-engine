@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "..\Actor.h"
-#include "../Meta.h"
+#include "../Utils/Meta.h"
 
 class ICommand
 {

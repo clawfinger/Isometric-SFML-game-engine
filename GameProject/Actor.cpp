@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Actor.h"
 #include "PathFollower.h"
-
+#include "Window.h"
 Actor::Actor()
 {
 	m_PathComponent = new PathFollower(this);
@@ -23,9 +23,9 @@ void Actor::setActorSpeed(float speed)
 	m_actorSpeed = speed;
 }
 
-void Actor::draw(sf::RenderWindow & window)
+void Actor::draw(Window* window)
 {
-	window.draw(getSprite());
+	window->draw(getSprite());
 }
 
 PathFollower* Actor::pathComponent()

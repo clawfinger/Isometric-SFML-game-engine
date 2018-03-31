@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Map.h"
+#include "Window.h"
 #include <fstream>
 #include <queue>
 #include <sstream>
@@ -249,7 +250,7 @@ sf::Vector2f Map::getEnemySpawnCoordinate()
 
 }
 
-void Map::draw(sf::RenderWindow & window)
+void Map::draw(Window* window)
 {
 	for (int y = 0; y < m_mapHeight; y++)
 	{
@@ -258,7 +259,7 @@ void Map::draw(sf::RenderWindow & window)
 			// TODO: remove sprite size hard code
 			sf::Vector2f position(float(x * 64), float(y * 64));
 			getMapTile(x, y).setPosition(position);
-			window.draw(getMapTile(x, y).sprite());
+			window->draw(getMapTile(x, y).sprite());
 		}
 	}
 }
