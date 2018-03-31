@@ -11,11 +11,13 @@ MapTile::MapTile(): m_walkable(true)
 }
 
 
-Map::Map(TextureManager* textures) :
+Map::Map(TextureManager* textures, EventDispatcher* dispatcher) :
 	m_mapHeight(0), m_mapWidth(0),
 	m_tileHeight(0), m_tileWidth(0),
-	m_textureManager(textures)
+	m_textureManager(textures),
+	m_EventDispatcher(dispatcher)
 {
+	m_EventDispatcher->subscribe(typeName<TestEvent>(), this);
 }
 
 MapTile::MapTile(sf::Texture& texture): m_walkable(true)

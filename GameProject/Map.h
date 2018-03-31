@@ -1,6 +1,7 @@
 #pragma once
 #include "TextureManager.h"
 #include "Events/Observer.h"
+#include "Events/EventDispatcher.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <stack>
@@ -30,7 +31,7 @@ enum LevelNames
 class Map : public Observer
 {
 public:
-	Map(TextureManager* textures);
+	Map(TextureManager* textures, EventDispatcher* dispatcher);
 	void loadLevel(LevelNames name);
 	bool isWalkable(sf::Vector2f tile);
 	bool isWalkable(int x, int y);
@@ -56,6 +57,7 @@ private:
 
 private:
 	TextureManager* m_textureManager;
+	EventDispatcher* m_EventDispatcher;
 	std::vector<MapTile> m_mapTiles;
 	int m_mapWidth;
 	int m_mapHeight;

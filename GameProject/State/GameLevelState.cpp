@@ -6,6 +6,7 @@
 #include "../Command/Commands.h"
 #include "../ActorManager.h"
 #include "../GameEngine.h"
+#include "../Events/Events.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
@@ -85,5 +86,7 @@ void GameLevelState::handleMouseInput(sf::Vector2i mouseCoords)
 	{
 		SetPathCommand command(m_gameEngine.activeCharacter(), mapIndex);
 		m_sharedContext->commandDispatcher->execute(&command);
+		IEvent* testEvent = new TestEvent();
+		m_sharedContext->eventDispatcher->dispatch(testEvent);
 	}
 }

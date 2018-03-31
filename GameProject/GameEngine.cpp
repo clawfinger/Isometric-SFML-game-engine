@@ -14,6 +14,9 @@ GameEngine::GameEngine(StateSharedContext* context) : m_actorManager(context), m
 	Actor* enemy = m_actorManager.createEnemy(EnemyId::enemy());
 	enemy->setPosition(enemySpawn);
 	m_enemies.insert({ EnemyId::enemy(), enemy });
+	//
+	m_sharedContext->eventDispatcher->subscribe(typeName<TestEvent>(), this);
+	//
 }
 
 

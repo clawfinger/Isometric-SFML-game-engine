@@ -21,14 +21,15 @@ private:
 	void render();
 
 private:
+	//MEMBER ORDER MATTERS!
+	CommandDispatcher m_commandDispatcher;
+	GameStateManager m_stateManager;
+	TextureManager m_textureManager;
+	EventDispatcher m_eventDispatcher;
+
 	bool isRunning;
 	sf::Time m_timePerFrame;
 	Window m_window;
 	sf::View view;
 	Map m_map;
-
-	CommandDispatcher m_commandDispatcher;
-	GameStateManager m_stateManager;
-	TextureManager m_textureManager;
-	EventDispatcher m_eventDispatcher;
 };
