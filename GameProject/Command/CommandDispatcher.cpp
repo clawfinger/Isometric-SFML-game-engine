@@ -8,6 +8,14 @@ CommandDispatcher::CommandDispatcher(Map& map, Window& window)
 	m_executors[TypeNameResolver<ViewMoveCommand>::typeName()] = new ViewMoveCommandExecutor(window);
 }
 
+CommandDispatcher::~CommandDispatcher()
+{
+	for (auto executor : m_executors)
+	{
+		delete executor.second;
+	}
+}
+
 void CommandDispatcher::execute(ICommand* command)
 {
 	if (m_executors.find(command->name()) != m_executors.end())

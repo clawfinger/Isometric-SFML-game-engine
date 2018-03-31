@@ -1,20 +1,7 @@
 #pragma once
 #include <string>
 #include "..\Actor.h"
-
-template <typename TCommand>
-class TypeNameResolver
-{
-	std::string typeName() { return "Default"; };
-};
-
-#define REGISTER_TYPENAME(NAME) \
-template<> \
-class TypeNameResolver<NAME> \
-{ \
-public: \
-	static std::string typeName() { return #NAME; }; \
-}; \
+#include "../Meta.h"
 
 class ICommand
 {
