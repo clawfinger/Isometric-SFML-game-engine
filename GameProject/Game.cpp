@@ -7,11 +7,12 @@
 
 Game::Game() : isRunning(true), m_map(&m_textureManager), m_commandDispatcher(m_map, m_window)
 {
-	m_window.setup("SFML", sf::Vector2u(1280, 720));
+	m_window.setup("SFML", sf::Vector2u(1920, 1080));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
 
 	StateSharedContext* context = new StateSharedContext;
 	context->commandDispatcher = &m_commandDispatcher;
+	context->eventDispatcher = &m_eventDispatcher;
 	context->window = &m_window;
 	context->map = &m_map;
 	context->textureManager = &m_textureManager;

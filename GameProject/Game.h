@@ -1,6 +1,7 @@
 #pragma once
 #include "TextureManager.h"
 #include "Command/CommandDispatcher.h"
+#include "Events/EventDispatcher.h"
 #include "window.h"
 #include "Map.h"
 #include "State/GameStateManager.h"
@@ -29,4 +30,5 @@ private:
 	CommandDispatcher m_commandDispatcher;
 	GameStateManager m_stateManager;
 	TextureManager m_textureManager;
+	EventDispatcher m_eventDispatcher;
 };

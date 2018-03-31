@@ -1,5 +1,6 @@
 #pragma once
 #include "TextureManager.h"
+#include "Events/Observer.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <stack>
@@ -26,7 +27,7 @@ enum LevelNames
 	forest
 };
 
-class Map
+class Map : public Observer
 {
 public:
 	Map(TextureManager* textures);
@@ -47,7 +48,7 @@ public:
 	sf::Vector2f getPlayerSpawnCoordinate();
 	sf::Vector2f getEnemySpawnCoordinate();
 	void draw(Window* window);
-
+	void notify(IEvent* event);
 private:
 	std::vector<int> neighbors(int position);
 	inline bool isWithinMap(int x, int y);

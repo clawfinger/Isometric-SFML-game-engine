@@ -3,6 +3,7 @@
 #include "ActorManager.h"
 #include "Window.h"
 #include "Map.h"
+#include "Events/Events.h"
 #include <iostream>
 
 GameEngine::GameEngine(StateSharedContext* context) : m_actorManager(context), m_sharedContext(context)
@@ -69,5 +70,10 @@ void GameEngine::createEnemy(std::string id)
 Actor * GameEngine::activeCharacter()
 {
 	return m_activeCharacter;
+}
+
+void GameEngine::notify(IEvent * event)
+{
+	std::cout << "GameEngine: " << event->name() << std::endl;
 }
 

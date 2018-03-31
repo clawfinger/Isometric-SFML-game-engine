@@ -4,6 +4,7 @@
 #include <fstream>
 #include <queue>
 #include <sstream>
+#include "Events/Events.h"
 
 MapTile::MapTile(): m_walkable(true)
 {
@@ -262,6 +263,11 @@ void Map::draw(Window* window)
 			window->draw(getMapTile(x, y).sprite());
 		}
 	}
+}
+
+void Map::notify(IEvent * event)
+{
+	std::cout << "Map: " << event->name() << std::endl;
 }
 
 std::vector<int> Map::neighbors(int position)

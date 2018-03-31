@@ -3,9 +3,11 @@
 #include "SharedContext.h"
 #include "Actor.h"
 #include "ActorManager.h"
+#include "Events/Observer.h"
+
 class Window;
 
-class GameEngine
+class GameEngine : public Observer
 {
 public:
 	GameEngine(StateSharedContext* context);
@@ -16,6 +18,8 @@ public:
 	void createCharacter(std::string id);
 	void createEnemy(std::string id);
 	Actor* activeCharacter();
+	void notify(IEvent* event);
+
 private:
 	Actor* m_activeCharacter;
 	ActorManager m_actorManager;

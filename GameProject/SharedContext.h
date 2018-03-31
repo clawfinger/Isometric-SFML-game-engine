@@ -8,11 +8,13 @@ class Window;
 class Map;
 class CommandDispatcher;
 class TextureManager;
+class EventDispatcher;
 
 struct StateSharedContext
 {
 	Window* window;
 	Map* map;
 	CommandDispatcher* commandDispatcher;
+	EventDispatcher* eventDispatcher;
 	TextureManager* textureManager;
 };
