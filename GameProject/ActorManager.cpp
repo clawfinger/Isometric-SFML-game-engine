@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Logger.h"
+#include "Utils/Logger.h"
 #include "TextureManager.h"
 #include "Map.h"
 #include "ActorManager.h"

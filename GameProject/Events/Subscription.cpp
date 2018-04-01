@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Subscription.h"
-#include "../Logger.h"
+#include "../Utils/Logger.h"
 #include <algorithm>
 #include <string>
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CommandDispatcher.h"
-#include "../Logger.h"
+#include "../Utils/Logger.h"
 
 CommandDispatcher::CommandDispatcher(Map& map, Window& window)
 {

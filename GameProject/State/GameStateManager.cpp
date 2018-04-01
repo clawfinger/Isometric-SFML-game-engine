@@ -2,7 +2,7 @@
 #include "GameStateManager.h"
 #include "GameLevelState.h"
 #include <string>
-#include "../Logger.h"
+#include "../Utils/Logger.h"
 
 GameStateManager::GameStateManager()
 {

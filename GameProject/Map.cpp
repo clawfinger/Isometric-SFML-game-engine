@@ -5,7 +5,7 @@
 #include <queue>
 #include <sstream>
 #include "Events/Events.h"
-#include "Logger.h"
+#include "Utils/Logger.h"
 
 MapTile::MapTile(): m_walkable(true)
 {

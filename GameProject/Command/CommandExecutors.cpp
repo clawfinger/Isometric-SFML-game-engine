@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CommandExecutors.h"
 #include "..\PathFollower.h"
-#include "../Logger.h"
+#include "../Utils/Logger.h"
 
 void SetPathCommandExecutor::execute(ICommand* command)
 {

@@ -4,7 +4,7 @@
 #include "Window.h"
 #include "Map.h"
 #include "Events/Events.h"
-#include "Logger.h"
+#include "Utils/Logger.h"
 
 GameEngine::GameEngine(StateSharedContext* context) : m_actorManager(context), m_sharedContext(context)
 {
