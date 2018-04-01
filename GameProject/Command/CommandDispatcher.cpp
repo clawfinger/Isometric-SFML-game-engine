@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CommandDispatcher.h"
+#include "../Logger.h"
 
 CommandDispatcher::CommandDispatcher(Map& map, Window& window)
 {
@@ -21,6 +22,6 @@ void CommandDispatcher::execute(ICommand* command)
 	if (m_executors.find(command->name()) != m_executors.end())
 		m_executors[command->name()]->execute(command);
 	else
-		std::cout << "ERROR: Cannot find executor for " << command->name() << std::endl;
+		Logger::instance().log("ERROR: Cannot find executor for " + command->name());
 }
 

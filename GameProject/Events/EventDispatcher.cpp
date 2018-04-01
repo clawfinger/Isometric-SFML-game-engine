@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "EventDispatcher.h"
 #include "Events.h"
-#include <iostream>
+#include "../Logger.h"
 
 EventDispatcher::EventDispatcher()
 {
@@ -25,7 +25,7 @@ void EventDispatcher::unsubscribe(std::string eventName, Observer * observer)
 		subscription->second.removeObserver(observer);
 	}
 	else
-		std::cout << "No subscribers for " << eventName << std::endl;
+		Logger::instance().log("No subscribers for " + eventName);
 }
 
 void EventDispatcher::dispatch(IEvent * event)

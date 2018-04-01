@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "State/GameLevelState.h"
 #include "game.h"
+#include "Logger.h"
 #include <iostream>
 #include <assert.h>
 #include <fstream>

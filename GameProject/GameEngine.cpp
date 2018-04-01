@@ -4,7 +4,7 @@
 #include "Window.h"
 #include "Map.h"
 #include "Events/Events.h"
-#include <iostream>
+#include "Logger.h"
 
 GameEngine::GameEngine(StateSharedContext* context) : m_actorManager(context), m_sharedContext(context)
 {
@@ -55,7 +55,7 @@ void GameEngine::setActiveCharacter(std::string id)
 		m_activeCharacter = m_team[id];
 	else
 	{
-		std::cout << "ERROR: Requested character not created! Creating and setting active" << std::endl;
+		Logger::instance().log("ERROR: Requested character not created! Creating and setting active");
 		Actor* newChar = m_actorManager.createCharacter(id);
 		m_team[id] = newChar;
 		m_activeCharacter = newChar;
@@ -77,6 +77,6 @@ Actor * GameEngine::activeCharacter()
 
 void GameEngine::notify(IEvent * event)
 {
-	std::cout << "GameEngine: " << event->name() << std::endl;
+	Logger::instance().log("GameEngine: " + event->name());
 }
 

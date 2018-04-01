@@ -9,6 +9,7 @@ class Map;
 class CommandDispatcher;
 class TextureManager;
 class EventDispatcher;
+class ILogger;
 
 struct StateSharedContext
 {

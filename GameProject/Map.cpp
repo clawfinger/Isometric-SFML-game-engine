@@ -5,6 +5,7 @@
 #include <queue>
 #include <sstream>
 #include "Events/Events.h"
+#include "Logger.h"
 
 MapTile::MapTile(): m_walkable(true)
 {
@@ -63,7 +64,7 @@ void Map::loadLevel(LevelNames name)
 	mapFile.open(levelFileName);
 	if (!mapFile.is_open())
 	{
-		std::cout << "ERROR: Level file " << levelFileName << " failed to load!" << std::endl;
+		Logger::instance().log("ERROR: Level file " + levelFileName + " failed to load!");
 		return;
 	}
 	std::stringstream s_stream;
@@ -78,7 +79,7 @@ void Map::loadLevel(LevelNames name)
 	}
 	else
 	{
-		std::cout << "ERROR: missing tag mapSize in level map file. Level size is set to Zero" << std::endl;
+		Logger::instance().log("ERROR: missing tag mapSize in level map file. Level size is set to Zero");
 	}
 	s_stream >> tag;
 	if (tag == "tileSize")
@@ -87,7 +88,7 @@ void Map::loadLevel(LevelNames name)
 	}
 	else
 	{
-		std::cout << "ERROR: missing tag tileSize in level map file. Tile size is set to Zero" << std::endl;
+		Logger::instance().log("ERROR: missing tag tileSize in level map file. Tile size is set to Zero");
 	}
 	s_stream >> tag;
 	if (tag == "mapTiles")
@@ -119,7 +120,7 @@ void Map::loadLevel(LevelNames name)
 	}
 	else
 	{
-		std::cout << "ERROR: missing tag mapTiles in level map file. Level not loaded" << std::endl;
+		Logger::instance().log("ERROR: missing tag mapTiles in level map file. Level not loaded");
 
 	}
 	s_stream >> tag;
@@ -269,7 +270,7 @@ void Map::draw(Window* window)
 
 void Map::notify(IEvent * event)
 {
-	std::cout << "Map: " << event->name() << std::endl;
+	Logger::instance().log("Map: " + event->name());
 }
 
 std::vector<int> Map::neighbors(int position)

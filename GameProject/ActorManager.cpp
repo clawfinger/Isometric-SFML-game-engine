@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include <iostream>
+#include "Logger.h"
 #include "TextureManager.h"
 #include "Map.h"
 #include "ActorManager.h"
@@ -28,7 +28,7 @@ Actor* ActorManager::createCharacter(std::string id)
 	}
 	else
 	{
-		std::cout << "ERROR: cannot find factory for character id=" << id << std::endl;
+		Logger::instance().log("ERROR: cannot find factory for character id=" + id);
 	}
 	return character;
 }
@@ -47,7 +47,7 @@ Actor * ActorManager::createEnemy(std::string id)
 	}
 	else
 	{
-		std::cout << "ERROR: cannot find factory for character id=" << id << std::endl;
+		Logger::instance().log("ERROR: cannot find factory for character id=" + id);
 	}
 	return enemy;
 }

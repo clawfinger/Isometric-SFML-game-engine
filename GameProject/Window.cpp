@@ -110,5 +110,5 @@ void Window::create()
 		style = sf::Style::Default;
 	//uniform initialisation of sf::VideoMode
 	m_window.create({ m_windowSize.x, m_windowSize.y, 32 }, m_windowTitle, style);
-	m_window.setFramerateLimit(60);
+	m_window.setVerticalSyncEnabled(true);
 }

@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Subscription.h"
+#include "../Logger.h"
 #include <algorithm>
-#include <iostream>
+#include <string>
 
 Subscription::Subscription()
 {
@@ -21,7 +22,7 @@ void Subscription::addObserver(Observer * observer)
 	}
 	else
 	{
-		std::cout << "Observer " << observer << " already in subscription list" << std::endl;
+		Logger::instance().log("Observer " + std::to_string(int(observer)) + " already in subscription list");
 	}
 }
 
@@ -35,7 +36,8 @@ void Subscription::removeObserver(Observer * observer)
 	}
 	else
 	{
-		std::cout << "Observer " << observer << " already removed" << std::endl;
+		Logger::instance().log("Observer " + std::to_string(int(observer)) + " not found in subscribsions");
+
 	}
 }
 

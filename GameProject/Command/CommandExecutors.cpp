@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CommandExecutors.h"
 #include "..\PathFollower.h"
+#include "../Logger.h"
 
 void SetPathCommandExecutor::execute(ICommand* command)
 {
@@ -8,7 +9,7 @@ void SetPathCommandExecutor::execute(ICommand* command)
 
 	if (concreteCommand == nullptr)
 	{
-		std::cout << "ERROR: Wrong command passed to SetPathCommandExecutor" << std::endl;
+		Logger::instance().log("ERROR: Wrong command passed to SetPathCommandExecutor");
 	}
 	else
 	{
@@ -28,7 +29,7 @@ void ViewMoveCommandExecutor::execute(ICommand * command)
 	ViewMoveCommand* concreteCommand = static_cast<ViewMoveCommand*>(command);
 	if (concreteCommand == nullptr)
 	{
-		std::cout << "ERROR: Wrong command passed to ViewMoveCommandExecutor" << std::endl;
+		Logger::instance().log("ERROR: Wrong command passed to ViewMoveCommandExecutor");
 	}
 	else
 	{
