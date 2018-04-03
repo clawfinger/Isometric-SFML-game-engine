@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
 #include <math.h>
+#include <string>
+#include <vector>
 
 namespace Vector
 {
@@ -16,3 +18,14 @@ namespace Vector
 		return vector / length<T>(vector);
 	}
 }
+
+
+class StringList
+{
+public:
+	StringList();
+	bool contains(const std::string& string);
+	StringList& operator<<(const std::string& string);
+private:
+	std::vector<std::string> m_strings;
+};
