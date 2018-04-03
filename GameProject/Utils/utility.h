@@ -26,6 +26,10 @@ public:
 	StringList();
 	bool contains(const std::string& string);
 	StringList& operator<<(const std::string& string);
+	std::vector<std::string>::iterator begin();
+	std::vector<std::string>::iterator end();
+	std::vector<std::string>::const_iterator begin() const;
+	std::vector<std::string>::const_iterator end() const;
 private:
 	std::vector<std::string> m_strings;
 };
