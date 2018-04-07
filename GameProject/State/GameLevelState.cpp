@@ -29,12 +29,8 @@ void GameLevelState::update(sf::Time deltaTime)
 
 void GameLevelState::render()
 {
-	m_sharedContext->window->beginDraw();
-
 	m_sharedContext->map->draw(m_sharedContext->window);
 	m_gameEngine.draw(m_sharedContext->window);
-
-	m_sharedContext->window->endDraw();
 }
 
 void GameLevelState::handlePlayerInput(sf::Event& event)

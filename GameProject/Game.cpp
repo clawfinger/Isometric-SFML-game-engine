@@ -69,7 +69,11 @@ void Game::update(sf::Time deltaTime)
 
 void Game::render()
 {
+	m_window.beginDraw();
+
 	m_stateManager.currentState()->render();	
+
+	m_window.endDraw();
 }
 
 
