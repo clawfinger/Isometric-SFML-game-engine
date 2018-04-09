@@ -1,26 +1,38 @@
 #pragma once
 #include <unordered_map>
 #include "Factory.h"
+#include "Utils/Logger.h"
+#include "Utils/Meta.h"
 
 class DiContainer
 {
 public:
-	template <typename ResultT>
-	void registerClass(constructingFunction function);
+	template <typename ReturnT>
+	void registerClass(typename Factory<ReturnT>::constructingFunction function, FactoryType type = FactoryType::singleInstance);
 
-	template<typename ResultT>
-	ResultT* get();
+	template<typename ReturnT>
+	std::shared_ptr<ReturnT> get() const;
 private:
 	std::unordered_map<std::string, IFactory*> m_factories;
 };
 
-template<typename ResultT>
-inline void DiContainer::registerClass(constructingFunction function)
+template<typename ReturnT>
+inline void DiContainer::registerClass(typename Factory<ReturnT>::constructingFunction function, FactoryType type)
 {
+	std::string name = typeName<ReturnT>();
+	if (name == "DEFAULT")
+		Logger::instance().log("ERROR: Registering class without REGISTER TYPENAME macro defined!");
+	m_factories[name] = new Factory<ReturnT>(function, type);
 }
 
-template<typename ResultT>
-inline ResultT * DiContainer::get()
+template<typename ReturnT>
+inline std::shared_ptr<ReturnT> DiContainer::get() const
 {
-	return NULL;
+	auto factory = m_factories.find(typeName<ReturnT>());
+	if (factory != m_factories.end())
+	{
+		return dynamic_cast<Factory<ReturnT>*>(factory->second)->create(*this);
+	}
+	else
+		return nullptr;
 }

@@ -12,17 +12,17 @@ ResultT* constructingFunction(const DiContainer& cont)
 template<typename FirstDependencyT, typename ResultT>
 ResultT* constructingFunction(const DiContainer& cont)
 {
-	return new ResultT(cont.resolve<FirstDependencyT>());
+	return new ResultT(cont.get<FirstDependencyT>());
 }
 
 template<typename FirstDependencyT, typename SecondDependencyT, typename ResultT>
 ResultT* constructingFunction(const DiContainer& cont)
 {
-	return new ResultT(cont.resolve<FirstDependencyT>(), cont.resolve<SecondDependencyT>());
+	return new ResultT(cont.get<FirstDependencyT>(), cont.get<SecondDependencyT>());
 }
 
 template<typename FirstDependencyT, typename SecondDependencyT, typename ThirdDependencyT, typename ResultT>
 ResultT* constructingFunction(const DiContainer& cont)
 {
-	return new ResultT(cont.resolve<FirstDependencyT>(), cont.resolve<SecondDependencyT>(), cont.resolve<ThirdDependencyT>());
+	return new ResultT(cont.get<FirstDependencyT>(), cont.get<SecondDependencyT>(), cont.get<ThirdDependencyT>());
 }
