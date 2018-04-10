@@ -13,7 +13,10 @@ public:
 	void setPosition(const sf::Vector2f& position);
 
 	void move(const sf::Vector2f& movement);
+	float actorSpeed() const { return m_actorSpeed; }
+	void setActorSpeed(float val) { m_actorSpeed = val; }
 private:
 	sf::Vector2f m_position;
+	float m_actorSpeed;
 };
 REGISTER_TYPENAME(PositionComponent)
