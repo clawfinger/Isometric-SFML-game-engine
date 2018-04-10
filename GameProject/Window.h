@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "Utils/Meta.h"
+
 class Window
 {
 public:
@@ -38,3 +40,4 @@ private:
 	sf::View m_mainView;
 	sf::Vector2f m_viewMoveVector;
 };
+REGISTER_TYPENAME(Window)

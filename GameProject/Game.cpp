@@ -20,6 +20,15 @@ Game::Game() : isRunning(true), m_map(&m_textureManager, &m_eventDispatcher), m_
 
 	m_stateManager.setSharedContext(context);
 
+	//test field	
+	//DiContainer container;
+	//container.registerClass<TextureManager>(constructingFunction);
+	//container.registerClass<EventDispatcher>(constructingFunction);
+
+	//container.registerClass<Map>(constructingFunction<TextureManager, EventDispatcher>);
+	//std::shared_ptr<Map> map = container.get<Map>();
+	//
+
 	m_textureManager.load(TextureId::wall(), "images/3.png");
 	m_textureManager.load(TextureId::floor1(), "images/1.png");
 	m_textureManager.load(TextureId::floor2(), "images/2.png");

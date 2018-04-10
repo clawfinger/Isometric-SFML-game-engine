@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <stack>
+#include "Utils/Meta.h"
+
 class Window;
 
 class MapTile
@@ -66,3 +68,4 @@ private:
 	sf::Vector2f m_playerSpawnPosition;
 	sf::Vector2f m_enemySpawnPosition;
 };
+REGISTER_TYPENAME(Map)

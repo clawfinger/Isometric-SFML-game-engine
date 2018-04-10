@@ -5,6 +5,8 @@
 #include "SFML/Graphics.hpp"
 #include "../Actor.h"
 #include "../GameEngine.h"
+#include "../Utils/Meta.h"
+
 
 class GameLevelState : public GameStateBase
 {
@@ -21,4 +23,4 @@ private:
 	StateSharedContext* m_sharedContext;
 	GameEngine m_gameEngine;
 };
-
+REGISTER_TYPENAME(GameLevelState)

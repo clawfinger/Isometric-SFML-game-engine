@@ -3,6 +3,7 @@
 #include <map>
 #include <functional>
 #include "../SharedContext.h"
+#include "../Utils/Meta.h"
 
 class GameStateBase;
 
@@ -28,6 +29,8 @@ private:
 	std::stack<GameStateBase*> m_statesStack;
 	std::map<GameStateType, std::function<GameStateBase* (void)>> m_stateFactories;
 };
+REGISTER_TYPENAME(GameStateManager)
+
 
 template<typename T>
 inline void GameStateManager::registerStateFactory(GameStateType state)

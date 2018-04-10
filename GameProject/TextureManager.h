@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include "ActorsIds.h"
+#include "Utils/Meta.h"
 
 namespace TextureId
 {
@@ -24,3 +25,4 @@ public:
 private:
 	std::map<std::string, std::unique_ptr<sf::Texture>> m_textureCache;
 };
+REGISTER_TYPENAME(TextureManager)
