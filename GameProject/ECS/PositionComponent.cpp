@@ -2,7 +2,7 @@
 #include "PositionComponent.h"
 
 
-PositionComponent::PositionComponent() : ComponentBase(typeName<PositionComponent>())
+PositionComponent::PositionComponent() : ComponentBase(typeName<PositionComponent>()), m_actorSpeed(0)
 {
 }
 
