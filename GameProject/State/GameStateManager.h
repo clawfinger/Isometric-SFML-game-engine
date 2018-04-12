@@ -37,6 +37,6 @@ inline void GameStateManager::registerStateFactory(GameStateType state)
 {
 	m_stateFactories[state] = [this]()->GameStateBase*
 	{
-		return new T();
+		return new T(m_container);
 	};
 }

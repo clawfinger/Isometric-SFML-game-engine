@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "window.h"
 
-Window::Window()
+Window::Window(): m_viewSpeed(300.0)
 {
 	setup("Default window", sf::Vector2u(800, 600));
 }
 
-Window::Window(const std::string & windowTitle, const sf::Vector2u & size)
+Window::Window(const std::string & windowTitle, const sf::Vector2u & size) : m_viewSpeed(300.0)
 {
 	setup(windowTitle, size);
 }
@@ -66,7 +66,7 @@ void Window::moveView(sf::Vector2f & movement)
 
 void Window::update(sf::Time deltaTime)
 {
-	moveView(m_viewMoveVector * deltaTime.asSeconds());
+	moveView(m_viewMoveVector * deltaTime.asSeconds() * m_viewSpeed);
 }
 
 void Window::resizeView(sf::Vector2f & newSize)

@@ -2,16 +2,15 @@
 #include "../Window.h"
 #include "../Map.h"
 #include "GameLevelState.h"
-#include "../Command/CommandDispatcher.h"
-#include "../Command/Commands.h"
 #include "../Events/Events.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
 
-GameLevelState::GameLevelState()
+GameLevelState::GameLevelState(DiContainer* container): m_container(container)
 {	
+	m_window = m_container->get<Window>();
 }
 
 
@@ -21,7 +20,7 @@ GameLevelState::~GameLevelState()
 
 void GameLevelState::update(sf::Time deltaTime)
 {
-	//m_sharedContext->window->update(deltaTime);
+	m_window->update(deltaTime);
 	//m_gameEngine.update(deltaTime);
 }
 
@@ -56,19 +55,17 @@ void GameLevelState::onDeactivate()
 
 void GameLevelState::handleKeyboardInput(sf::Keyboard::Key key)
 {
-	ViewMoveCommand moveCommand;
-
+	sf::Vector2f viewMoveVector;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		moveCommand.y_direction = -1;
+		viewMoveVector.y = -1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		moveCommand.y_direction = 1;
+		viewMoveVector.y = 1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		moveCommand.x_direction = -1;
+		viewMoveVector.x = -1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		moveCommand.x_direction = 1;
+		viewMoveVector.x = 1;
 
-	moveCommand.m_speed = 300.f;
-	//m_sharedContext->commandDispatcher->execute(&moveCommand);
+	m_window->setViewMoveVector(viewMoveVector);
 }
 
 void GameLevelState::handleMouseInput(sf::Vector2i mouseCoords)

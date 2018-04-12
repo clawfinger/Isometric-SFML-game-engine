@@ -43,5 +43,6 @@ private:
 	sf::Vector2u m_windowSize;
 	sf::View m_mainView;
 	sf::Vector2f m_viewMoveVector;
+	float m_viewSpeed;
 };
 REGISTER_TYPENAME(Window)
