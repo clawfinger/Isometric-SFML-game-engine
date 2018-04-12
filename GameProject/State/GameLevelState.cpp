@@ -4,15 +4,13 @@
 #include "GameLevelState.h"
 #include "../Command/CommandDispatcher.h"
 #include "../Command/Commands.h"
-#include "../ActorManager.h"
-#include "../GameEngine.h"
 #include "../Events/Events.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
 
-GameLevelState::GameLevelState(StateSharedContext* context): m_sharedContext(context), m_gameEngine(context)
+GameLevelState::GameLevelState()
 {	
 }
 
@@ -23,25 +21,20 @@ GameLevelState::~GameLevelState()
 
 void GameLevelState::update(sf::Time deltaTime)
 {
-	m_sharedContext->window->update(deltaTime);
-	m_gameEngine.update(deltaTime);
+	//m_sharedContext->window->update(deltaTime);
+	//m_gameEngine.update(deltaTime);
 }
 
 void GameLevelState::render()
 {
-	m_sharedContext->map->draw(m_sharedContext->window);
-	m_gameEngine.draw(m_sharedContext->window);
+	//m_sharedContext->map->draw(m_sharedContext->window);
+	//m_gameEngine.draw(m_sharedContext->window);
 }
 
 void GameLevelState::handlePlayerInput(sf::Event& event)
 {
 	switch (event.type)
 	{
-	case sf::Event::KeyPressed:
-		handleKeyboardInput(event.key.code);
-		if (event.key.code == sf::Keyboard::F12)
-			m_sharedContext->window->toggleFullScreen();
-		break;
 	case sf::Event::KeyReleased:
 		handleKeyboardInput(event.key.code);
 		break;
@@ -55,6 +48,10 @@ void GameLevelState::handlePlayerInput(sf::Event& event)
 		}
 	}
 	}
+}
+
+void GameLevelState::onDeactivate()
+{
 }
 
 void GameLevelState::handleKeyboardInput(sf::Keyboard::Key key)
@@ -71,18 +68,18 @@ void GameLevelState::handleKeyboardInput(sf::Keyboard::Key key)
 		moveCommand.x_direction = 1;
 
 	moveCommand.m_speed = 300.f;
-	m_sharedContext->commandDispatcher->execute(&moveCommand);
+	//m_sharedContext->commandDispatcher->execute(&moveCommand);
 }
 
 void GameLevelState::handleMouseInput(sf::Vector2i mouseCoords)
 {
-	sf::Vector2f mouse = m_sharedContext->window->getRenderWindow().mapPixelToCoords(mouseCoords);
-	int mapIndex = m_sharedContext->map->mapFromWindow(mouse.x, mouse.y);
-	if (m_sharedContext->map->isWalkable(m_sharedContext->map->XYfromLinear(mapIndex)))
-	{
-		SetPathCommand command(m_gameEngine.activeCharacter(), mapIndex);
-		m_sharedContext->commandDispatcher->execute(&command);
-		IEvent* testEvent = new TestEvent();
-		m_sharedContext->eventDispatcher->dispatch(testEvent);
-	}
+	//sf::Vector2f mouse = m_sharedContext->window->getRenderWindow().mapPixelToCoords(mouseCoords);
+	//int mapIndex = m_sharedContext->map->mapFromWindow(mouse.x, mouse.y);
+	//if (m_sharedContext->map->isWalkable(m_sharedContext->map->XYfromLinear(mapIndex)))
+	//{
+	//	SetPathCommand command(m_gameEngine.activeCharacter(), mapIndex);
+	//	m_sharedContext->commandDispatcher->execute(&command);
+	//	IEvent* testEvent = new TestEvent();
+	//	m_sharedContext->eventDispatcher->dispatch(testEvent);
+	//}
 }

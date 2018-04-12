@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
-#include "..\Actor.h"
 #include "../Utils/Meta.h"
+
+class Actor;
 
 class ICommand
 {

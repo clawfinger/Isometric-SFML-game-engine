@@ -1,6 +1,5 @@
 #pragma once
 #include "TextureManager.h"
-#include "Command/CommandDispatcher.h"
 #include "Events/EventDispatcher.h"
 #include "window.h"
 #include "Map.h"
@@ -8,7 +7,7 @@
 #include <vector>
 #include <list>
 #include <memory>
-
+#include "DiContainer/DiContainer.h"
 
 class Game
 {
@@ -19,17 +18,18 @@ private:
 	void processEvents();
 	void update(sf::Time deltaTime);
 	void render();
-
+	void registerClassFactories();
 private:
 	//MEMBER ORDER MATTERS!
-	GameStateManager m_stateManager;
-	TextureManager m_textureManager;
-	EventDispatcher m_eventDispatcher;
+	std::shared_ptr<GameStateManager> m_stateManager;
+	std::shared_ptr<TextureManager> m_textureManager;
+	std::shared_ptr<EventDispatcher> m_eventDispatcher;
+	std::shared_ptr<Window> m_window;
+	std::shared_ptr<sf::View> view;
+	std::shared_ptr<Map> m_map;
+
+	DiContainer m_container;
 
 	bool isRunning;
 	sf::Time m_timePerFrame;
-	Window m_window;
-	sf::View view;
-	Map m_map;
-	CommandDispatcher m_commandDispatcher;
 };

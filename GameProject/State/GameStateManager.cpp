@@ -12,6 +12,10 @@ GameStateManager::GameStateManager()
 
 GameStateManager::~GameStateManager()
 {
+	while (!m_statesStack.empty())
+	{
+		deactivateCurrentState();
+	}
 }
 
 GameStateBase * GameStateManager::currentState()
@@ -22,9 +26,9 @@ GameStateBase * GameStateManager::currentState()
 		return m_statesStack.top();
 }
 
-void GameStateManager::setSharedContext(StateSharedContext* context)
+void GameStateManager::setContainer(DiContainer* container)
 {
-	m_sharedContext = context;
+	m_container = container;
 }
 
 void GameStateManager::activateState(GameStateType state)
@@ -36,7 +40,9 @@ void GameStateManager::activateState(GameStateType state)
 		m_statesStack.push(stateFactory->second());
 }
 
-void GameStateManager::deactivateState()
+void GameStateManager::deactivateCurrentState()
 {
+	m_statesStack.top()->onDeactivate();
+	delete m_statesStack.top();
 	m_statesStack.pop();
 }

@@ -2,10 +2,10 @@
 #include <stack>
 #include <map>
 #include <functional>
-#include "../SharedContext.h"
 #include "../Utils/Meta.h"
 
 class GameStateBase;
+class DiContainer;
 
 enum GameStateType
 {
@@ -19,13 +19,13 @@ public:
 	GameStateManager();
 	~GameStateManager();
 	GameStateBase* currentState();
-	void setSharedContext(StateSharedContext* context);
+	void setContainer(DiContainer* container);
 	void activateState(GameStateType state);
-	void deactivateState();
+	void deactivateCurrentState();
 	template<typename T>
 	void registerStateFactory(GameStateType state);
 private:
-	StateSharedContext* m_sharedContext;
+	DiContainer* m_container;
 	std::stack<GameStateBase*> m_statesStack;
 	std::map<GameStateType, std::function<GameStateBase* (void)>> m_stateFactories;
 };
@@ -37,6 +37,6 @@ inline void GameStateManager::registerStateFactory(GameStateType state)
 {
 	m_stateFactories[state] = [this]()->GameStateBase*
 	{
-		return new T(m_sharedContext);
+		return new T();
 	};
 }

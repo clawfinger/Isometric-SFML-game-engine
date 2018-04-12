@@ -12,19 +12,23 @@ public:
 
 	void beginDraw();
 	void endDraw();
+	void setup(const std::string& windowTitle, const sf::Vector2u& size);
 
-	//void update();
 	bool isDone();
 	void setDone();
+
 	bool isFullScreen();
-	sf::Vector2u getWindowSize() const;
 	void toggleFullScreen();
-	void draw(sf::Drawable& drawable);
-	void moveView(sf::Vector2f& movement);
+
+	sf::Vector2u getWindowSize() const;
+
 	void update(sf::Time deltaTime);
+	void draw(sf::Drawable& drawable);
+
+	void moveView(sf::Vector2f& movement);
 	void resizeView(sf::Vector2f& newSize);
+
 	sf::RenderWindow& getRenderWindow();
-	void setup(const std::string& windowTitle, const sf::Vector2u& size);
 	void setViewMoveVector(const sf::Vector2f& moveVector);
 
 private:

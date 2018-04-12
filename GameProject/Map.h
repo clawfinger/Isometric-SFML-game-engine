@@ -2,10 +2,11 @@
 #include "TextureManager.h"
 #include "Events/Observer.h"
 #include "Events/EventDispatcher.h"
+#include "Utils/Meta.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <stack>
-#include "Utils/Meta.h"
+#include <memory>
 
 class Window;
 
@@ -33,7 +34,7 @@ enum LevelNames
 class Map : public Observer
 {
 public:
-	Map(TextureManager* textures, EventDispatcher* dispatcher);
+	Map(std::shared_ptr<TextureManager> textures, std::shared_ptr<EventDispatcher> dispatcher);
 	void loadLevel(LevelNames name);
 	bool isWalkable(sf::Vector2f tile);
 	bool isWalkable(int x, int y);
@@ -58,9 +59,11 @@ private:
 	int costForTile(int linearPos); // now always return 1; can change this in future
 
 private:
-	TextureManager* m_textureManager;
-	EventDispatcher* m_EventDispatcher;
+	std::shared_ptr<TextureManager> m_textureManager;
+	std::shared_ptr<EventDispatcher> m_EventDispatcher;
+
 	std::vector<MapTile> m_mapTiles;
+
 	int m_mapWidth;
 	int m_mapHeight;
 	int m_tileWidth;
