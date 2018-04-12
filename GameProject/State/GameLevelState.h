@@ -6,6 +6,7 @@
 #include "../Utils/Meta.h"
 #include "../DiContainer/DiContainer.h"
 #include "../Window.h"
+#include "../Map.h"
 
 class GameLevelState : public GameStateBase
 {
@@ -22,5 +23,6 @@ private:
 private:
 	DiContainer* m_container;
 	std::shared_ptr<Window> m_window;
+	std::shared_ptr<Map> m_map;
 };
 REGISTER_TYPENAME(GameLevelState)

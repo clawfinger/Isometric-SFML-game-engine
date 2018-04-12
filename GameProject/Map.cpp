@@ -4,6 +4,7 @@
 #include <fstream>
 #include <queue>
 #include <sstream>
+#include <memory>
 #include "Events/Events.h"
 #include "Utils/Logger.h"
 
@@ -253,7 +254,7 @@ sf::Vector2f Map::getEnemySpawnCoordinate()
 
 }
 
-void Map::draw(Window* window)
+void Map::draw(std::shared_ptr<Window> window)
 {
 	for (int y = 0; y < m_mapHeight; y++)
 	{

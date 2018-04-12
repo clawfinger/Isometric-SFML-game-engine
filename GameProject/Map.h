@@ -51,7 +51,7 @@ public:
 	inline sf::Vector2f XYfromLinear(int linear);
 	sf::Vector2f getPlayerSpawnCoordinate();
 	sf::Vector2f getEnemySpawnCoordinate();
-	void draw(Window* window);
+	void draw(std::shared_ptr<Window> window);
 	void notify(IEvent* event);
 private:
 	std::vector<int> neighbors(int position);

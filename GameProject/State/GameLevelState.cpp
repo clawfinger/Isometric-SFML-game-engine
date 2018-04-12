@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#include "../Window.h"
-#include "../Map.h"
 #include "GameLevelState.h"
 #include "../Events/Events.h"
 #include <SFML/System/Time.hpp>
@@ -11,6 +9,7 @@
 GameLevelState::GameLevelState(DiContainer* container): m_container(container)
 {	
 	m_window = m_container->get<Window>();
+	m_map = m_container->get<Map>();
 }
 
 
@@ -26,7 +25,7 @@ void GameLevelState::update(sf::Time deltaTime)
 
 void GameLevelState::render()
 {
-	//m_sharedContext->map->draw(m_sharedContext->window);
+	m_map->draw(m_window);
 	//m_gameEngine.draw(m_sharedContext->window);
 }
 
@@ -35,6 +34,7 @@ void GameLevelState::handlePlayerInput(sf::Event& event)
 	switch (event.type)
 	{
 	case sf::Event::KeyReleased:
+	case sf::Event::KeyPressed:
 		handleKeyboardInput(event.key.code);
 		break;
 	case sf::Event::MouseButtonPressed:
