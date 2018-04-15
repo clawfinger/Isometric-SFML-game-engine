@@ -10,6 +10,7 @@ GameLevelState::GameLevelState(DiContainer* container): m_container(container)
 {	
 	m_window = m_container->get<Window>();
 	m_map = m_container->get<Map>();
+	m_map->loadLevel(LevelNames::dungeon);
 }
 
 

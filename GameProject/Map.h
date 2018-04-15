@@ -49,8 +49,10 @@ public:
 
 	inline int linearFromXY(int x, int y);
 	inline sf::Vector2f XYfromLinear(int linear);
+
 	sf::Vector2f getPlayerSpawnCoordinate();
 	sf::Vector2f getEnemySpawnCoordinate();
+
 	void draw(std::shared_ptr<Window> window);
 	void notify(IEvent* event);
 private:

@@ -26,7 +26,6 @@ Game::Game() : isRunning(true)
 	m_textureManager->load(CharacterId::swordsman(), "images/player.png");
 	m_textureManager->load(EnemyId::enemy(), "images/enemy.png");
 
-	m_map->loadLevel(LevelNames::dungeon);
 	m_stateManager->activateState(GameStateType::level);
 }
 
@@ -88,7 +87,4 @@ void Game::registerClassFactories()
 	m_container.registerClass<Map>(constructingFunction<TextureManager, EventDispatcher>);
 	m_container.registerClass<Window>(constructingFunction);
 	m_container.registerClass<GameStateManager>(constructingFunction);
-}	
-
-
-
+}
