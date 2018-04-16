@@ -5,8 +5,8 @@
 #include "../Utils/utility.h"
 #include "../Utils/Logger.h"
 #include "ComponentBase.h"
+#include "Entity.h"
 
-using EntityId = uint32_t;
 using EntityData = std::pair<StringList, std::vector<ComponentBase*>>;
 
 class EntityManager
