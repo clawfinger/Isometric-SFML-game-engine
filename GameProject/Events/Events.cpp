@@ -1,7 +1,16 @@
 #include "stdafx.h"
 #include "Events.h"
 
-std::string TestEvent::name()
+std::string EntityCreatedEvent::name()
 {
-	return typeName<TestEvent>();
+	return typeName<EntityCreatedEvent>();
+}
+
+FloorTileClickedEvent::FloorTileClickedEvent(int index): mapIndex(index)
+{
+}
+
+std::string FloorTileClickedEvent::name()
+{
+	return typeName<FloorTileClickedEvent>();
 }

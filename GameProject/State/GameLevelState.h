@@ -7,6 +7,7 @@
 #include "../DiContainer/DiContainer.h"
 #include "../Window.h"
 #include "../Map.h"
+#include "../Events/EventDispatcher.h"
 
 class GameLevelState : public GameStateBase
 {
@@ -24,5 +25,6 @@ private:
 	DiContainer* m_container;
 	std::shared_ptr<Window> m_window;
 	std::shared_ptr<Map> m_map;
+	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 };
 REGISTER_TYPENAME(GameLevelState)
