@@ -1,5 +1,7 @@
 #pragma once
+#include "../Utils/utility.h"
 #include "../Utils/Meta.h"
+#include "../ECS/Entity.h"
 
 class IEvent
 {
@@ -8,9 +10,22 @@ public:
 	virtual ~IEvent() {};
 };
 
-class TestEvent : public IEvent
+class EntityCreatedEvent : public IEvent
 {
 public:
+	EntityCreatedEvent(EntityId id, StringList components)
+		: id(id), components(components) {};
 	std::string name();
+	EntityId id;
+	StringList components;
 };
-REGISTER_TYPENAME(TestEvent)
+REGISTER_TYPENAME(EntityCreatedEvent)
+
+class FloorTileClickedEvent : public IEvent
+{
+public:
+	FloorTileClickedEvent(int index);
+	std::string name();
+	int mapIndex;
+};
+REGISTER_TYPENAME(FloorTileClickedEvent)
