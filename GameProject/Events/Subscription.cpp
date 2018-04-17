@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Subscription.h"
 #include "../Utils/Logger.h"
+#include "../Events/Events.h"
 #include <algorithm>
 #include <string>
 
