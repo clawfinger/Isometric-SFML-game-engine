@@ -18,7 +18,7 @@ Map::Map(std::shared_ptr<TextureManager> textures, std::shared_ptr<EventDispatch
 	m_textureManager(textures),
 	m_EventDispatcher(dispatcher)
 {
-	m_EventDispatcher->subscribe(typeName<TestEvent>(), this);
+	//m_EventDispatcher->subscribe(typeName<TestEvent>(), this);
 }
 
 MapTile::MapTile(sf::Texture& texture): m_walkable(true)

@@ -5,6 +5,7 @@
 #include "Utils/Logger.h"
 #include <iostream>
 #include <fstream>
+#include "EntityLoader.h"
 
 Game::Game() : isRunning(true)
 {
@@ -23,7 +24,7 @@ Game::Game() : isRunning(true)
 	m_textureManager->load(TextureId::wall(), "images/3.png");
 	m_textureManager->load(TextureId::floor1(), "images/1.png");
 	m_textureManager->load(TextureId::floor2(), "images/2.png");
-	m_textureManager->load(CharacterId::swordsman(), "images/player.png");
+	m_textureManager->load(CharacterId::Toughguy(), "images/player.png");
 	m_textureManager->load(EnemyId::enemy(), "images/enemy.png");
 
 	m_stateManager->activateState(GameStateType::level);
@@ -87,4 +88,6 @@ void Game::registerClassFactories()
 	m_container.registerClass<Map>(constructingFunction<TextureManager, EventDispatcher>);
 	m_container.registerClass<Window>(constructingFunction);
 	m_container.registerClass<GameStateManager>(constructingFunction);
+	m_container.registerClass<EntityManager>(constructingFunction);
+	m_container.registerClass<EntityLoader>(constructingFunction<EntityManager, TextureManager>);
 }

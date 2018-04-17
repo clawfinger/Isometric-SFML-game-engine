@@ -8,5 +8,5 @@ namespace EnemyId
 
 namespace CharacterId
 {
-	static std::string swordsman() { return std::string("swordsman"); };
+	static std::string Toughguy() { return std::string("Toughguy"); };
 }
