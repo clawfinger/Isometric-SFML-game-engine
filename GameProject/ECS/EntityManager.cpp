@@ -1,9 +1,17 @@
 #include "stdafx.h"
 #include "EntityManager.h"
+#include "PathComponent.h"
+#include "SpriteComponent.h"
+#include "PositionComponent.h"
+#include "../Utils/Meta.h"
 
 EntityManager::EntityManager() : m_idCounter(0)
 {
 	//register component factories
+	registerComponentFactory<PathComponent>(typeName<PathComponent>());
+	registerComponentFactory<SpriteComponent>(typeName<SpriteComponent>());
+	registerComponentFactory<PositionComponent>(typeName<PositionComponent>());
+
 }
 
 

@@ -4,6 +4,7 @@
 #include <functional>
 #include "../Utils/utility.h"
 #include "../Utils/Logger.h"
+#include "../Utils/Meta.h"
 #include "ComponentBase.h"
 #include "Entity.h"
 
@@ -31,7 +32,7 @@ private:
 	std::unordered_map <EntityId, EntityData> m_entityContainer;
 	std::unordered_map<std::string, std::function<ComponentBase*(void)>> m_componentFactories;
 };
-
+REGISTER_TYPENAME(EntityManager)
 
 template<typename T>
 inline T * EntityManager::getComponent(EntityId id, const std::string & componentName)
@@ -39,7 +40,7 @@ inline T * EntityManager::getComponent(EntityId id, const std::string & componen
 	auto entityDataIter = m_entityContainer.find(id);
 	if (entityDataIter != m_entityContainer.end())
 	{
-		if (entityData->second.first.contains(componentName))
+		if (entityDataIter->second.first.contains(componentName))
 		{
 			for (auto component : entityDataIter->second.second)
 			{
@@ -52,14 +53,13 @@ inline T * EntityManager::getComponent(EntityId id, const std::string & componen
 		else
 		{
 			Logger::instance().log("ERROR: Component " + componentName + " not found in entity with id=" + std::to_string(id));
-			return nullptr;
 		}
 	}
 	else
 	{
 		Logger::instance().log("ERROR: Cannot find Entity data for entity with id=" + std::to_string(id));
-		return nullptr;
 	}
+	return nullptr;
 }
 
 	template<typename T>
