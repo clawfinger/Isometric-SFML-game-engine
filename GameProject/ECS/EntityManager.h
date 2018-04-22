@@ -2,9 +2,11 @@
 #include <vector>
 #include <unordered_map>
 #include <functional>
+#include <memory>
 #include "../Utils/utility.h"
 #include "../Utils/Logger.h"
 #include "../Utils/Meta.h"
+#include "../Events/EventDispatcher.h"
 #include "ComponentBase.h"
 #include "Entity.h"
 
@@ -13,7 +15,7 @@ using EntityData = std::pair<StringList, std::vector<ComponentBase*>>;
 class EntityManager
 {
 public:
-	EntityManager();
+	EntityManager(std::shared_ptr<EventDispatcher> eventDispatcher);
 	~EntityManager();
 	EntityId createEntity(const StringList& componentList);
 	void removeEntity(EntityId id);
@@ -31,6 +33,7 @@ private:
 	std::vector<ComponentBase*> m_entityComponents;
 	std::unordered_map <EntityId, EntityData> m_entityContainer;
 	std::unordered_map<std::string, std::function<ComponentBase*(void)>> m_componentFactories;
+	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 };
 REGISTER_TYPENAME(EntityManager)
 

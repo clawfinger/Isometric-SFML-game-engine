@@ -3,9 +3,10 @@
 #include "PathComponent.h"
 #include "SpriteComponent.h"
 #include "PositionComponent.h"
+#include "../Events/Events.h"
 #include "../Utils/Meta.h"
 
-EntityManager::EntityManager() : m_idCounter(0)
+EntityManager::EntityManager(std::shared_ptr<EventDispatcher> eventDispatcher) : m_idCounter(0), m_eventDispatcher(eventDispatcher)
 {
 	//register component factories
 	registerComponentFactory<PathComponent>(typeName<PathComponent>());
@@ -28,6 +29,8 @@ EntityId EntityManager::createEntity(const StringList & componentList)
 	{
 		addComponentToEntity(newEntityId, component);
 	}
+	IEvent* entitySpawnEvent = new EntityCreatedEvent(newEntityId, componentList);
+	m_eventDispatcher->dispatch(entitySpawnEvent);
 	return newEntityId;
 }
 
