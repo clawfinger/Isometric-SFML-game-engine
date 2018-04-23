@@ -41,8 +41,8 @@ void EntityLoader::load(std::string filename)
 		s_stream >> tag;
 		while (tag != "#components")
 		{
-			s_stream >> tag;
 			componentsList << tag;
+			s_stream >> tag;
 		}
 	}
 	else
