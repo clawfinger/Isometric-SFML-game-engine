@@ -8,6 +8,7 @@
 #include "../Window.h"
 #include "../Map.h"
 #include "../Events/EventDispatcher.h"
+#include "../GameEngine.h"
 
 class GameLevelState : public GameStateBase
 {
@@ -26,5 +27,6 @@ private:
 	std::shared_ptr<Window> m_window;
 	std::shared_ptr<Map> m_map;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
+	std::shared_ptr<GameEngine> m_gameEngine;
 };
 REGISTER_TYPENAME(GameLevelState)
