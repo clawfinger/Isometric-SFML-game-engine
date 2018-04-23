@@ -2,7 +2,7 @@
 #include "EntityLoader.h"
 #include "Utils/Logger.h"
 #include "Utils/utility.h"
-#include "ECS/SpriteComponent.h"
+#include "ECS/Components/SpriteComponent.h"
 #include <fstream>
 #include <sstream>
 

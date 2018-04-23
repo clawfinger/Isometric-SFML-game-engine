@@ -2,7 +2,7 @@
 #include "ComponentBase.h"
 #include "SFML/Graphics/Sprite.hpp"
 
-#include "../Utils/Meta.h"
+#include "../../Utils/Meta.h"
 
 class SpriteComponent : public ComponentBase
 {

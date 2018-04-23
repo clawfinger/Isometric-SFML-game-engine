@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "EntityManager.h"
-#include "PathComponent.h"
-#include "SpriteComponent.h"
-#include "PositionComponent.h"
+#include "Components/PathComponent.h"
+#include "Components/SpriteComponent.h"
+#include "Components/PositionComponent.h"
 #include "../Events/Events.h"
 #include "../Utils/Meta.h"
 

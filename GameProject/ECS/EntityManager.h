@@ -7,7 +7,7 @@
 #include "../Utils/Logger.h"
 #include "../Utils/Meta.h"
 #include "../Events/EventDispatcher.h"
-#include "ComponentBase.h"
+#include "Components/ComponentBase.h"
 #include "Entity.h"
 
 using EntityData = std::pair<StringList, std::vector<ComponentBase*>>;

@@ -1,6 +1,6 @@
 #pragma once
 #include "ComponentBase.h"
-#include "../Utils/Meta.h"
+#include "../../Utils/Meta.h"
 #include "SFML/System/Vector2.hpp"
 #include <stack>
 
