@@ -27,4 +27,4 @@ private:
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<Map> m_map;
 };
-
+REGISTER_TYPENAME(MovementSystem)

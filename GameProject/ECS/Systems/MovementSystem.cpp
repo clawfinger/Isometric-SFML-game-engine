@@ -6,7 +6,7 @@
 #include "../../DiContainer/DiContainer.h"
 #include "../../Events/Events.h"
 #include "../../Map.h"
-
+#include "../../Utils/Logger.h"
 #include "MovementSystem.h"
 
 

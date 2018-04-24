@@ -1,12 +1,15 @@
 #pragma once
 #include "Events\Observer.h"
 #include "SFML\System\Time.hpp"
-#include "DiContainer\DiContainer.h"
-#include "Events\EventDispatcher.h"
-#include "ECS\EntityManager.h"
+#include "ECS/Entity.h"
 #include <memory>
+#include <unordered_map>
 
 class Window;
+class SystemBase;
+class EntityManager;
+class EventDispatcher;
+class DiContainer;
 
 class GameEngine :	public Observer
 {
@@ -25,5 +28,6 @@ private:
 	DiContainer* m_container;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<EntityManager> m_entityManager;
+	std::unordered_map<std::string, SystemBase*> m_systems;
 };
 
