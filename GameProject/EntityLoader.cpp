@@ -15,12 +15,7 @@ EntityLoader::~EntityLoader()
 {
 }
 
-std::vector<EntityId>& EntityLoader::getCharacters()
-{
-	return m_charsIds;
-}
-
-void EntityLoader::load(std::string filename)
+EntityId EntityLoader::load(std::string filename)
 {
 	std::ifstream charFile;
 
@@ -28,7 +23,7 @@ void EntityLoader::load(std::string filename)
 	if (!charFile.is_open())
 	{
 		Logger::instance().log("ERROR: Level file " + filename + " failed to load!");
-		return;
+		return - 1;
 	}
 	std::stringstream s_stream;
 
@@ -48,7 +43,7 @@ void EntityLoader::load(std::string filename)
 	else
 	{
 		Logger::instance().log("ERROR: missing tag components in character file");
-		return;
+		return -1;
 	}
 	EntityId entity = m_EntityManager->createEntity(componentsList);
 	s_stream >> tag;
@@ -62,5 +57,5 @@ void EntityLoader::load(std::string filename)
 			spriteComp->create(m_TextureManager->get(tag));
 		}
 	}
-	m_charsIds.push_back(entity);
+	return entity;
 }
