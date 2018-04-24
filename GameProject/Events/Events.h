@@ -29,3 +29,21 @@ public:
 	int mapIndex;
 };
 REGISTER_TYPENAME(FloorTileClickedEvent)
+
+class CurrentPlayerChangedEvent : public IEvent
+{
+public:
+	CurrentPlayerChangedEvent(EntityId id) : id(id) {}
+	std::string name();
+	EntityId id;
+};
+REGISTER_TYPENAME(CurrentPlayerChangedEvent)
+
+class PlayerReachTileEvent : public IEvent
+{
+public:
+	PlayerReachTileEvent(sf::Vector2f pos) : pos(pos) {}
+	std::string name();
+	sf::Vector2f pos;
+};
+REGISTER_TYPENAME(PlayerReachTileEvent)

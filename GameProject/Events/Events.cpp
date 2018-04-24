@@ -14,3 +14,13 @@ std::string FloorTileClickedEvent::name()
 {
 	return typeName<FloorTileClickedEvent>();
 }
+
+std::string CurrentPlayerChangedEvent::name()
+{
+	return typeName<CurrentPlayerChangedEvent>();
+}
+
+std::string PlayerReachTileEvent::name()
+{
+	return typeName<PlayerReachTileEvent>();
+}
