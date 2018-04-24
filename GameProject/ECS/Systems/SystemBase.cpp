@@ -11,7 +11,7 @@ SystemBase::~SystemBase()
 {
 }
 
-bool SystemBase::checkRequirements(const StringList & requirements)
+bool SystemBase::fitsRequirements(const StringList & requirements)
 {
 	for (const std::string& req : requirements)
 	{

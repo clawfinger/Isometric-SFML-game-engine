@@ -4,13 +4,14 @@
 #include "../../Utils/utility.h"
 #include "../../Utils/Meta.h"
 #include "../Entity.h"
+
 class SystemBase
 {
 public:
 	SystemBase(std::string name);
 	virtual ~SystemBase();
 	virtual void update(sf::Time deltaTime) = 0;
-	bool checkRequirements(const StringList& requirements);
+	bool fitsRequirements(const StringList& requirements);
 	void addEntity(EntityId entity);
 	bool haseEntity(EntityId entity);
 	void removeEntity(EntityId entity);
@@ -18,10 +19,10 @@ public:
 
 protected:
 	std::vector<EntityId>  m_entities;
+	StringList m_requirements;
 
 private:
 	std::string m_name;
-	StringList m_requirements;
 
 };
 
