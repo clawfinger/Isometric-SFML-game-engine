@@ -221,6 +221,11 @@ int Map::mapFromWindow(float x, float y)
 	return linearFromXY(x / m_tileWidth, y / m_tileHeight);
 }
 
+int Map::mapFromWindow(sf::Vector2f window)
+{
+	return linearFromXY(window.x / m_tileWidth, window.y / m_tileHeight);
+}
+
 sf::Vector2f Map::windowFromMap(float x, float y)
 {
 	return sf::Vector2f(x * m_tileWidth, y * m_tileHeight);
