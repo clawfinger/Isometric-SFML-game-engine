@@ -2,12 +2,18 @@
 #include "GameEngine.h"
 #include "Events/Events.h"
 #include "Utils/Logger.h"
+#include "EntityLoader.h"
 
 GameEngine::GameEngine(DiContainer* container): m_container(container)
 {
 	m_eventDispatcher = m_container->get<EventDispatcher>();
 	m_entityManager = m_container->get<EntityManager>();
-	subscribe();
+	std::shared_ptr<EntityLoader> loader = m_container->get<EntityLoader>();
+	m_player = loader->load("Player.txt");
+
+	//
+	m_eventDispatcher->dispatch(new CurrentPlayerChangedEvent(m_player));
+	//
 }
 
 
@@ -25,10 +31,8 @@ void GameEngine::update(sf::Time deltaTime)
 
 void GameEngine::notify(IEvent * event)
 {
-	Logger::instance().log(event->name());
 }
 
-void GameEngine::subscribe()
+void GameEngine::initSystems()
 {
-	m_eventDispatcher->subscribe(typeName<FloorTileClickedEvent>(), this);
 }

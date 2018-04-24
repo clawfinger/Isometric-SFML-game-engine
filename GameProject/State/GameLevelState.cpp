@@ -5,18 +5,14 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "../EntityLoader.h"
-
 GameLevelState::GameLevelState(DiContainer* container): m_container(container)
 {	
 	m_gameEngine = std::make_shared<GameEngine>(container);
 	m_window = m_container->get<Window>();
 	m_map = m_container->get<Map>();
 	m_eventDispatcher = m_container->get<EventDispatcher>();
-	std::shared_ptr<EntityLoader> loader = m_container->get<EntityLoader>();
 
 	m_map->loadLevel(LevelNames::dungeon);
-	loader->load("Player.txt");
 }
 
 

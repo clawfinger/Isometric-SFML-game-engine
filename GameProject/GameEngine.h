@@ -16,10 +16,12 @@ public:
 	void draw(std::shared_ptr<Window> window);
 	void update(sf::Time deltaTime);
 	void notify(IEvent* event);
-private:
-	void subscribe();
 
 private:
+	void initSystems();
+
+private:
+	EntityId m_player;
 	DiContainer* m_container;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<EntityManager> m_entityManager;
