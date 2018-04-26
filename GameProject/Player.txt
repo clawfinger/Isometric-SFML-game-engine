@@ -5,3 +5,5 @@ SpriteComponent
 #components
 SpriteComponent
 Toughguy
+PositionComponent
+200

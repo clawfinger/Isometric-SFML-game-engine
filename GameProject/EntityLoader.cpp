@@ -3,6 +3,7 @@
 #include "Utils/Logger.h"
 #include "Utils/utility.h"
 #include "ECS/Components/SpriteComponent.h"
+#include "ECS/Components/PositionComponent.h"
 #include <fstream>
 #include <sstream>
 
@@ -55,6 +56,18 @@ EntityId EntityLoader::load(std::string filename)
 		{
 			s_stream >> tag;
 			spriteComp->create(m_TextureManager->get(tag));
+		}
+	}
+	s_stream >> tag;
+	component = m_EntityManager->getComponent<ComponentBase>(entity, tag);
+	if (component->name() == "PositionComponent")
+	{
+		PositionComponent* posComp = dynamic_cast<PositionComponent*>(component);
+		if (posComp)
+		{
+			float speed;
+			s_stream >> speed;
+			posComp->setActorSpeed(speed);
 		}
 	}
 	return entity;
