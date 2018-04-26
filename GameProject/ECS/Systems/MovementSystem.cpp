@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "../../ECS/EntityManager.h"
-#include "../../Utils/Meta.h"
 #include "../Components/PathComponent.h"
 #include "../Components/PositionComponent.h"
 #include "../../DiContainer/DiContainer.h"
