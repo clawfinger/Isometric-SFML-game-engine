@@ -7,6 +7,7 @@
 #include "Events\EventDispatcher.h"
 #include "ECS\EntityManager.h"
 #include "ECS\Systems\MovementSystem.h"
+#include "ECS\Systems\RenderSystem.h"
 
 GameEngine::GameEngine(DiContainer* container): m_container(container)
 {
@@ -28,6 +29,15 @@ GameEngine::~GameEngine()
 
 void GameEngine::draw(std::shared_ptr<Window> window)
 {
+	auto system = m_systems.find(typeName<RenderSystem>());
+	if (system != m_systems.end())
+	{
+		RenderSystem *render = dynamic_cast<RenderSystem *>(system->second);
+		if (NULL != render)
+		{
+			render->draw(window);
+		}
+	}
 }
 
 void GameEngine::update(sf::Time deltaTime)
@@ -45,4 +55,5 @@ void GameEngine::notify(IEvent * event)
 void GameEngine::initSystems()
 {
 	m_systems[typeName<MovementSystem>()] = new MovementSystem(m_container, typeName<MovementSystem>());
+	m_systems[typeName<RenderSystem>()] = new RenderSystem(m_container, typeName<RenderSystem>());
 }
