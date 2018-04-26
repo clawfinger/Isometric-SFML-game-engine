@@ -11,7 +11,7 @@ public:
 	SystemBase(std::string name);
 	virtual ~SystemBase();
 	virtual void update(sf::Time deltaTime) = 0;
-	bool fitsRequirements(const StringList& requirements);
+	bool fitsRequirements(const StringList& components);
 	void addEntity(EntityId entity);
 	bool haseEntity(EntityId entity);
 	void removeEntity(EntityId entity);

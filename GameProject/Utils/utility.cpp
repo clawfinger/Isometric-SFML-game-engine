@@ -6,7 +6,7 @@ StringList::StringList()
 {
 }
 
-bool StringList::contains(const std::string & string)
+bool StringList::contains(const std::string & string) const
 {
 	return (std::find_if(m_strings.begin(), m_strings.end(),
 		[&](const std::string& original){return string == original;}) != m_strings.end());

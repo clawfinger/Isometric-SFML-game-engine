@@ -24,7 +24,7 @@ class StringList
 {
 public:
 	StringList();
-	bool contains(const std::string& string);
+	bool contains(const std::string& string) const;
 	StringList& operator<<(const std::string& string);
 	std::vector<std::string>::iterator begin();
 	std::vector<std::string>::iterator end();

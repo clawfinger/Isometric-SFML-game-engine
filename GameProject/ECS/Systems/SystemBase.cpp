@@ -11,11 +11,11 @@ SystemBase::~SystemBase()
 {
 }
 
-bool SystemBase::fitsRequirements(const StringList & requirements)
+bool SystemBase::fitsRequirements(const StringList & components)
 {
-	for (const std::string& req : requirements)
+	for (const std::string& req : m_requirements)
 	{
-		if (!m_requirements.contains(req))
+		if (!components.contains(req))
 			return false;
 	}
 	return true;
