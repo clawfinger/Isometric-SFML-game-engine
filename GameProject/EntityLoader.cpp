@@ -26,49 +26,49 @@ EntityId EntityLoader::load(std::string filename)
 		Logger::instance().log("ERROR: Level file " + filename + " failed to load!");
 		return - 1;
 	}
-	std::stringstream s_stream;
 
-	s_stream << charFile.rdbuf();
-	std::string tag;
-	s_stream >> tag;
+	std::string line;
 	StringList componentsList;
-	if (tag == "components")
-	{
-		s_stream >> tag;
-		while (tag != "#components")
+	EntityId entity = -1;
+
+	while (std::getline(charFile, line)) {
+		std::stringstream s_stream(line);
+		std::string type;
+		s_stream >> type;
+		if (type == "Name") {
+			std::string name;
+			s_stream >> name;
+			std::cout << "Name: " << name << std::endl;
+		}
+		else if (type == "ComponentList")
 		{
-			componentsList << tag;
-			s_stream >> tag;
+			std::string comp;
+			while (s_stream >> comp)
+				componentsList << comp;
+			entity = m_EntityManager->createEntity(componentsList);
+
+		}
+		else if (type == "Component")
+		{
+			std::string comp;
+			s_stream >> comp;
+			if (comp == "SpriteComponent")
+			{
+				SpriteComponent* spriteComp = m_EntityManager->getComponent<SpriteComponent>(entity, comp);
+				if (spriteComp)
+				{
+					s_stream >> comp;
+					spriteComp->create(m_TextureManager->get(comp));
+				}
+			}
+			else
+			{
+				ComponentBase* component = m_EntityManager->getComponent<ComponentBase>(entity, comp);
+				component->readData(s_stream);
+			}
+			
 		}
 	}
-	else
-	{
-		Logger::instance().log("ERROR: missing tag components in character file");
-		return -1;
-	}
-	EntityId entity = m_EntityManager->createEntity(componentsList);
-	s_stream >> tag;
-	ComponentBase* component = m_EntityManager->getComponent<ComponentBase>(entity, tag);
-	if (component->name() == "SpriteComponent")
-	{
-		SpriteComponent* spriteComp = dynamic_cast<SpriteComponent*>(component);
-		if (spriteComp)
-		{
-			s_stream >> tag;
-			spriteComp->create(m_TextureManager->get(tag));
-		}
-	}
-	s_stream >> tag;
-	component = m_EntityManager->getComponent<ComponentBase>(entity, tag);
-	if (component->name() == "PositionComponent")
-	{
-		PositionComponent* posComp = dynamic_cast<PositionComponent*>(component);
-		if (posComp)
-		{
-			float speed;
-			s_stream >> speed;
-			posComp->setActorSpeed(speed);
-		}
-	}
+	charFile.close();
 	return entity;
 }

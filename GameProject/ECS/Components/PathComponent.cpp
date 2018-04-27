@@ -34,3 +34,7 @@ bool PathComponent::isPathSet()
 {
 	return !m_path.empty();
 }
+
+void PathComponent::readData(std::stringstream & stream)
+{
+}

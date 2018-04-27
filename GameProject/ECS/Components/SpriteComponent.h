@@ -12,7 +12,7 @@ public:
 	void create(sf::Texture& texture);
 	sf::Sprite& getSprite();
 	void setPosition(const sf::Vector2f& position);
-
+	void readData(std::stringstream& stream);
 private:
 	sf::Sprite m_sprite;
 };

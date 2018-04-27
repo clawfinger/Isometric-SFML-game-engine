@@ -15,6 +15,7 @@ public:
 	void move(const sf::Vector2f& movement);
 	float actorSpeed() const { return m_actorSpeed; }
 	void setActorSpeed(float val) { m_actorSpeed = val; }
+	void readData(std::stringstream& stream);
 private:
 	sf::Vector2f m_position;
 	float m_actorSpeed;

@@ -15,6 +15,7 @@ public:
 
 	int getPathEnd();
 	bool isPathSet();
+	void readData(std::stringstream& stream);
 private:
 	std::stack<sf::Vector2f> m_path;
 	int m_pathEnd;

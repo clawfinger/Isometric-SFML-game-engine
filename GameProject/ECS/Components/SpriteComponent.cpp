@@ -25,3 +25,7 @@ void SpriteComponent::setPosition(const sf::Vector2f & position)
 {
 	m_sprite.setPosition(position.x, position.y);
 }
+
+void SpriteComponent::readData(std::stringstream & stream)
+{
+}

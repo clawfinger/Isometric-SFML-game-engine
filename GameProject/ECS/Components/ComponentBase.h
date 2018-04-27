@@ -10,6 +10,7 @@ public:
 	{
 		return m_name;
 	}
+	virtual void readData(std::stringstream& l_stream) = 0;
 	virtual ~ComponentBase() {};
 
 private:
