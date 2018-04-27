@@ -54,7 +54,6 @@ void MovementSystem::update(sf::Time deltatime)
 			}
 			else
 			{
-				m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top()));
 				pathComponent->getPath().pop();
 			}
 		}
