@@ -75,6 +75,11 @@ void Window::resizeView(sf::Vector2f & newSize)
 	m_window.setView(m_mainView);
 }
 
+sf::View & Window::getView()
+{
+	return m_mainView;
+}
+
 sf::RenderWindow& Window::getRenderWindow()
 {
 	return m_window;

@@ -261,12 +261,30 @@ sf::Vector2f Map::getEnemySpawnCoordinate()
 
 void Map::draw(std::shared_ptr<Window> window)
 {
-	for (int y = 0; y < m_mapHeight; y++)
+	sf::Vector2f ViewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
+	sf::Vector2f ViewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
+
+	int startX = ViewTopLeft.x / m_tileWidth;
+	int endX = ViewDownRight.x / m_tileWidth + 1;
+
+	int startY = ViewTopLeft.y / m_tileHeight;
+	int endY = ViewDownRight.y / m_tileHeight + 1;
+
+	if (startX < 0 || startX > m_mapWidth)
+		startX = 0;
+	if (startY < 0 || startY > m_mapHeight)
+		startY = 0;
+
+	if (endX > m_mapWidth)
+		endX = m_mapWidth;
+	if (endY > m_mapHeight)
+		endY = m_mapHeight;
+
+	for (int y = startY; y < endY; y++)
 	{
-		for (int x = 0; x < m_mapWidth; x++)
+		for (int x = startX; x < endX; x++)
 		{
-			// TODO: remove sprite size hard code
-			sf::Vector2f position(float(x * 64), float(y * 64));
+			sf::Vector2f position(float(x * m_tileWidth), float(y * m_tileHeight));
 			getMapTile(x, y).setPosition(position);
 			window->draw(getMapTile(x, y).sprite());
 		}
@@ -275,7 +293,11 @@ void Map::draw(std::shared_ptr<Window> window)
 
 void Map::notify(IEvent * event)
 {
-	Logger::instance().log("Map: " + event->name());
+	if (event->name() == typeName<PlayerReachTileEvent>())
+	{
+		PlayerReachTileEvent *currentEvent = dynamic_cast<PlayerReachTileEvent *>(event);
+		Logger::instance().log("Map: " + event->name() + " " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
+	}
 }
 
 std::vector<int> Map::neighbors(int position)

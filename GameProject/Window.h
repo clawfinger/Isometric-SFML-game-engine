@@ -27,6 +27,7 @@ public:
 
 	void moveView(sf::Vector2f& movement);
 	void resizeView(sf::Vector2f& newSize);
+	sf::View& getView();
 
 	sf::RenderWindow& getRenderWindow();
 	void setViewMoveVector(const sf::Vector2f& moveVector);
