@@ -138,8 +138,8 @@ void Map::loadLevel(LevelNames name)
 
 bool Map::isWalkable(sf::Vector2f tile)
 {
-	if (isWithinMap(tile.x, tile.y))
-		return m_mapTiles[tile.y * m_mapWidth + tile.x].isWalkable();
+	if (isWithinMap(int(tile.x), int(tile.y)))
+		return m_mapTiles[int(tile.y) * m_mapWidth + int(tile.x)].isWalkable();
 	else
 		return false;
 }
@@ -218,12 +218,12 @@ std::stack<sf::Vector2f> Map::calculatePath(int start, int end)
 
 int Map::mapFromWindow(float x, float y)
 {
-	return linearFromXY(x / m_tileWidth, y / m_tileHeight);
+	return linearFromXY(int(x / m_tileWidth), int(y / m_tileHeight));
 }
 
 int Map::mapFromWindow(sf::Vector2f window)
 {
-	return linearFromXY(window.x / m_tileWidth, window.y / m_tileHeight);
+	return linearFromXY(int(window.x / m_tileWidth), int(window.y / m_tileHeight));
 }
 
 sf::Vector2f Map::windowFromMap(float x, float y)
@@ -243,8 +243,8 @@ int Map::linearFromXY(int x, int y)
 
 sf::Vector2f Map::XYfromLinear(int linear)
 {
-	float y = linear / m_mapWidth;
-	float x = linear % m_mapWidth;
+	float y = float(linear / m_mapWidth);
+	float x = float(linear % m_mapWidth);
 	return sf::Vector2f(x, y);
 }
 
@@ -264,11 +264,11 @@ void Map::draw(std::shared_ptr<Window> window)
 	sf::Vector2f ViewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
 	sf::Vector2f ViewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
 
-	int startX = ViewTopLeft.x / m_tileWidth;
-	int endX = ViewDownRight.x / m_tileWidth + 1;
+	int startX = int(ViewTopLeft.x) / m_tileWidth;
+	int endX = int(ViewDownRight.x) / m_tileWidth + 1;
 
-	int startY = ViewTopLeft.y / m_tileHeight;
-	int endY = ViewDownRight.y / m_tileHeight + 1;
+	int startY = int(ViewTopLeft.y) / m_tileHeight;
+	int endY = int(ViewDownRight.y) / m_tileHeight + 1;
 
 	if (startX < 0 || startX > m_mapWidth)
 		startX = 0;
@@ -306,10 +306,10 @@ std::vector<int> Map::neighbors(int position)
 	sf::Vector2f pos = XYfromLinear(position);
 	std::vector<sf::Vector2i> neighborPoints;
 
-	neighborPoints.push_back(sf::Vector2i(pos.x + 1, pos.y));
-	neighborPoints.push_back(sf::Vector2i(pos.x - 1, pos.y));
-	neighborPoints.push_back(sf::Vector2i(pos.x, pos.y + 1));
-	neighborPoints.push_back(sf::Vector2i(pos.x, pos.y - 1));
+	neighborPoints.push_back(sf::Vector2i(int(pos.x + 1), int(pos.y)));
+	neighborPoints.push_back(sf::Vector2i(int(pos.x - 1), int(pos.y)));
+	neighborPoints.push_back(sf::Vector2i(int(pos.x), int(pos.y + 1)));
+	neighborPoints.push_back(sf::Vector2i(int(pos.x), int(pos.y - 1)));
 
 	for (auto point : neighborPoints)
 	{
