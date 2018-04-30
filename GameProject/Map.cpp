@@ -261,14 +261,14 @@ sf::Vector2f Map::getEnemySpawnCoordinate()
 
 void Map::draw(std::shared_ptr<Window> window)
 {
-	sf::Vector2f ViewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
-	sf::Vector2f ViewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
+	sf::Vector2f viewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
+	sf::Vector2f viewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
 
-	int startX = int(ViewTopLeft.x) / m_tileWidth;
-	int endX = int(ViewDownRight.x) / m_tileWidth + 1;
+	int startX = int(viewTopLeft.x) / m_tileWidth;
+	int endX = int(viewDownRight.x) / m_tileWidth + 1;
 
-	int startY = int(ViewTopLeft.y) / m_tileHeight;
-	int endY = int(ViewDownRight.y) / m_tileHeight + 1;
+	int startY = int(viewTopLeft.y) / m_tileHeight;
+	int endY = int(viewDownRight.y) / m_tileHeight + 1;
 
 	if (startX < 0 || startX > m_mapWidth)
 		startX = 0;
