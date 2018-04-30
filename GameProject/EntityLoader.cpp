@@ -1,14 +1,21 @@
 #include "stdafx.h"
 #include "EntityLoader.h"
+#include "Events/Events.h"
 #include "Utils/Logger.h"
 #include "Utils/utility.h"
 #include "ECS/Components/SpriteComponent.h"
 #include "ECS/Components/PositionComponent.h"
+#include "ECS/EntityContainer.h"
+#include "TextureManager.h"
+#include "Events/EventDispatcher.h"
 #include <fstream>
 #include <sstream>
 
 EntityLoader::EntityLoader(std::shared_ptr<EntityContainer> manager,
-	std::shared_ptr<TextureManager> textureManager): m_EntityManager(manager), m_TextureManager(textureManager)
+	std::shared_ptr<TextureManager> textureManager,
+	std::shared_ptr<EventDispatcher> eventDispatcher): m_entityContainer(manager),
+	m_TextureManager(textureManager),
+	m_eventDispatcher(eventDispatcher)
 {
 }
 
@@ -23,7 +30,7 @@ EntityId EntityLoader::load(std::string filename)
 	charFile.open(filename);
 	if (!charFile.is_open())
 	{
-		Logger::instance().log("ERROR: Level file " + filename + " failed to load!");
+		Logger::instance().log("ERROR: Entity file " + filename + " failed to load!");
 		return - 1;
 	}
 
@@ -45,7 +52,7 @@ EntityId EntityLoader::load(std::string filename)
 			std::string comp;
 			while (s_stream >> comp)
 				componentsList << comp;
-			entity = m_EntityManager->createEntity(componentsList);
+			entity = m_entityContainer->createEntity(componentsList);
 
 		}
 		else if (type == "Component")
@@ -54,7 +61,7 @@ EntityId EntityLoader::load(std::string filename)
 			s_stream >> comp;
 			if (comp == "SpriteComponent")
 			{
-				SpriteComponent* spriteComp = m_EntityManager->getComponent<SpriteComponent>(entity, comp);
+				SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity, comp);
 				if (spriteComp)
 				{
 					s_stream >> comp;
@@ -63,12 +70,14 @@ EntityId EntityLoader::load(std::string filename)
 			}
 			else
 			{
-				ComponentBase* component = m_EntityManager->getComponent<ComponentBase>(entity, comp);
+				ComponentBase* component = m_entityContainer->getComponent<ComponentBase>(entity, comp);
 				component->readData(s_stream);
 			}
 			
 		}
 	}
 	charFile.close();
+	IEvent* entitySpawnEvent = new EntityCreatedEvent(entity, componentsList);
+	m_eventDispatcher->dispatch(entitySpawnEvent);
 	return entity;
 }

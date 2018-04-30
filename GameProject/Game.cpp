@@ -7,6 +7,7 @@
 #include <fstream>
 #include "EntityLoader.h"
 #include "ECS/EntityManager.h"
+#include "ECS/EntityContainer.h"
 
 Game::Game() : isRunning(true)
 {
@@ -89,7 +90,7 @@ void Game::registerClassFactories()
 	m_container.registerClass<Map>(constructingFunction<TextureManager, EventDispatcher>);
 	m_container.registerClass<Window>(constructingFunction);
 	m_container.registerClass<GameStateManager>(constructingFunction);
-	m_container.registerClass<EntityContainer>(constructingFunction<EventDispatcher>);
-	m_container.registerClass<EntityLoader>(constructingFunction<EntityContainer, TextureManager>);
-	m_container.registerClass<EntityManager>(constructingFunction<EntityContainer, EventDispatcher>);
+	m_container.registerClass<EntityContainer>(constructingFunction);
+	m_container.registerClass<EntityLoader>(constructingFunction<EntityContainer, TextureManager, EventDispatcher>);
+	m_container.registerClass<EntityManager>(constructingFunction<EntityContainer, EventDispatcher, TextureManager>);
 }

@@ -6,7 +6,7 @@
 #include "../Events/Events.h"
 #include "../Utils/Meta.h"
 
-EntityContainer::EntityContainer(std::shared_ptr<EventDispatcher> eventDispatcher) : m_idCounter(0), m_eventDispatcher(eventDispatcher)
+EntityContainer::EntityContainer() : m_idCounter(0)
 {
 	//register component factories
 	registerComponentFactory<PathComponent>(typeName<PathComponent>());
@@ -29,8 +29,6 @@ EntityId EntityContainer::createEntity(const StringList & componentList)
 	{
 		addComponentToEntity(newEntityId, component);
 	}
-	IEvent* entitySpawnEvent = new EntityCreatedEvent(newEntityId, componentList);
-	m_eventDispatcher->dispatch(entitySpawnEvent);
 	return newEntityId;
 }
 

@@ -2,6 +2,7 @@
 #include "RenderSystem.h"
 #include "../../DiContainer/DiContainer.h"
 #include "../../Events/Events.h"
+#include "../../Events/EventDispatcher.h"
 #include "../../ECS/EntityContainer.h"
 #include "../Components/PositionComponent.h"
 #include "../Components/SpriteComponent.h"
