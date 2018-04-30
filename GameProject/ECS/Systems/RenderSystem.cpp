@@ -45,10 +45,23 @@ void RenderSystem::draw(std::shared_ptr<Window> window)
 {
 	for (EntityId entity : m_entities)
 	{
+		PositionComponent* positionComponent =
+			m_entityManager->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+
+		sf::Vector2f viewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
+		sf::Vector2f viewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
+		sf::Vector2f entityPosition = positionComponent->getPosition();
+
 		SpriteComponent* spriteComponent =
 			m_entityManager->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
 
-		window->draw(spriteComponent->getSprite());
+		sf::Rect<float> spriteBounds = spriteComponent->getSprite().getLocalBounds();
+
+		if ((entityPosition.x + spriteBounds.width) > viewTopLeft.x && (entityPosition.y + spriteBounds.height) > viewTopLeft.y &&
+			entityPosition.x < viewDownRight.x && entityPosition.y < viewDownRight.y)
+		{
+			window->draw(spriteComponent->getSprite());
+		}
 
 	}
 }
