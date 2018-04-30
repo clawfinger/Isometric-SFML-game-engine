@@ -10,7 +10,7 @@
 
 
 MovementSystem::MovementSystem(DiContainer* container, std::string name):
-	SystemBase(name)
+	SystemBase(name), m_currentPlayer(-1)
 {
 	m_requirements << typeName<PathComponent>();
 	m_requirements << typeName<PositionComponent>();
@@ -82,6 +82,12 @@ void MovementSystem::handleEntitySpawnEvent(IEvent * event)
 
 void MovementSystem::handleTileClickedEvent(IEvent * event)
 {
+	if (m_currentPlayer == -1)
+	{
+		Logger::instance().log("ERROR: Current player is not set in Movement System!");
+		return;
+	}
+
 	FloorTileClickedEvent *currentEvent = dynamic_cast<FloorTileClickedEvent *>(event);
 	if (nullptr != currentEvent)
 	{
