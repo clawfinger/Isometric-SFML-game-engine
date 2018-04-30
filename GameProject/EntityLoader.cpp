@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sstream>
 
-EntityLoader::EntityLoader(std::shared_ptr<EntityManager> manager,
+EntityLoader::EntityLoader(std::shared_ptr<EntityContainer> manager,
 	std::shared_ptr<TextureManager> textureManager): m_EntityManager(manager), m_TextureManager(textureManager)
 {
 }

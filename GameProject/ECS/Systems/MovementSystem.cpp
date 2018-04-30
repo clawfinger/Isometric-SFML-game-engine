@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "../../ECS/EntityManager.h"
+#include "../../ECS/EntityContainer.h"
 #include "../Components/PathComponent.h"
 #include "../Components/PositionComponent.h"
 #include "../../DiContainer/DiContainer.h"
@@ -15,7 +15,7 @@ MovementSystem::MovementSystem(DiContainer* container, std::string name):
 	m_requirements << typeName<PathComponent>();
 	m_requirements << typeName<PositionComponent>();
 
-	m_entityManager = container->get<EntityManager>();
+	m_entityContainer = container->get<EntityContainer>();
 	m_eventDispatcher = container->get<EventDispatcher>();
 	m_map = container->get<Map>();
 
@@ -29,9 +29,9 @@ void MovementSystem::update(sf::Time deltatime)
 	for (EntityId entity : m_entities)
 	{
 		PathComponent* pathComponent =
-			m_entityManager->getComponent<PathComponent>(entity, typeName<PathComponent>());
+			m_entityContainer->getComponent<PathComponent>(entity, typeName<PathComponent>());
 		PositionComponent* positionComponent =
-			m_entityManager->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
 
 		if (pathComponent->isPathSet())
 		{
@@ -92,9 +92,9 @@ void MovementSystem::handleTileClickedEvent(IEvent * event)
 	if (nullptr != currentEvent)
 	{
 		PathComponent* pathComponent = 
-			m_entityManager->getComponent<PathComponent>(m_currentPlayer, typeName<PathComponent>());
+			m_entityContainer->getComponent<PathComponent>(m_currentPlayer, typeName<PathComponent>());
 		PositionComponent* positionComponent = 
-			m_entityManager->getComponent<PositionComponent>(m_currentPlayer, typeName<PositionComponent>());
+			m_entityContainer->getComponent<PositionComponent>(m_currentPlayer, typeName<PositionComponent>());
 		pathComponent->setPath(m_map->calculatePath(
 			m_map->mapFromWindow(positionComponent->getPosition()), currentEvent->mapIndex), currentEvent->mapIndex);
 	}

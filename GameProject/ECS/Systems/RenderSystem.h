@@ -3,7 +3,7 @@
 #include "SystemBase.h"
 #include "../../Events/Observer.h"
 
-class EntityManager;
+class EntityContainer;
 class EventDispatcher;
 class DiContainer;
 class Window;
@@ -20,7 +20,7 @@ public:
 private:
 	void handleEntitySpawnEvent(IEvent* event);
 private:
-	std::shared_ptr<EntityManager> m_entityManager;
+	std::shared_ptr<EntityContainer> m_entityContainer;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 };
 REGISTER_TYPENAME(RenderSystem)

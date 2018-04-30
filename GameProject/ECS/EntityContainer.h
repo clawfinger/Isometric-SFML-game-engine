@@ -12,11 +12,11 @@
 
 using EntityData = std::pair<StringList, std::vector<ComponentBase*>>;
 
-class EntityManager
+class EntityContainer
 {
 public:
-	EntityManager(std::shared_ptr<EventDispatcher> eventDispatcher);
-	~EntityManager();
+	EntityContainer(std::shared_ptr<EventDispatcher> eventDispatcher);
+	~EntityContainer();
 	EntityId createEntity(const StringList& componentList);
 	void removeEntity(EntityId id);
 	bool HasComponent(EntityId id, const std::string& componentName);
@@ -35,10 +35,10 @@ private:
 	std::unordered_map<std::string, std::function<ComponentBase*(void)>> m_componentFactories;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 };
-REGISTER_TYPENAME(EntityManager)
+REGISTER_TYPENAME(EntityContainer)
 
 template<typename T>
-inline T * EntityManager::getComponent(EntityId id, const std::string & componentName)
+inline T * EntityContainer::getComponent(EntityId id, const std::string & componentName)
 {
 	auto entityDataIter = m_entityContainer.find(id);
 	if (entityDataIter != m_entityContainer.end())
@@ -66,7 +66,7 @@ inline T * EntityManager::getComponent(EntityId id, const std::string & componen
 }
 
 	template<typename T>
-inline void EntityManager::registerComponentFactory(const std::string & componentName)
+inline void EntityContainer::registerComponentFactory(const std::string & componentName)
 {
 	m_componentFactories[componentName] = []()->ComponentBase* { return new T();};
 }

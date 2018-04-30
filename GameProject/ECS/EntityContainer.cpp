@@ -1,12 +1,12 @@
 #include "stdafx.h"
-#include "EntityManager.h"
+#include "EntityContainer.h"
 #include "Components/PathComponent.h"
 #include "Components/SpriteComponent.h"
 #include "Components/PositionComponent.h"
 #include "../Events/Events.h"
 #include "../Utils/Meta.h"
 
-EntityManager::EntityManager(std::shared_ptr<EventDispatcher> eventDispatcher) : m_idCounter(0), m_eventDispatcher(eventDispatcher)
+EntityContainer::EntityContainer(std::shared_ptr<EventDispatcher> eventDispatcher) : m_idCounter(0), m_eventDispatcher(eventDispatcher)
 {
 	//register component factories
 	registerComponentFactory<PathComponent>(typeName<PathComponent>());
@@ -16,11 +16,11 @@ EntityManager::EntityManager(std::shared_ptr<EventDispatcher> eventDispatcher) :
 }
 
 
-EntityManager::~EntityManager()
+EntityContainer::~EntityContainer()
 {
 }
 
-EntityId EntityManager::createEntity(const StringList & componentList)
+EntityId EntityContainer::createEntity(const StringList & componentList)
 {
 	EntityId newEntityId = m_idCounter++;
 	//TODO: Move component creation to object pool to prevent memory fragmentation
@@ -34,7 +34,7 @@ EntityId EntityManager::createEntity(const StringList & componentList)
 	return newEntityId;
 }
 
-void EntityManager::removeEntity(EntityId id)
+void EntityContainer::removeEntity(EntityId id)
 {
 	auto entityDataIter = m_entityContainer.find(id);
 	if (entityDataIter != m_entityContainer.end())
@@ -48,7 +48,7 @@ void EntityManager::removeEntity(EntityId id)
 	}
 }
 
-bool EntityManager::HasComponent(EntityId id, const std::string & componentName)
+bool EntityContainer::HasComponent(EntityId id, const std::string & componentName)
 {
 	auto entityDataIter = m_entityContainer.find(id);
 	if (entityDataIter != m_entityContainer.end())
@@ -77,12 +77,12 @@ bool EntityManager::HasComponent(EntityId id, const std::string & componentName)
 	return false;
 }
 
-void EntityManager::clearAllEntities()
+void EntityContainer::clearAllEntities()
 {
 
 }
 
-void EntityManager::addComponentToEntity(EntityId id, const std::string & componentName)
+void EntityContainer::addComponentToEntity(EntityId id, const std::string & componentName)
 {
 	auto entityIter = m_entityContainer.find(id);
 	if (entityIter != m_entityContainer.end())

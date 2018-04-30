@@ -5,7 +5,7 @@
 #include "EntityLoader.h"
 #include "DiContainer\DiContainer.h"
 #include "Events\EventDispatcher.h"
-#include "ECS\EntityManager.h"
+#include "ECS\EntityContainer.h"
 #include "ECS\Systems\MovementSystem.h"
 #include "ECS\Systems\RenderSystem.h"
 
@@ -13,7 +13,7 @@ GameEngine::GameEngine(DiContainer* container): m_container(container)
 {
 	initSystems();
 	m_eventDispatcher = m_container->get<EventDispatcher>();
-	m_entityManager = m_container->get<EntityManager>();
+	m_entityContainer = m_container->get<EntityContainer>();
 	std::shared_ptr<EntityLoader> loader = m_container->get<EntityLoader>();
 	m_player = loader->load("Player.txt");
 

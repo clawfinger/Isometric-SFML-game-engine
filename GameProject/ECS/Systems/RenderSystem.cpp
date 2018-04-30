@@ -2,7 +2,7 @@
 #include "RenderSystem.h"
 #include "../../DiContainer/DiContainer.h"
 #include "../../Events/Events.h"
-#include "../../ECS/EntityManager.h"
+#include "../../ECS/EntityContainer.h"
 #include "../Components/PositionComponent.h"
 #include "../Components/SpriteComponent.h"
 #include "../../Window.h"
@@ -11,7 +11,7 @@ RenderSystem::RenderSystem(DiContainer* container, std::string name): SystemBase
 {
 	m_requirements << typeName<SpriteComponent>();
 
-	m_entityManager = container->get<EntityManager>();
+	m_entityContainer = container->get<EntityContainer>();
 	m_eventDispatcher = container->get<EventDispatcher>();
 	m_eventDispatcher->subscribe(typeName<EntityCreatedEvent>(), this);
 }
@@ -26,12 +26,11 @@ void RenderSystem::update(sf::Time deltaTime)
 	for (EntityId entity : m_entities)
 	{
 		PositionComponent* positionComponent =
-			m_entityManager->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
 		SpriteComponent* spriteComponent =
-			m_entityManager->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
 
 		spriteComponent->setPosition(positionComponent->getPosition());
-
 	}
 }
 
@@ -46,23 +45,23 @@ void RenderSystem::draw(std::shared_ptr<Window> window)
 	for (EntityId entity : m_entities)
 	{
 		PositionComponent* positionComponent =
-			m_entityManager->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
 
 		sf::Vector2f viewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
 		sf::Vector2f viewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
 		sf::Vector2f entityPosition = positionComponent->getPosition();
 
 		SpriteComponent* spriteComponent =
-			m_entityManager->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
 
 		sf::Rect<float> spriteBounds = spriteComponent->getSprite().getLocalBounds();
 
-		if ((entityPosition.x + spriteBounds.width) > viewTopLeft.x && (entityPosition.y + spriteBounds.height) > viewTopLeft.y &&
+		if ((entityPosition.x + spriteBounds.width) > viewTopLeft.x &&
+			(entityPosition.y + spriteBounds.height) > viewTopLeft.y &&
 			entityPosition.x < viewDownRight.x && entityPosition.y < viewDownRight.y)
 		{
 			window->draw(spriteComponent->getSprite());
 		}
-
 	}
 }
 

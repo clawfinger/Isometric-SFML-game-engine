@@ -3,7 +3,7 @@
 #include "SystemBase.h"
 #include "../../Events/Observer.h"
 
-class EntityManager;
+class EntityContainer;
 class EventDispatcher;
 class DiContainer;
 class Map;
@@ -23,7 +23,7 @@ private:
 
 private:
 	EntityId m_currentPlayer;
-	std::shared_ptr<EntityManager> m_entityManager;
+	std::shared_ptr<EntityContainer> m_entityContainer;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<Map> m_map;
 };
