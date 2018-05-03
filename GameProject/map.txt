@@ -12,4 +12,4 @@ mapTiles
 0 1 1 1 1 1 1 1 1 0 2 2 2 2 2 2 2 2 2 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 playerSpawnPosition 0 2
-enemySpawnPosition 16 7
+enemySpawnPosition 16 3

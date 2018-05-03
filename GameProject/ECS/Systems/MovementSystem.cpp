@@ -10,7 +10,7 @@
 
 
 MovementSystem::MovementSystem(DiContainer* container, std::string name):
-	SystemBase(name), m_currentPlayer(-1)
+	SystemBase(name)
 {
 	m_requirements << typeName<PathComponent>();
 	m_requirements << typeName<PositionComponent>();
@@ -20,8 +20,7 @@ MovementSystem::MovementSystem(DiContainer* container, std::string name):
 	m_map = container->get<Map>();
 
 	m_eventDispatcher->subscribe(typeName<EntityCreatedEvent>(), this);
-	m_eventDispatcher->subscribe(typeName<FloorTileClickedEvent>(), this);
-	m_eventDispatcher->subscribe(typeName<CurrentPlayerChangedEvent>(), this);
+	m_eventDispatcher->subscribe(typeName<SetDestinationForEntityEvent>(), this);
 }
 
 void MovementSystem::update(sf::Time deltatime)
@@ -64,10 +63,8 @@ void MovementSystem::notify(IEvent * event)
 {
 	if (event->name() == typeName<EntityCreatedEvent>())
 		handleEntitySpawnEvent(event);
-	else if (event->name() == typeName<FloorTileClickedEvent>())
-		handleTileClickedEvent(event);
-	else if (event->name() == typeName<CurrentPlayerChangedEvent>())
-		handlePlayerChangedEvent(event);
+	else if (event->name() == typeName<SetDestinationForEntityEvent>())
+		handleSetDestinationEvent(event);
 }
 
 void MovementSystem::handleEntitySpawnEvent(IEvent * event)
@@ -80,32 +77,17 @@ void MovementSystem::handleEntitySpawnEvent(IEvent * event)
 	}
 }
 
-void MovementSystem::handleTileClickedEvent(IEvent * event)
+void MovementSystem::handleSetDestinationEvent(IEvent * event)
 {
-	if (m_currentPlayer == -1)
-	{
-		Logger::instance().log("ERROR: Current player is not set in Movement System!");
-		return;
-	}
-
-	FloorTileClickedEvent *currentEvent = dynamic_cast<FloorTileClickedEvent *>(event);
+	SetDestinationForEntityEvent *currentEvent = dynamic_cast<SetDestinationForEntityEvent *>(event);
 	if (nullptr != currentEvent)
 	{
 		PathComponent* pathComponent = 
-			m_entityContainer->getComponent<PathComponent>(m_currentPlayer, typeName<PathComponent>());
+			m_entityContainer->getComponent<PathComponent>(currentEvent->entity, typeName<PathComponent>());
 		PositionComponent* positionComponent = 
-			m_entityContainer->getComponent<PositionComponent>(m_currentPlayer, typeName<PositionComponent>());
+			m_entityContainer->getComponent<PositionComponent>(currentEvent->entity, typeName<PositionComponent>());
 		pathComponent->setPath(m_map->calculatePath(
 			m_map->mapFromWindow(positionComponent->getPosition()), currentEvent->mapIndex), currentEvent->mapIndex);
-	}
-}
-
-void MovementSystem::handlePlayerChangedEvent(IEvent * event)
-{
-	CurrentPlayerChangedEvent *currentEvent = dynamic_cast<CurrentPlayerChangedEvent *>(event);
-	if (nullptr != currentEvent)
-	{
-		m_currentPlayer = currentEvent->id;
 	}
 }
 

@@ -75,9 +75,11 @@ void GameLevelState::handleMouseInput(sf::Vector2i mouseCoords)
 {
 	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(mouseCoords);
 	int mapIndex = m_map->mapFromWindow(mouse.x, mouse.y);
+	EntityId activeCharcter = m_gameEngine->getActiveCharacter();
+
 	if (m_map->isWalkable(m_map->XYfromLinear(mapIndex)))
 	{
-		IEvent* tileClicked = new FloorTileClickedEvent(mapIndex);
+		IEvent* tileClicked = new SetDestinationForEntityEvent(activeCharcter, mapIndex);
 		m_eventDispatcher->dispatch(tileClicked);
 	}
 }

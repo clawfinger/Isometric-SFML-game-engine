@@ -21,23 +21,15 @@ public:
 };
 REGISTER_TYPENAME(EntityCreatedEvent)
 
-class FloorTileClickedEvent : public IEvent
+class SetDestinationForEntityEvent : public IEvent
 {
 public:
-	FloorTileClickedEvent(int index);
+	SetDestinationForEntityEvent(EntityId entity, int index);
 	std::string name();
+	EntityId entity;
 	int mapIndex;
 };
-REGISTER_TYPENAME(FloorTileClickedEvent)
-
-class CurrentPlayerChangedEvent : public IEvent
-{
-public:
-	CurrentPlayerChangedEvent(EntityId id) : id(id) {}
-	std::string name();
-	EntityId id;
-};
-REGISTER_TYPENAME(CurrentPlayerChangedEvent)
+REGISTER_TYPENAME(SetDestinationForEntityEvent)
 
 class PlayerReachTileEvent : public IEvent
 {
@@ -47,3 +39,9 @@ public:
 	sf::Vector2f pos;
 };
 REGISTER_TYPENAME(PlayerReachTileEvent)
+
+class MapCreatedEvent: public IEvent
+{
+	std::string name();
+};
+REGISTER_TYPENAME(MapCreatedEvent)

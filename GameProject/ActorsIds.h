@@ -2,11 +2,11 @@
 
 namespace EnemyId
 {
-	static std::string rat() { return std::string("rat"); };
-	static std::string enemy() { return std::string("enemy"); };
+	const std::string rat = "rat";
+	const std::string enemy = "enemy";
 };
 
 namespace CharacterId
 {
-	static std::string Toughguy() { return std::string("Toughguy"); };
+	const std::string Toughguy = "Toughguy";
 }

@@ -8,11 +8,11 @@
 
 namespace TextureId
 {
-	static std::string wall() { return std::string("wall"); };
-	static std::string floor1() { return std::string("floor1"); };
-	static std::string floor2() { return std::string("floor2"); };
-	static std::string floor3() { return std::string("floor3"); };
-	static std::string floor4() { return std::string("floor4"); };
+	const std::string wall = "wall";
+	const std::string floor1 = "floor1";
+	const std::string floor2 = "floor2";
+	const std::string floor3 = "floor3";
+	const std::string floor4 = "floor4";
 }
 
 class TextureManager

@@ -101,17 +101,17 @@ void Map::loadLevel(LevelNames name)
 			switch (tileId)
 			{
 			case 0:
-				tile.sprite().setTexture(m_textureManager->get(TextureId::wall()));
+				tile.sprite().setTexture(m_textureManager->get(TextureId::wall));
 				tile.setWalkability(false);
 				m_mapTiles.push_back(tile);
 				break;
 			case 1:
-				tile.sprite().setTexture(m_textureManager->get(TextureId::floor1()));
+				tile.sprite().setTexture(m_textureManager->get(TextureId::floor1));
 				tile.setWalkability(true);
 				m_mapTiles.push_back(tile);
 				break;
 			case 2:
-				tile.sprite().setTexture(m_textureManager->get(TextureId::floor2()));
+				tile.sprite().setTexture(m_textureManager->get(TextureId::floor2));
 				tile.setWalkability(true);
 				m_mapTiles.push_back(tile);
 				break;
@@ -134,6 +134,7 @@ void Map::loadLevel(LevelNames name)
 		s_stream >> m_enemySpawnPosition.x >> m_enemySpawnPosition.y;
 	}
 	mapFile.close();
+	m_EventDispatcher->dispatch(new MapCreatedEvent());
 }
 
 bool Map::isWalkable(sf::Vector2f tile)

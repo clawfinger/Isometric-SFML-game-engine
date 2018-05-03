@@ -7,9 +7,9 @@
 
 class Window;
 class SystemBase;
-class EntityContainer;
 class EventDispatcher;
 class DiContainer;
+class EntityManager;
 
 class GameEngine :	public Observer
 {
@@ -19,15 +19,18 @@ public:
 	void draw(std::shared_ptr<Window> window);
 	void update(sf::Time deltaTime);
 	void notify(IEvent* event);
+	EntityId getActiveCharacter();
 
 private:
 	void initSystems();
 
 private:
-	EntityId m_player;
+	EntityId m_activeCharacter;
+	std::vector<EntityId> m_characters;
 	DiContainer* m_container;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
-	std::shared_ptr<EntityContainer> m_entityContainer;
+	std::shared_ptr<EntityManager> m_entityManager;
+
 	std::unordered_map<std::string, SystemBase*> m_systems;
 };
 

@@ -6,21 +6,22 @@ std::string EntityCreatedEvent::name()
 	return typeName<EntityCreatedEvent>();
 }
 
-FloorTileClickedEvent::FloorTileClickedEvent(int index): mapIndex(index)
+SetDestinationForEntityEvent::SetDestinationForEntityEvent(EntityId entity, int index):
+	mapIndex(index), entity(entity)
 {
 }
 
-std::string FloorTileClickedEvent::name()
+std::string SetDestinationForEntityEvent::name()
 {
-	return typeName<FloorTileClickedEvent>();
-}
-
-std::string CurrentPlayerChangedEvent::name()
-{
-	return typeName<CurrentPlayerChangedEvent>();
+	return typeName<SetDestinationForEntityEvent>();
 }
 
 std::string PlayerReachTileEvent::name()
 {
 	return typeName<PlayerReachTileEvent>();
+}
+
+std::string MapCreatedEvent::name()
+{
+	return typeName<MapCreatedEvent>();
 }
