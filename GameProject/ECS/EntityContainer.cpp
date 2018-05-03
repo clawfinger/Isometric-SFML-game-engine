@@ -3,6 +3,7 @@
 #include "Components/PathComponent.h"
 #include "Components/SpriteComponent.h"
 #include "Components/PositionComponent.h"
+#include "Components/AIControlledComponent.h"
 #include "../Events/Events.h"
 #include "../Utils/Meta.h"
 
@@ -12,7 +13,7 @@ EntityContainer::EntityContainer() : m_idCounter(0)
 	registerComponentFactory<PathComponent>(typeName<PathComponent>());
 	registerComponentFactory<SpriteComponent>(typeName<SpriteComponent>());
 	registerComponentFactory<PositionComponent>(typeName<PositionComponent>());
-
+	registerComponentFactory<AIControlledComponent>(typeName<AIControlledComponent>());
 }
 
 

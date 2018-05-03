@@ -5,7 +5,7 @@
 class AIControlledComponent : public ComponentBase
 {
 public:
-	AIControlledComponent() :ComponentBase(typeName<AIControlledComponent>()) {}
+	AIControlledComponent();
 	void readData(std::stringstream& l_stream) {}
 };
 REGISTER_TYPENAME(AIControlledComponent)
