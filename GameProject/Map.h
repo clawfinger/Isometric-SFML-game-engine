@@ -36,7 +36,7 @@ class Map : public Observer
 public:
 	Map(std::shared_ptr<TextureManager> textures, std::shared_ptr<EventDispatcher> dispatcher);
 	void loadLevel(LevelNames name);
-	bool isWalkable(sf::Vector2f tile);
+	bool isWalkable(const sf::Vector2f& tile);
 	bool isWalkable(int x, int y);
 	int mapWidth();
 	int mapHeight();
@@ -51,12 +51,15 @@ public:
 	inline int linearFromXY(int x, int y);
 	inline sf::Vector2f XYfromLinear(int linear);
 
-	sf::Vector2f getPlayerSpawnCoordinate();
-	sf::Vector2f getEnemySpawnCoordinate();
+	sf::Vector2f getPlayerSpawnCoordinate(); //to be removed
+	sf::Vector2f getEnemySpawnCoordinate(); //to be removed
+
+	int manhattanLength(int from, int to);
 
 	void draw(std::shared_ptr<Window> window);
 	void notify(IEvent* event);
 private:
+	bool isVectorsIntersects(const sf::Vector2f& first, const sf::Vector2f& second);
 	std::vector<int> neighbors(int position);
 	inline bool isWithinMap(int x, int y);
 	int costForTile(int linearPos); // now always return 1; can change this in future

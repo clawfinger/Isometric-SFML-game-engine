@@ -137,7 +137,7 @@ void Map::loadLevel(LevelNames name)
 	m_EventDispatcher->dispatch(new MapCreatedEvent());
 }
 
-bool Map::isWalkable(sf::Vector2f tile)
+bool Map::isWalkable(const sf::Vector2f& tile)
 {
 	if (isWithinMap(int(tile.x), int(tile.y)))
 		return m_mapTiles[int(tile.y) * m_mapWidth + int(tile.x)].isWalkable();
@@ -258,6 +258,13 @@ sf::Vector2f Map::getEnemySpawnCoordinate()
 {
 	return windowFromMap(m_enemySpawnPosition);
 
+}
+
+int Map::manhattanLength(int from, int to)
+{
+	sf::Vector2f fromCoord = XYfromLinear(from);
+	sf::Vector2f toCoord = XYfromLinear(to);
+	return abs(fromCoord.x - toCoord.x) + abs(fromCoord.y - toCoord.y);
 }
 
 void Map::draw(std::shared_ptr<Window> window)
