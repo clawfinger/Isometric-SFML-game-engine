@@ -37,3 +37,25 @@ std::vector<std::string>::const_iterator StringList::end() const
 {
 	return m_strings.end();
 }
+
+bool Vector::isVectorsIntersects(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c, sf::Vector2f d)
+{
+	auto isProjectionsIntersects = [](float a, float b, float c, float d)->bool
+	{
+		if (a > b)
+			std::swap(a, b);
+		if (c > d)
+			std::swap(c, d);
+		return std::max(a, c) <= std::min(b, d);
+	};
+	auto orientedArea = [](sf::Vector2f a, sf::Vector2f b, sf::Vector2f c)->int
+	{
+		return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+	};
+
+	return isProjectionsIntersects(a.x, b.x, c.x, d.x) &&
+		isProjectionsIntersects(a.y, b.y, c.y, d.y) &&
+		orientedArea(a, b, c) * orientedArea(a, b, d) < 0 &&
+		orientedArea(c, d, b) * orientedArea(c, d, a) < 0;
+
+}

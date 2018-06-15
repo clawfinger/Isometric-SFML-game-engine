@@ -59,7 +59,6 @@ public:
 	void draw(std::shared_ptr<Window> window);
 	void notify(IEvent* event);
 private:
-	bool isVectorsIntersects(const sf::Vector2f& first, const sf::Vector2f& second);
 	std::vector<int> neighbors(int position);
 	inline bool isWithinMap(int x, int y);
 	int costForTile(int linearPos); // now always return 1; can change this in future

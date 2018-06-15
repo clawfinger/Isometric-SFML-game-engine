@@ -17,6 +17,8 @@ namespace Vector
 	{
 		return vector / length<T>(vector);
 	}
+
+	bool isVectorsIntersects(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c, sf::Vector2f d);
 }
 
 
