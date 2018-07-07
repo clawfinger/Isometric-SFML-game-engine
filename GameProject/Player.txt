@@ -1,4 +1,0 @@
-Name Player
-ComponentList PathComponent SpriteComponent PositionComponent
-Component PositionComponent 200
-Component SpriteComponent Toughguy
