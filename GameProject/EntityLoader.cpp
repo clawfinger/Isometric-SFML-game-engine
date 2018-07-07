@@ -66,6 +66,7 @@ EntityId EntityLoader::load(std::string filename)
 				{
 					s_stream >> comp;
 					spriteComp->create(m_TextureManager->get(comp));
+					spriteComp->readData(s_stream);
 				}
 			}
 			else

@@ -22,12 +22,7 @@ Game::Game() : isRunning(true)
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
 
 	m_stateManager->setContainer(&m_container);
-
-	m_textureManager->load(TextureId::wall, "images/3.png");
-	m_textureManager->load(TextureId::floor1, "images/1.png");
-	m_textureManager->load(TextureId::floor2, "images/2.png");
-	m_textureManager->load(CharacterId::Toughguy, "images/player.png");
-	m_textureManager->load(EnemyId::enemy, "images/enemy.png");
+	m_textureManager->preloadTextures();
 
 	m_stateManager->activateState(GameStateType::level);
 }

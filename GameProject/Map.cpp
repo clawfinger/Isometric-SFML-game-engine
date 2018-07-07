@@ -7,8 +7,9 @@
 #include <memory>
 #include "Events/Events.h"
 #include "Utils/Logger.h"
+#include "Utils/Utility.h"
 
-MapTile::MapTile(): m_walkable(true)
+MapTile::MapTile(): m_walkable(true), m_empty(false)
 {
 }
 
@@ -21,7 +22,7 @@ Map::Map(std::shared_ptr<TextureManager> textures, std::shared_ptr<EventDispatch
 	m_EventDispatcher->subscribe(typeName<PlayerReachTileEvent>(), this);
 }
 
-MapTile::MapTile(sf::Texture& texture): m_walkable(true)
+MapTile::MapTile(sf::Texture& texture): m_walkable(true), m_empty(false)
 {
 	m_sprite.setTexture(texture);
 }
@@ -31,9 +32,19 @@ bool MapTile::isWalkable()
 	return m_walkable;
 }
 
+bool MapTile::isEmpty()
+{
+	return m_empty;
+}
+
 void MapTile::setWalkability(bool walkable)
 {
 	m_walkable = walkable;
+}
+
+void MapTile::setEmpty(bool empty)
+{
+	m_empty = empty;
 }
 
 void MapTile::setPosition(const sf::Vector2f & position)
@@ -93,28 +104,39 @@ void Map::loadLevel(LevelNames name)
 	s_stream >> tag;
 	if (tag == "mapTiles")
 	{
-		int tileId;
-		MapTile tile;
-		for (int i = 0; i < m_mapWidth * m_mapHeight; i++)
+		for (int i = 0; i < m_mapHeight; i++)
 		{
-			s_stream >> tileId;
-			switch (tileId)
+			std::string mapLine;
+			s_stream >> mapLine;
+			std::string floorTileTags = "ABCDEF";
+			if (mapLine.size() < m_mapWidth)
 			{
-			case 0:
-				tile.sprite().setTexture(m_textureManager->get(TextureId::wall));
-				tile.setWalkability(false);
+				for (int i = 0; i < m_mapWidth - mapLine.size(); i++)
+				{
+					mapLine.push_back('0');
+				}
+			}
+			for (int i = 0; i < mapLine.size(); i++)
+			{
+				MapTile tile;
+				int index = 0;
+				switch (mapLine[i])
+				{
+				case '0':
+					tile.setWalkability(false);
+					tile.setEmpty(true);
+					break;
+				case 'A':
+					tile.setWalkability(true);
+					index = getRandomInRange<int>(0, floorTileTags.size() - 1);
+					tile.sprite().setTexture(m_textureManager->get(std::string(floorTileTags.begin() + index, floorTileTags.begin() + index + 1)));
+					break;
+				default:
+					tile.sprite().setTexture(m_textureManager->get(std::string(mapLine.begin() + i, mapLine.begin() + i + 1)));
+					tile.setWalkability(false);
+					break;
+				}
 				m_mapTiles.push_back(tile);
-				break;
-			case 1:
-				tile.sprite().setTexture(m_textureManager->get(TextureId::floor1));
-				tile.setWalkability(true);
-				m_mapTiles.push_back(tile);
-				break;
-			case 2:
-				tile.sprite().setTexture(m_textureManager->get(TextureId::floor2));
-				tile.setWalkability(true);
-				m_mapTiles.push_back(tile);
-				break;
 			}
 		}
 	}
@@ -272,11 +294,11 @@ void Map::draw(std::shared_ptr<Window> window)
 	sf::Vector2f viewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
 	sf::Vector2f viewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
 
-	int startX = int(viewTopLeft.x) / m_tileWidth;
-	int endX = int(viewDownRight.x) / m_tileWidth + 1;
+	int startX = int(viewTopLeft.x) / m_tileWidth - 1;
+	int endX = int(viewDownRight.x) / m_tileWidth + 2;
 
-	int startY = int(viewTopLeft.y) / m_tileHeight;
-	int endY = int(viewDownRight.y) / m_tileHeight + 1;
+	int startY = int(viewTopLeft.y) / m_tileHeight - 1;
+	int endY = int(viewDownRight.y) / m_tileHeight + 2;
 
 	if (startX < 0 || startX > m_mapWidth)
 		startX = 0;
@@ -292,9 +314,11 @@ void Map::draw(std::shared_ptr<Window> window)
 	{
 		for (int x = startX; x < endX; x++)
 		{
+			MapTile& current = getMapTile(x, y);
 			sf::Vector2f position(float(x * m_tileWidth), float(y * m_tileHeight));
-			getMapTile(x, y).setPosition(position);
-			window->draw(getMapTile(x, y).sprite());
+			current.setPosition(position);
+			if(!current.isEmpty())
+				window->draw(getMapTile(x, y).sprite());
 		}
 	}
 }

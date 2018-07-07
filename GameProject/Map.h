@@ -16,13 +16,16 @@ public:
 	MapTile();
 	MapTile(sf::Texture& texture);
 	bool isWalkable();
+	bool isEmpty();
 	void setWalkability(bool walkable);
+	void setEmpty(bool empty);
 	void setPosition(const sf::Vector2f& position);
 	void setPosition(float x, float y);
 	sf::Sprite& sprite();
 private:
 	sf::Sprite m_sprite;
 	bool m_walkable;
+	bool m_empty;
 };
 
 enum LevelNames

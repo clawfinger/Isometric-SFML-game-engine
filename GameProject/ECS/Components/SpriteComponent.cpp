@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <sstream>
 #include "SpriteComponent.h"
 
 
@@ -28,4 +29,8 @@ void SpriteComponent::setPosition(const sf::Vector2f & position)
 
 void SpriteComponent::readData(std::stringstream & stream)
 {
+	int x = 0;
+	int y = 0;
+	stream >> x >> y;
+	m_sprite.setOrigin(x, y);
 }

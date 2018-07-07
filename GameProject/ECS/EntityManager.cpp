@@ -66,6 +66,7 @@ std::vector<EntityId> EntityManager::loadCharacters()
 				{
 					s_stream >> comp;
 					spriteComp->create(m_textureManager->get(comp));
+					spriteComp->readData(s_stream);
 				}
 			}
 			else

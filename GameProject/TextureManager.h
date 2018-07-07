@@ -19,6 +19,7 @@ class TextureManager
 {
 public:
 	TextureManager() {};
+	void preloadTextures();
 	void load(std::string id, const std::string& filename);
 	sf::Texture& get(std::string id);
 	sf::Texture& get(std::string id) const;

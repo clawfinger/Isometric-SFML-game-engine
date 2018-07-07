@@ -1,12 +1,39 @@
 #include "stdafx.h"
+#include <fstream>
+#include <sstream>
+#include "Utils/Logger.h"
 #include "TextureManager.h"
+
+void TextureManager::preloadTextures()
+{
+	std::ifstream mapFile;
+	std::string levelFileName;
+	levelFileName = "textures.txt";
+	mapFile.open(levelFileName);
+	if (!mapFile.is_open())
+	{
+		Logger::instance().log("ERROR: Texture file " + levelFileName + " failed to load!");
+		return;
+	}
+	std::stringstream s_stream;
+
+	s_stream << mapFile.rdbuf();
+	std::string tag;
+	std::string spriteName;
+	while (s_stream >> tag >> spriteName)
+	{
+		load(tag, "images/" + spriteName + ".png");
+	}
+	load(CharacterId::Toughguy, "images/toughguy.png");
+	load(EnemyId::enemy, "images/rat.png");
+}
 
 void TextureManager::load(std::string id, const std::string & filename)
 {
 	std::unique_ptr<sf::Texture> newTexture(new sf::Texture());
 	if (!newTexture->loadFromFile(filename))
 	{
-		std::cout << "TextureManager::load - Failed to load texture by " << filename << std::endl;
+		Logger::instance().log("TextureManager::load - Failed to load texture by " + filename);
 		return;
 	}
 	m_textureCache.insert(std::make_pair(id, std::move(newTexture)));
@@ -24,7 +51,7 @@ sf::Texture& TextureManager::get(std::string id) const
 		return *found->second;
 	else
 	{
-		std::cout << "Texture " << id << " not found. Aborting";
+		Logger::instance().log("Texture " + id + " not found. Aborting");
 		abort();
 	}
 }
