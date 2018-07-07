@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "window.h"
 
-Window::Window(): m_viewSpeed(300.0)
+Window::Window(): m_viewSpeed(600.0)
 {
 	setup("Default window", sf::Vector2u(800, 600));
 }
