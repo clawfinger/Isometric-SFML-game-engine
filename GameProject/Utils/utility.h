@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string>
 #include <vector>
+#include <random>
 
 namespace Vector
 {
@@ -21,6 +22,14 @@ namespace Vector
 	bool isVectorsIntersects(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c, sf::Vector2f d);
 }
 
+template<typename T>
+T getRandomInRange(T a, T b)
+{
+	std::random_device rd;     
+	std::mt19937 rng(rd());    
+	std::uniform_int_distribution<T> uni(a, b);
+	return uni(rng);
+}
 
 class StringList
 {
