@@ -116,7 +116,7 @@ void Map::loadLevel(LevelNames name)
 					mapLine.push_back('0');
 				}
 			}
-			for (int i = 0; i < mapLine.size(); i++)
+			for (int i = 0; i < m_mapWidth; i++)
 			{
 				MapTile tile;
 				int index = 0;
