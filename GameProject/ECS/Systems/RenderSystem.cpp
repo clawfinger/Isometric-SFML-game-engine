@@ -52,6 +52,11 @@ void RenderSystem::draw(std::shared_ptr<Window> window)
 		sf::Vector2f viewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
 		sf::Vector2f entityPosition = positionComponent->getPosition();
 
+		entityPosition.x = std::round(entityPosition.x);
+		entityPosition.y = std::round(entityPosition.y);
+
+		positionComponent->setPosition(entityPosition);
+
 		SpriteComponent* spriteComponent =
 			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
 
