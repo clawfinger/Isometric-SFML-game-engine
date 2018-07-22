@@ -86,6 +86,19 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
 			m_entityContainer->getComponent<PathComponent>(currentEvent->entity, typeName<PathComponent>());
 		PositionComponent* positionComponent = 
 			m_entityContainer->getComponent<PositionComponent>(currentEvent->entity, typeName<PositionComponent>());
+
+		//player clicked on the same destination tile twice
+		if (pathComponent->getPathEnd() == currentEvent->mapIndex)
+			return;
+
+		//player reset entity path while it was moving, finishing current movement
+		if (pathComponent->isPathSet())
+		{
+			std::stack<sf::Vector2f> tempPath;
+			tempPath.push(pathComponent->getPath().top());
+			pathComponent->setPath(tempPath, m_map->mapFromWindow(pathComponent->getPath().top()));
+			return;
+		}
 		pathComponent->setPath(m_map->calculatePath(
 			m_map->mapFromWindow(positionComponent->getPosition()), currentEvent->mapIndex), currentEvent->mapIndex);
 	}
