@@ -109,9 +109,9 @@ void Map::loadLevel(LevelNames name)
 			std::string mapLine;
 			s_stream >> mapLine;
 			std::string floorTileTags = "ABCDEF";
-			if (mapLine.size() < m_mapWidth)
+			if (mapLine.size() < size_t(m_mapWidth))
 			{
-				for (int i = 0; i < m_mapWidth - mapLine.size(); i++)
+				for (size_t i = 0; i < size_t(m_mapWidth - mapLine.size()); i++)
 				{
 					mapLine.push_back('0');
 				}

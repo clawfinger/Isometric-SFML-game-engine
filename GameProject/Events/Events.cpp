@@ -25,3 +25,8 @@ std::string MapCreatedEvent::name()
 {
 	return typeName<MapCreatedEvent>();
 }
+
+std::string EntityChangedOrientationEvent::name()
+{
+	return typeName<EntityChangedOrientationEvent>();
+}

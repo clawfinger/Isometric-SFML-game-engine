@@ -37,6 +37,7 @@ void TextureManager::load(std::string id, const std::string & filename)
 		Logger::instance().log("TextureManager::load - Failed to load texture by " + filename);
 		return;
 	}
+	newTexture->setSmooth(true);
 	m_textureCache.insert(std::make_pair(id, std::move(newTexture)));
 }
 

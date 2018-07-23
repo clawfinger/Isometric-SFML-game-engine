@@ -42,6 +42,16 @@ REGISTER_TYPENAME(PlayerReachTileEvent)
 
 class MapCreatedEvent: public IEvent
 {
+public:
 	std::string name();
 };
 REGISTER_TYPENAME(MapCreatedEvent)
+
+class EntityChangedOrientationEvent : public IEvent
+{
+public:
+	EntityChangedOrientationEvent(EntityId entity) : entity(entity) {}
+	std::string name();
+	EntityId entity;
+};
+REGISTER_TYPENAME(EntityChangedOrientationEvent)

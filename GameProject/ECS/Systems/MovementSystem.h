@@ -3,6 +3,7 @@
 #include "SystemBase.h"
 #include "../../Events/Observer.h"
 
+class PositionComponent;
 class EntityContainer;
 class EventDispatcher;
 class DiContainer;
@@ -19,6 +20,7 @@ public:
 private:
 	void handleEntitySpawnEvent(IEvent* event);
 	void handleSetDestinationEvent(IEvent* event);
+	void updateOrientation(const sf::Vector2f& movement, PositionComponent* positionComponent, EntityId id);
 
 private:
 	std::shared_ptr<EntityContainer> m_entityContainer;

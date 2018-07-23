@@ -2,7 +2,8 @@
 #include "PositionComponent.h"
 #include <sstream>
 
-PositionComponent::PositionComponent() : ComponentBase(typeName<PositionComponent>()), m_actorSpeed(0)
+PositionComponent::PositionComponent() : ComponentBase(typeName<PositionComponent>()),
+										m_actorSpeed(0), m_orientation(SpriteOrientation::right)
 {
 }
 

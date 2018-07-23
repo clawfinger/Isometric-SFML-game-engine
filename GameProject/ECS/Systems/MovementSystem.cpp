@@ -38,6 +38,9 @@ void MovementSystem::update(sf::Time deltatime)
 			{
 				sf::Vector2f playerMoveVector = pathComponent->getPath().top() - positionComponent->getPosition();
 				sf::Vector2f normalazedVector = Vector::normalize<sf::Vector2f>(playerMoveVector);
+
+				updateOrientation(normalazedVector, positionComponent, entity);
+
 				sf::Vector2f movement = normalazedVector * deltatime.asSeconds() * positionComponent->actorSpeed();
 				if (Vector::length<sf::Vector2f>(playerMoveVector) < Vector::length<sf::Vector2f>(movement))
 				{
@@ -101,6 +104,22 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
 		}
 		pathComponent->setPath(m_map->calculatePath(
 			m_map->mapFromWindow(positionComponent->getPosition()), currentEvent->mapIndex), currentEvent->mapIndex);
+	}
+}
+
+void MovementSystem::updateOrientation(const sf::Vector2f & movement, PositionComponent * positionComponent, EntityId id)
+{
+	SpriteOrientation orientation = positionComponent->orientation();
+
+	if (orientation == SpriteOrientation::left && movement.x > 0)
+	{
+		positionComponent->setOrientation(SpriteOrientation::right);
+		m_eventDispatcher->dispatch(new EntityChangedOrientationEvent(id));
+	}
+	else if (orientation == SpriteOrientation::right && movement.x < 0)
+	{
+		positionComponent->setOrientation(SpriteOrientation::left);
+		m_eventDispatcher->dispatch(new EntityChangedOrientationEvent(id));
 	}
 }
 
