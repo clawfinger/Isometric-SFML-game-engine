@@ -2,6 +2,7 @@
 #include "../../ECS/EntityContainer.h"
 #include "../Components/PathComponent.h"
 #include "../Components/PositionComponent.h"
+#include "../Components/SpriteOrientationComponent.h"
 #include "../../DiContainer/DiContainer.h"
 #include "../../Events/Events.h"
 #include "../../Map.h"
@@ -39,7 +40,9 @@ void MovementSystem::update(sf::Time deltatime)
 				sf::Vector2f playerMoveVector = pathComponent->getPath().top() - positionComponent->getPosition();
 				sf::Vector2f normalazedVector = Vector::normalize<sf::Vector2f>(playerMoveVector);
 
-				updateOrientation(normalazedVector, positionComponent, entity);
+				//Update sprite orientation if needed
+				if (m_entityContainer->HasComponent(entity, typeName<SpriteOrientationComponent>()))
+					updateOrientation(normalazedVector, entity);
 
 				sf::Vector2f movement = normalazedVector * deltatime.asSeconds() * positionComponent->actorSpeed();
 				if (Vector::length<sf::Vector2f>(playerMoveVector) < Vector::length<sf::Vector2f>(movement))
@@ -107,18 +110,19 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
 	}
 }
 
-void MovementSystem::updateOrientation(const sf::Vector2f & movement, PositionComponent * positionComponent, EntityId id)
+void MovementSystem::updateOrientation(const sf::Vector2f & movement, EntityId id)
 {
-	SpriteOrientation orientation = positionComponent->orientation();
+	SpriteOrientationComponent* orientationComponent =
+		m_entityContainer->getComponent<SpriteOrientationComponent>(id, typeName<SpriteOrientationComponent>());
 
-	if (orientation == SpriteOrientation::left && movement.x > 0)
+	if (orientationComponent->orientation() == SpriteOrientation::left && movement.x > 0)
 	{
-		positionComponent->setOrientation(SpriteOrientation::right);
+		orientationComponent->setOrientation(SpriteOrientation::right);
 		m_eventDispatcher->dispatch(new EntityChangedOrientationEvent(id));
 	}
-	else if (orientation == SpriteOrientation::right && movement.x < 0)
+	else if (orientationComponent->orientation() == SpriteOrientation::right && movement.x < 0)
 	{
-		positionComponent->setOrientation(SpriteOrientation::left);
+		orientationComponent->setOrientation(SpriteOrientation::left);
 		m_eventDispatcher->dispatch(new EntityChangedOrientationEvent(id));
 	}
 }

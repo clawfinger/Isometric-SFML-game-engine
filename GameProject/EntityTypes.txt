@@ -1,2 +1,2 @@
-Player PathComponent SpriteComponent PositionComponent
-Enemy PathComponent SpriteComponent PositionComponent AIControlledComponent
+Player PathComponent SpriteComponent PositionComponent SpriteOrientationComponent
+Enemy PathComponent SpriteComponent PositionComponent AIControlledComponent SpriteOrientationComponent

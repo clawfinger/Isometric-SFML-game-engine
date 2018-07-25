@@ -10,6 +10,7 @@ class SystemBase;
 class EventDispatcher;
 class DiContainer;
 class EntityManager;
+class RenderSystem;
 
 class GameEngine :	public Observer
 {
@@ -30,7 +31,7 @@ private:
 	DiContainer* m_container;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<EntityManager> m_entityManager;
-
+	RenderSystem* m_render;
 	std::unordered_map<std::string, SystemBase*> m_systems;
 };
 

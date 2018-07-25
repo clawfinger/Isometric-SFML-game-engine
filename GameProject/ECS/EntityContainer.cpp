@@ -4,6 +4,7 @@
 #include "Components/SpriteComponent.h"
 #include "Components/PositionComponent.h"
 #include "Components/AIControlledComponent.h"
+#include "Components/SpriteOrientationComponent.h"
 #include "../Events/Events.h"
 #include "../Utils/Meta.h"
 
@@ -14,6 +15,7 @@ EntityContainer::EntityContainer() : m_idCounter(0)
 	registerComponentFactory<SpriteComponent>(typeName<SpriteComponent>());
 	registerComponentFactory<PositionComponent>(typeName<PositionComponent>());
 	registerComponentFactory<AIControlledComponent>(typeName<AIControlledComponent>());
+	registerComponentFactory<SpriteOrientationComponent>(typeName<SpriteOrientationComponent>());
 }
 
 

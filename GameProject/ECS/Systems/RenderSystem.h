@@ -8,7 +8,7 @@ class EventDispatcher;
 class DiContainer;
 class Window;
 
-class RenderSystem : public SystemBase, Observer
+class RenderSystem : public SystemBase, public Observer
 {
 public:
 	RenderSystem(DiContainer* container, std::string name);
@@ -19,7 +19,6 @@ public:
 	void draw(std::shared_ptr<Window> window);
 private:
 	void handleEntitySpawnEvent(IEvent* event);
-	void handleOrientationChangeEvent(IEvent* event);
 private:
 	std::shared_ptr<EntityContainer> m_entityContainer;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
