@@ -61,13 +61,9 @@ EntityId GameEngine::getActiveCharacter()
 
 void GameEngine::initSystems()
 {
-	m_systems[typeName<MovementSystem>()] = new MovementSystem(m_container, typeName<MovementSystem>());
-	m_systems[typeName<RenderSystem>()] = new RenderSystem(m_container, typeName<RenderSystem>());
-	m_systems[typeName<SpriteOrientationSystem>()] = new SpriteOrientationSystem(m_container, typeName<SpriteOrientationSystem>());
+	m_render = new RenderSystem(m_container, typeName<RenderSystem>());
+	m_systems[typeName<RenderSystem>()] = m_render;
 
-	auto system = m_systems.find(typeName<RenderSystem>());
-	if (system != m_systems.end())
-	{
-		m_render = dynamic_cast<RenderSystem *>(system->second);
-	}
+	m_systems[typeName<MovementSystem>()] = new MovementSystem(m_container, typeName<MovementSystem>());
+	m_systems[typeName<SpriteOrientationSystem>()] = new SpriteOrientationSystem(m_container, typeName<SpriteOrientationSystem>());
 }
