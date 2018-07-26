@@ -45,12 +45,7 @@ void GameEngine::notify(IEvent * event)
 {
 	if (event->name() == typeName<MapCreatedEvent>())
 	{
-		MapCreatedEvent *currentEvent = dynamic_cast<MapCreatedEvent *>(event);
-		if (nullptr != currentEvent)
-		{
-			m_entityManager->spawnCharacters();
-			m_entityManager->spawnEnemy();
-		}
+		handleMapCreatedEvent(event);
 	}
 }
 
@@ -66,4 +61,14 @@ void GameEngine::initSystems()
 
 	m_systems[typeName<MovementSystem>()] = new MovementSystem(m_container, typeName<MovementSystem>());
 	m_systems[typeName<SpriteOrientationSystem>()] = new SpriteOrientationSystem(m_container, typeName<SpriteOrientationSystem>());
+}
+
+void GameEngine::handleMapCreatedEvent(IEvent * event)
+{
+	MapCreatedEvent *currentEvent = dynamic_cast<MapCreatedEvent *>(event);
+	if (nullptr != currentEvent)
+	{
+		m_entityManager->spawnCharacters();
+		m_entityManager->spawnEnemy();
+	}
 }

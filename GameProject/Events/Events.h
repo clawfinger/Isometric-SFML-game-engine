@@ -2,6 +2,7 @@
 #include "../Utils/utility.h"
 #include "../Utils/Meta.h"
 #include "../ECS/Entity.h"
+#include "../LevelInfo.h"
 
 class IEvent
 {
@@ -43,7 +44,9 @@ REGISTER_TYPENAME(PlayerReachTileEvent)
 class MapCreatedEvent: public IEvent
 {
 public:
+	MapCreatedEvent(LevelTypes currentMap) : mapType(currentMap) {}
 	std::string name();
+	LevelTypes mapType;
 };
 REGISTER_TYPENAME(MapCreatedEvent)
 

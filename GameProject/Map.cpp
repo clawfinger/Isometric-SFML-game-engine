@@ -62,13 +62,13 @@ sf::Sprite& MapTile::sprite()
 	return m_sprite;
 }
 
-void Map::loadLevel(LevelNames name)
+void Map::loadLevel(LevelTypes name)
 {
 	std::ifstream mapFile;
 	std::string levelFileName;
 	switch (name)
 	{
-	case LevelNames::dungeon:
+	case LevelTypes::dungeon:
 		levelFileName = "map.txt";
 		break;
 	}
@@ -156,7 +156,7 @@ void Map::loadLevel(LevelNames name)
 		s_stream >> m_enemySpawnPosition.x >> m_enemySpawnPosition.y;
 	}
 	mapFile.close();
-	m_EventDispatcher->dispatch(new MapCreatedEvent());
+	m_EventDispatcher->dispatch(new MapCreatedEvent(name));
 }
 
 bool Map::isWalkable(const sf::Vector2f& tile)
