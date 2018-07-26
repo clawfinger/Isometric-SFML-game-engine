@@ -3,6 +3,7 @@
 #include "Events/Observer.h"
 #include "Events/EventDispatcher.h"
 #include "Utils/Meta.h"
+#include "LevelInfo.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <stack>
@@ -28,12 +29,6 @@ private:
 	bool m_empty;
 };
 
-enum LevelNames
-{
-	dungeon = 1,
-	forest
-};
-
 class Map : public Observer
 {
 public:
@@ -45,6 +40,7 @@ public:
 	int mapHeight();
 	MapTile& getMapTile(int x, int y);
 	std::stack<sf::Vector2f> calculatePath(int start, int end);
+
 	int mapFromWindow(float x, float y);
 	int mapFromWindow(sf::Vector2f window);
 
