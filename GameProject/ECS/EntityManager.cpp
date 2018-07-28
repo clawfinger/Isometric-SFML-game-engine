@@ -1,6 +1,8 @@
 #include "stdafx.h"
+#include "SFML/System/Vector2.hpp"
 #include "../Utils/Logger.h"
 #include "../Utils/Utility.h"
+#include "../Utils/StructSerialization.h"
 #include "../TextureManager.h"
 #include "EntityContainer.h"
 #include "../Events/Events.h"
@@ -53,7 +55,7 @@ std::vector<EntityId> EntityManager::loadCharacters()
 		if (type == "Name") {
 			std::string name;
 			s_stream >> name;
-			Logger::instance().log("Loaded: " + name);
+			Logger::instance().log("Loaded character: " + name);
 		}
 		else if (type == "Component")
 		{
@@ -94,13 +96,15 @@ void EntityManager::spawnCharacters()
 	}
 }
 
-void EntityManager::spawnEnemy()
+void EntityManager::spawnEnemy(LevelTypes mapType)
 {
+	loadEnemies();
 	EntityId entity = m_entityContainer->createEntity(m_entityTypes[EntityType::enemy]);
+
 	SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
 	if (spriteComp)
 	{
-		spriteComp->create(m_textureManager->get(EnemyId::enemy));
+		spriteComp->create(m_textureManager->get(EnemyId::Rat));
 	}
 	PositionComponent* positionComponent =
 		m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
@@ -138,4 +142,35 @@ void EntityManager::loadEntityTypes()
 		m_entityTypes.insert(std::make_pair(type, std::move(componentsList)));
 	}
 	charFile.close();
+}
+
+void EntityManager::loadEnemies()
+{
+	std::ifstream enemiesFile;
+	std::string filename = "Enemies.txt";
+
+	std::string line;
+	enemiesFile.open(filename);
+
+	while (std::getline(enemiesFile, line))
+	{
+		std::stringstream s_stream(line);
+		std::string type;
+		s_stream >> type;
+		if (type == "#begin")
+		{
+			EnemyData data;
+			std::stringstream ss;
+			std::string name;
+			std::getline(enemiesFile, line);
+			while (line != "#end")
+			{
+				ss << line << std::endl;
+				std::getline(enemiesFile, line);
+			}
+			ClassMetaInfo<EnemyData>::deserialize(data, ss);
+			m_enemies.emplace(data.name, data);
+		}
+	}
+	enemiesFile.close();
 }

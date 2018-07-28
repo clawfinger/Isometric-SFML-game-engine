@@ -25,6 +25,7 @@ public:
 private:
 	void initSystems();
 	void handleMapCreatedEvent(IEvent* event);
+
 private:
 	EntityId m_activeCharacter;
 	std::vector<EntityId> m_characters;

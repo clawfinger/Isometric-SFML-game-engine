@@ -69,6 +69,6 @@ void GameEngine::handleMapCreatedEvent(IEvent * event)
 	if (nullptr != currentEvent)
 	{
 		m_entityManager->spawnCharacters();
-		m_entityManager->spawnEnemy();
+		m_entityManager->spawnEnemy(currentEvent->mapType);
 	}
 }

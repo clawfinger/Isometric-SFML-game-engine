@@ -44,3 +44,9 @@ public:
 private:
 	std::vector<std::string> m_strings;
 };
+
+struct Point
+{
+	int x;
+	int y;
+};

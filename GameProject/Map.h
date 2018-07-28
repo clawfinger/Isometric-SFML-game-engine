@@ -33,7 +33,7 @@ class Map : public Observer
 {
 public:
 	Map(std::shared_ptr<TextureManager> textures, std::shared_ptr<EventDispatcher> dispatcher);
-	void loadLevel(LevelNames name);
+	void loadLevel(LevelTypes name);
 	bool isWalkable(const sf::Vector2f& tile);
 	bool isWalkable(int x, int y);
 	int mapWidth();

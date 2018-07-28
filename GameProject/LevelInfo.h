@@ -1,6 +1,6 @@
 #pragma once
 
-enum LevelNames
+enum class LevelTypes
 {
 	dungeon = 1,
 	forest,

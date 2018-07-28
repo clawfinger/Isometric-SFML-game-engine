@@ -12,7 +12,7 @@ GameLevelState::GameLevelState(DiContainer* container): m_container(container)
 	m_map = m_container->get<Map>();
 	m_eventDispatcher = m_container->get<EventDispatcher>();
 
-	m_map->loadLevel(LevelNames::dungeon);
+	m_map->loadLevel(LevelTypes::dungeon);
 }
 
 
