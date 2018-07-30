@@ -101,6 +101,7 @@ private:
 	sf::Vector2f Class::* m_memberPointer;
 };
 
+//Main meta info class
 template <typename Class>
 class ClassMetaInfo
 {
@@ -134,17 +135,9 @@ public:
 		}
 	}
 
-	using MemberPtrType = std::unique_ptr<AbstractMember<Class>>;
-	using MemberMapType = std::unordered_map<std::string, MemberPtrType>;
-
 private:
-	//static MemberMapType m_members;
-
 	static std::unordered_map<std::string, std::unique_ptr<AbstractMember<Class>>> m_members;
 };
 
-template <typename Class>
-typename ClassMetaInfo<Class>::MemberMapType ClassMetaInfo<Class>::m_members;
-
-//template<typename Class>
-//std::unordered_map<std::string, std::unique_ptr<AbstractMember<Class>>> ClassMetaInfo<Class>::m_members;
+template<typename Class>
+std::unordered_map<std::string, std::unique_ptr<AbstractMember<Class>>> ClassMetaInfo<Class>::m_members;
