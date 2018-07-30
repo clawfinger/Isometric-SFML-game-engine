@@ -26,6 +26,8 @@ public:
 private:
 	void loadEntityTypes();
 	void loadEnemies();
+	EnemyData& getRandomEnemyData();
+
 private:
 	std::shared_ptr<EntityContainer> m_entityContainer;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;

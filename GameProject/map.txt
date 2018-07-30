@@ -18,4 +18,4 @@ JAAAAAAJ00000000000000
 KHHHHHHL00000000000000
 
 playerSpawnPosition 1 2
-enemySpawnPosition 17 3
+enemySpawnPosition 5 3

@@ -9,11 +9,13 @@
 #include "../Events/EventDispatcher.h"
 #include "../ECS/Components/SpriteComponent.h"
 #include "../ECS/Components/PositionComponent.h"
+#include "../ECS/Components/SpriteOrientationComponent.h"
 #include "../Map.h"
 #include "Entity.h"
 #include "EntityManager.h"
 #include <sstream>
 #include <fstream>
+#include <iterator>
 
 EntityManager::EntityManager(std::shared_ptr<EntityContainer> entityContainer,
 	std::shared_ptr<EventDispatcher> eventDispatcher,
@@ -99,19 +101,29 @@ void EntityManager::spawnCharacters()
 void EntityManager::spawnEnemy(LevelTypes mapType)
 {
 	loadEnemies();
+	EnemyData data = getRandomEnemyData();
+
 	EntityId entity = m_entityContainer->createEntity(m_entityTypes[EntityType::enemy]);
 
 	SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
 	if (spriteComp)
 	{
-		spriteComp->create(m_textureManager->get(EnemyId::Rat));
+		spriteComp->create(m_textureManager->get(data.textureId));
+		spriteComp->getSprite().setOrigin(data.spriteOrigin);
 	}
 	PositionComponent* positionComponent =
 		m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
 	if (positionComponent)
 	{
+		positionComponent->setActorSpeed(data.movementSpeed);
 		sf::Vector2f enemySpawn = m_map->getEnemySpawnCoordinate();
 		positionComponent->setPosition(enemySpawn);
+	}
+	SpriteOrientationComponent* orientationComponent =
+		m_entityContainer->getComponent<SpriteOrientationComponent>(entity, typeName<SpriteOrientationComponent>());
+	if (orientationComponent)
+	{
+		orientationComponent->setRightTextureRect(data.defaultTextureRect);
 	}
 	m_eventDispatcher->dispatch(new EntityCreatedEvent(entity, m_entityTypes[EntityType::enemy]));
 }
@@ -173,4 +185,11 @@ void EntityManager::loadEnemies()
 		}
 	}
 	enemiesFile.close();
+}
+
+EnemyData & EntityManager::getRandomEnemyData()
+{
+	int max = m_enemies.size() - 1;
+	auto random_it = std::next(std::begin(m_enemies), getRandomInRange<int>(0, max));
+	return random_it->second;
 }

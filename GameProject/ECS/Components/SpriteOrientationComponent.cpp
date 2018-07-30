@@ -28,3 +28,8 @@ sf::IntRect & SpriteOrientationComponent::getRightTextureRect()
 		Logger::instance().log("ERROR: requested empty TextureRect from SpriteOrientationComponent");
 	return m_rightTextureRect;
 }
+
+void SpriteOrientationComponent::setRightTextureRect(sf::IntRect & rect)
+{
+	m_rightTextureRect = rect;
+}
