@@ -67,12 +67,12 @@ bool EntityContainer::HasComponent(EntityId id, const std::string & componentNam
 				}
 			}
 		}
-		else
-		{
-			//TODO: Do i really need this???
-			Logger::instance().log("ERROR: Component " + componentName + " not found in entity with id=" + std::to_string(id));
-			return false;
-		}
+		//else
+		//{
+		//	//TODO: Do i really need this???
+		//	Logger::instance().log("ERROR: Component " + componentName + " not found in entity with id=" + std::to_string(id));
+		//	return false;
+		//}
 	}
 	else
 	{
