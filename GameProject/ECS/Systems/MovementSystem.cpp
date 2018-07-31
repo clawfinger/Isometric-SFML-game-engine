@@ -26,7 +26,7 @@ MovementSystem::MovementSystem(DiContainer* container, std::string name):
 
 void MovementSystem::update(sf::Time deltatime)
 {
-	sf::Time time = sf::seconds(0.15);
+	sf::Time time = sf::seconds(0.15f);
 	for (EntityId entity : m_entities)
 	{
 		PathComponent* pathComponent =
