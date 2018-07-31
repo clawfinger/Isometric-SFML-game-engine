@@ -9,6 +9,7 @@
 #include "ECS\Systems\MovementSystem.h"
 #include "ECS\Systems\RenderSystem.h"
 #include "ECS\Systems\SpriteOrientationSystem.h"
+#include "ECS\Systems\EntityVisionSystem.h"
 
 GameEngine::GameEngine(DiContainer* container): m_container(container)
 {
@@ -56,11 +57,12 @@ EntityId GameEngine::getActiveCharacter()
 
 void GameEngine::initSystems()
 {
-	m_render = new RenderSystem(m_container, typeName<RenderSystem>());
+	m_render = new RenderSystem(m_container);
 	m_systems[typeName<RenderSystem>()] = m_render;
 
-	m_systems[typeName<MovementSystem>()] = new MovementSystem(m_container, typeName<MovementSystem>());
-	m_systems[typeName<SpriteOrientationSystem>()] = new SpriteOrientationSystem(m_container, typeName<SpriteOrientationSystem>());
+	m_systems[typeName<MovementSystem>()] = new MovementSystem(m_container);
+	m_systems[typeName<SpriteOrientationSystem>()] = new SpriteOrientationSystem(m_container); 
+	m_systems[typeName<EntityVisionSystem>()] = new EntityVisionSystem(m_container);
 }
 
 void GameEngine::handleMapCreatedEvent(IEvent * event)

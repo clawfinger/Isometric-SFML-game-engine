@@ -9,7 +9,7 @@
 #include "../Components/SpriteOrientationComponent.h"
 #include "../../Window.h"
 
-RenderSystem::RenderSystem(DiContainer* container, std::string name): SystemBase(name)
+RenderSystem::RenderSystem(DiContainer* container): SystemBase(typeName<RenderSystem>())
 {
 	m_requirements << typeName<SpriteComponent>();
 

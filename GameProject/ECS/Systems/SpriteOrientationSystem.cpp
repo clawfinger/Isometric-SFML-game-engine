@@ -8,7 +8,7 @@
 #include "../Components/SpriteComponent.h"
 #include "../Components/SpriteOrientationComponent.h"
 
-SpriteOrientationSystem::SpriteOrientationSystem(DiContainer * container, std::string name): SystemBase(name)
+SpriteOrientationSystem::SpriteOrientationSystem(DiContainer * container): SystemBase(typeName<SpriteOrientationSystem>())
 {
 	m_requirements << typeName<SpriteOrientationComponent>();
 	m_requirements << typeName<SpriteComponent>();

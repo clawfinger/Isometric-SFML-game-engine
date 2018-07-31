@@ -12,7 +12,7 @@ class Map;
 class MovementSystem : public SystemBase, public Observer
 {
 public:
-	MovementSystem(DiContainer* container, std::string name);
+	MovementSystem(DiContainer* container);
 	~MovementSystem();
 
 	void update(sf::Time deltaTime);

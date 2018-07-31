@@ -5,6 +5,7 @@
 #include "Components/PositionComponent.h"
 #include "Components/AIControlledComponent.h"
 #include "Components/SpriteOrientationComponent.h"
+#include "Components/VisionComponent.h"
 #include "../Events/Events.h"
 #include "../Utils/Meta.h"
 
@@ -16,6 +17,8 @@ EntityContainer::EntityContainer() : m_idCounter(0)
 	registerComponentFactory<PositionComponent>(typeName<PositionComponent>());
 	registerComponentFactory<AIControlledComponent>(typeName<AIControlledComponent>());
 	registerComponentFactory<SpriteOrientationComponent>(typeName<SpriteOrientationComponent>());
+	registerComponentFactory<VisionComponent>(typeName<VisionComponent>());
+
 }
 
 
@@ -66,6 +69,7 @@ bool EntityContainer::HasComponent(EntityId id, const std::string & componentNam
 		}
 		else
 		{
+			//TODO: Do i really need this???
 			Logger::instance().log("ERROR: Component " + componentName + " not found in entity with id=" + std::to_string(id));
 			return false;
 		}

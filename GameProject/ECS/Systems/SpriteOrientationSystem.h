@@ -12,7 +12,7 @@ class SpriteOrientationComponent;
 class SpriteOrientationSystem : public SystemBase, public Observer
 {
 public:
-	SpriteOrientationSystem(DiContainer* container, std::string name);
+	SpriteOrientationSystem(DiContainer* container);
 	~SpriteOrientationSystem();
 	void update(sf::Time deltaTime) {}
 	void notify(IEvent* event);

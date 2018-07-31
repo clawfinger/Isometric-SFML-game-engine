@@ -19,7 +19,6 @@ Map::Map(std::shared_ptr<TextureManager> textures, std::shared_ptr<EventDispatch
 	m_textureManager(textures),
 	m_EventDispatcher(dispatcher)
 {
-	m_EventDispatcher->subscribe(typeName<PlayerReachTileEvent>(), this);
 }
 
 MapTile::MapTile(sf::Texture& texture): m_walkable(true), m_empty(false)
@@ -325,11 +324,7 @@ void Map::draw(std::shared_ptr<Window> window)
 
 void Map::notify(IEvent * event)
 {
-	if (event->name() == typeName<PlayerReachTileEvent>())
-	{
-		PlayerReachTileEvent *currentEvent = dynamic_cast<PlayerReachTileEvent *>(event);
-		Logger::instance().log("Map: " + event->name() + " " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
-	}
+
 }
 
 std::vector<int> Map::neighbors(int position)

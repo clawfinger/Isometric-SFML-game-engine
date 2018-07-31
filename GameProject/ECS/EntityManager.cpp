@@ -76,7 +76,12 @@ std::vector<EntityId> EntityManager::loadCharacters()
 			else
 			{
 				ComponentBase* component = m_entityContainer->getComponent<ComponentBase>(entity, comp);
-				component->readData(s_stream);
+				if (component)
+					component->readData(s_stream);
+				else
+				{
+					Logger::instance().log("ERROR: Cannot get component " + comp + " from entity container!");
+				}
 			}
 		}
 	}

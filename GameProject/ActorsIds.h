@@ -23,10 +23,13 @@ struct EnemyData
 		ClassMetaInfo<EnemyData>::registerMember<sf::Vector2f>("spriteOrigin", &EnemyData::spriteOrigin);
 		ClassMetaInfo<EnemyData>::registerMember<std::string>("textureId", &EnemyData::textureId);
 		ClassMetaInfo<EnemyData>::registerMember<float>("movementSpeed", &EnemyData::movementSpeed);
+		ClassMetaInfo<EnemyData>::registerMember<int>("vision", &EnemyData::vision);
+
 	}
 	std::string name;
 	sf::IntRect defaultTextureRect;
 	sf::Vector2f spriteOrigin;
 	std::string textureId;
 	float movementSpeed;
+	int vision;
 };

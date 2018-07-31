@@ -10,8 +10,8 @@
 #include "MovementSystem.h"
 
 
-MovementSystem::MovementSystem(DiContainer* container, std::string name):
-	SystemBase(name)
+MovementSystem::MovementSystem(DiContainer* container):
+	SystemBase(typeName<MovementSystem>())
 {
 	m_requirements << typeName<PathComponent>();
 	m_requirements << typeName<PositionComponent>();
