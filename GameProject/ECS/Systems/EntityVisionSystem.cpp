@@ -60,6 +60,9 @@ void EntityVisionSystem::handleEntityReachTileEvent(IEvent * event)
 	PlayerReachTileEvent *currentEvent = dynamic_cast<PlayerReachTileEvent *>(event);
 	if (nullptr != currentEvent)
 	{
-		Logger::instance().log("Map: " + event->name() + " " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
+		if (m_entityContainer->HasComponent(currentEvent->entity, typeName<AIControlledComponent>()))
+			Logger::instance().log("Enemy " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
+		else
+			Logger::instance().log("Player " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
 	}
 }

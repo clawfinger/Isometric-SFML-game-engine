@@ -35,9 +35,10 @@ REGISTER_TYPENAME(SetDestinationForEntityEvent)
 class PlayerReachTileEvent : public IEvent
 {
 public:
-	PlayerReachTileEvent(sf::Vector2f pos) : pos(pos) {}
+	PlayerReachTileEvent(sf::Vector2f pos, EntityId entity) : pos(pos), entity(entity) {}
 	std::string name();
 	sf::Vector2f pos;
+	EntityId entity;
 };
 REGISTER_TYPENAME(PlayerReachTileEvent)
 

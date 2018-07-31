@@ -55,7 +55,7 @@ void MovementSystem::update(sf::Time deltatime)
 				if (Vector::length<sf::Vector2f>(playerMoveVector) < Vector::length<sf::Vector2f>(movement))
 				{
 					positionComponent->setPosition(pathComponent->getPath().top());
-					m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top()));
+					m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top(), entity));
 					pathComponent->getPath().pop();
 					//restart entity tile reach pause
 					positionComponent->getPauseClock().restart();
