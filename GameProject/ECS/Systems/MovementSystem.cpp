@@ -26,12 +26,17 @@ MovementSystem::MovementSystem(DiContainer* container, std::string name):
 
 void MovementSystem::update(sf::Time deltatime)
 {
+	sf::Time time = sf::seconds(0.15);
 	for (EntityId entity : m_entities)
 	{
 		PathComponent* pathComponent =
 			m_entityContainer->getComponent<PathComponent>(entity, typeName<PathComponent>());
 		PositionComponent* positionComponent =
 			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+
+		//If entity reach tile pause is not finished
+		if (positionComponent->getPauseClock().getElapsedTime() < time)
+			return;
 
 		if (pathComponent->isPathSet())
 		{
@@ -45,11 +50,15 @@ void MovementSystem::update(sf::Time deltatime)
 					updateOrientation(normalazedVector, entity);
 
 				sf::Vector2f movement = normalazedVector * deltatime.asSeconds() * positionComponent->actorSpeed();
+
+				//Entity reach tile on current move
 				if (Vector::length<sf::Vector2f>(playerMoveVector) < Vector::length<sf::Vector2f>(movement))
 				{
 					positionComponent->setPosition(pathComponent->getPath().top());
 					m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top()));
 					pathComponent->getPath().pop();
+					//restart entity tile reach pause
+					positionComponent->getPauseClock().restart();
 				}
 				else
 				{

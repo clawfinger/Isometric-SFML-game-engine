@@ -1,4 +1,4 @@
 Name Player
-Component PositionComponent 200
+Component PositionComponent 350
 Component SpriteComponent Toughguy 0 128
 Component SpriteOrientationComponent 128 0 128 256
