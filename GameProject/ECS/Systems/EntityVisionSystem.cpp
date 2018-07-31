@@ -37,10 +37,7 @@ void EntityVisionSystem::notify(IEvent * event)
 	if (event->name() == typeName<EntityCreatedEvent>())
 		handleEntitySpawnEvent(event);
 	else if (event->name() == typeName<PlayerReachTileEvent>())
-	{
-		PlayerReachTileEvent *currentEvent = dynamic_cast<PlayerReachTileEvent *>(event);
-		Logger::instance().log("Map: " + event->name() + " " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
-	}
+		handleEntityReachTileEvent(event);
 }
 
 void EntityVisionSystem::handleEntitySpawnEvent(IEvent * event)
