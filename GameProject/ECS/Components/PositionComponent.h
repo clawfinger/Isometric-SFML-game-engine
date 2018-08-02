@@ -10,7 +10,7 @@ public:
 	PositionComponent();
 	~PositionComponent();
 
-	sf::Vector2f getPosition();
+	sf::Vector2f& getPosition();
 	void setPosition(const sf::Vector2f& position);
 
 	void move(const sf::Vector2f& movement);

@@ -11,7 +11,7 @@ PositionComponent::~PositionComponent()
 {
 }
 
-sf::Vector2f PositionComponent::getPosition()
+sf::Vector2f& PositionComponent::getPosition()
 {
 	return m_position;
 }
