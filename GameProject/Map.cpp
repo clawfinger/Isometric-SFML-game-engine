@@ -21,7 +21,7 @@ Map::Map(std::shared_ptr<TextureManager> textures, std::shared_ptr<EventDispatch
 {
 }
 
-MapTile::MapTile(sf::Texture& texture): m_walkable(true), m_empty(false)
+MapTile::MapTile(sf::Texture& texture): m_walkable(true), m_empty(false), m_transparent(true)
 {
 	m_sprite.setTexture(texture);
 }
@@ -36,6 +36,11 @@ bool MapTile::isEmpty()
 	return m_empty;
 }
 
+bool MapTile::isTransparent()
+{
+	return m_transparent;
+}
+
 void MapTile::setWalkability(bool walkable)
 {
 	m_walkable = walkable;
@@ -44,6 +49,10 @@ void MapTile::setWalkability(bool walkable)
 void MapTile::setEmpty(bool empty)
 {
 	m_empty = empty;
+}
+
+void MapTile::setTransparent(bool transparent)
+{
 }
 
 void MapTile::setPosition(const sf::Vector2f & position)
@@ -124,15 +133,18 @@ void Map::loadLevel(LevelTypes name)
 				case '0':
 					tile.setWalkability(false);
 					tile.setEmpty(true);
+					tile.setTransparent(true);
 					break;
 				case 'A':
 					tile.setWalkability(true);
 					index = getRandomInRange<int>(0, floorTileTags.size() - 1);
 					tile.sprite().setTexture(m_textureManager->get(std::string(floorTileTags.begin() + index, floorTileTags.begin() + index + 1)));
+					tile.setTransparent(true);
 					break;
 				default:
 					tile.sprite().setTexture(m_textureManager->get(std::string(mapLine.begin() + i, mapLine.begin() + i + 1)));
 					tile.setWalkability(false);
+					tile.setTransparent(false);
 					break;
 				}
 				m_mapTiles.push_back(tile);

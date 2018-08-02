@@ -18,15 +18,21 @@ public:
 	MapTile(sf::Texture& texture);
 	bool isWalkable();
 	bool isEmpty();
+	bool isTransparent();
+
 	void setWalkability(bool walkable);
 	void setEmpty(bool empty);
+	void setTransparent(bool transparent);
+
 	void setPosition(const sf::Vector2f& position);
 	void setPosition(float x, float y);
+
 	sf::Sprite& sprite();
 private:
 	sf::Sprite m_sprite;
 	bool m_walkable;
 	bool m_empty;
+	bool m_transparent;
 };
 
 class Map : public Observer
