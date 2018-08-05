@@ -20,10 +20,6 @@ EntityVisionSystem::EntityVisionSystem(DiContainer* container): SystemBase(typeN
 	m_eventDispatcher = container->get<EventDispatcher>();
 	m_map = container->get<Map>();
 
-	//TODO: get this from settings
-	m_tileHeight = 128;
-	m_tileWidth = 128;
-
 	m_eventDispatcher->subscribe(typeName<EntityCreatedEvent>(), this);
 	m_eventDispatcher->subscribe(typeName<PlayerReachTileEvent>(), this);
 }
@@ -71,7 +67,8 @@ void EntityVisionSystem::handleEntityReachTileEvent(IEvent * event)
 		else
 			Logger::instance().log("Player " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
 
-		checkEnemyInSight();
+		if (checkEnemyInSight())
+			Logger::instance().log("Battle!");
 	}
 }
 
@@ -85,7 +82,10 @@ bool EntityVisionSystem::checkEnemyInSight()
 		{
 			PositionComponent* enemyPositionComponent =
 				m_entityContainer->getComponent<PositionComponent>(enemy, typeName<PositionComponent>());
-			if (isVisible(characterPositionComponent->getPosition(), enemyPositionComponent->getPosition()))
+			VisionComponent* enemyVisionComponent =
+				m_entityContainer->getComponent<VisionComponent>(enemy, typeName<VisionComponent>());
+
+			if (isVisible(characterPositionComponent->getPosition(), enemyPositionComponent->getPosition(), enemyVisionComponent->getVision()))
 			{
 				return true;
 			}
@@ -94,27 +94,53 @@ bool EntityVisionSystem::checkEnemyInSight()
 	return false;
 }
 
-bool EntityVisionSystem::isVisible(sf::Vector2f & from, sf::Vector2f & to)
+bool EntityVisionSystem::isVisible(sf::Vector2f & from, sf::Vector2f & to, int lengthOfSight)
 {
-	int fromX = int(from.x / m_tileWidth);
-	int fromY = int(from.y / m_tileHeight);
-	int toX = int(to.x / m_tileWidth);
-	int toY = int(to.y / m_tileHeight);
+	sf::Vector2i mapFrom = m_map->XYfromWindow(from);
+	sf::Vector2i mapTo = m_map->XYfromWindow(to);
 
-	int lenX = std::abs(toX - fromX);
-	int lenY = std::abs(toY - fromY);
+	int lenX = std::abs(mapFrom.x - mapTo.x);
+	int lenY = std::abs(mapFrom.y - mapTo.y);
 
-	int currentX = fromX;
-	int currentY = fromY;
+	int currentX = mapFrom.x;
+	int currentY = mapFrom.y;
 
-	if (lenX >= lenY)
+	int currentLengthOfSight = 0;
+	if (lenX == 0)
+	{
+		for (int i = currentY; i <= currentY + lenY; i++)
+		{
+			if (!m_map->getMapTile(currentX, i).isTransparent() || currentLengthOfSight > lengthOfSight)
+				return false;
+			currentLengthOfSight++;
+		}
+	}
+	else if (lenY == 0)
+	{
+		for (int i = currentX; i <= currentX + lenX; i++)
+		{
+			if (!m_map->getMapTile(i, currentY).isTransparent() || currentLengthOfSight > lengthOfSight)
+				return false;
+			currentLengthOfSight++;
+		}
+	}
+	else if (lenX >= lenY)
 	{
 		float error = 0;
 		float coefficient = float(lenY) / lenX;
 
 		for (int i = 0; i <= lenX; i++)
 		{
-
+			currentX++;
+			error += coefficient;
+			if (error > 0.5)
+			{
+				currentY++;
+				error -= 1;
+			}
+			if (!m_map->getMapTile(currentX, currentY).isTransparent() || currentLengthOfSight >= lengthOfSight)
+				return false;
+			currentLengthOfSight++;
 		}
 	}
 	else
@@ -124,9 +150,18 @@ bool EntityVisionSystem::isVisible(sf::Vector2f & from, sf::Vector2f & to)
 
 		for (int i = 0; i <= lenY; i++)
 		{
-
+			currentY++;
+			error += coefficient;
+			if (error > 0.5)
+			{
+				currentX++;
+				error -= 1;
+			}
+			if (!m_map->getMapTile(currentX, currentY).isTransparent() || currentLengthOfSight > lengthOfSight)
+				return false;
+			currentLengthOfSight++;
 		}
 	}
 
-	return false;
+	return true;
 }

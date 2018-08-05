@@ -10,6 +10,7 @@
 #include "../ECS/Components/SpriteComponent.h"
 #include "../ECS/Components/PositionComponent.h"
 #include "../ECS/Components/SpriteOrientationComponent.h"
+#include "../ECS/Components/VisionComponent.h"
 #include "../Map.h"
 #include "Entity.h"
 #include "EntityManager.h"
@@ -129,6 +130,12 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
 	if (orientationComponent)
 	{
 		orientationComponent->setRightTextureRect(data.defaultTextureRect);
+	}
+	VisionComponent* visionComponent =
+		m_entityContainer->getComponent<VisionComponent>(entity, typeName<VisionComponent>());
+	if (visionComponent)
+	{
+		visionComponent->setVision(data.vision);
 	}
 	m_eventDispatcher->dispatch(new EntityCreatedEvent(entity, m_entityTypes[EntityType::enemy]));
 }

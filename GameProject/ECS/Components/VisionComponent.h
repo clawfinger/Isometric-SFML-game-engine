@@ -9,6 +9,9 @@ public:
 	~VisionComponent();
 	void readData(std::stringstream& stream);
 
+	int getVision() const { return m_vision; }
+	void setVision(int val) { m_vision = val; }
+
 private:
 	int m_vision;
 };

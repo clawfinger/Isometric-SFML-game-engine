@@ -282,6 +282,11 @@ sf::Vector2f Map::XYfromLinear(int linear)
 	return sf::Vector2f(x, y);
 }
 
+sf::Vector2i Map::XYfromWindow(sf::Vector2f& windowCoords)
+{
+	return sf::Vector2i(int(windowCoords.x / m_tileWidth), int(windowCoords.y / m_tileHeight));
+}
+
 sf::Vector2f Map::getPlayerSpawnCoordinate()
 {
 	return windowFromMap(m_playerSpawnPosition);

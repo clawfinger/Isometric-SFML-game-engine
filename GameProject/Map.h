@@ -56,6 +56,8 @@ public:
 	inline int linearFromXY(int x, int y);
 	inline sf::Vector2f XYfromLinear(int linear);
 
+	sf::Vector2i XYfromWindow(sf::Vector2f& windowCoords);
+
 	sf::Vector2f getPlayerSpawnCoordinate(); //to be removed
 	sf::Vector2f getEnemySpawnCoordinate(); //to be removed
 
