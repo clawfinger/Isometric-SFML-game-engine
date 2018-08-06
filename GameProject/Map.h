@@ -47,8 +47,8 @@ public:
 	MapTile& getMapTile(int x, int y);
 	std::stack<sf::Vector2f> calculatePath(int start, int end);
 
-	int mapFromWindow(float x, float y);
-	int mapFromWindow(sf::Vector2f window);
+	int mapIndexFromWindow(float x, float y);
+	int mapIndexFromWindow(sf::Vector2f window);
 
 	inline sf::Vector2f windowFromMap(float x, float y);
 	inline sf::Vector2f windowFromMap(sf::Vector2f);

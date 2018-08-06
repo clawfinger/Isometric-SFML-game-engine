@@ -111,11 +111,11 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
 		{
 			std::stack<sf::Vector2f> tempPath;
 			tempPath.push(pathComponent->getPath().top());
-			pathComponent->setPath(tempPath, m_map->mapFromWindow(pathComponent->getPath().top()));
+			pathComponent->setPath(tempPath, m_map->mapIndexFromWindow(pathComponent->getPath().top()));
 			return;
 		}
 		pathComponent->setPath(m_map->calculatePath(
-			m_map->mapFromWindow(positionComponent->getPosition()), currentEvent->mapIndex), currentEvent->mapIndex);
+			m_map->mapIndexFromWindow(positionComponent->getPosition()), currentEvent->mapIndex), currentEvent->mapIndex);
 	}
 }
 

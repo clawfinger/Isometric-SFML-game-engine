@@ -74,7 +74,9 @@ void GameLevelState::handleKeyboardInput(sf::Keyboard::Key key)
 void GameLevelState::handleMouseInput(sf::Vector2i mouseCoords)
 {
 	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(mouseCoords);
-	int mapIndex = m_map->mapFromWindow(mouse.x, mouse.y);
+	int mapIndex = m_map->mapIndexFromWindow(mouse.x, mouse.y);
+	sf::Vector2i mapXY = m_map->XYfromWindow(mouse);
+
 	EntityId activeCharcter = m_gameEngine->getActiveCharacter();
 
 	if (m_map->isWalkable(m_map->XYfromLinear(mapIndex)))

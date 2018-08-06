@@ -250,12 +250,12 @@ std::stack<sf::Vector2f> Map::calculatePath(int start, int end)
 	return result;
 }
 
-int Map::mapFromWindow(float x, float y)
+int Map::mapIndexFromWindow(float x, float y)
 {
 	return linearFromXY(int(x / m_tileWidth), int(y / m_tileHeight));
 }
 
-int Map::mapFromWindow(sf::Vector2f window)
+int Map::mapIndexFromWindow(sf::Vector2f window)
 {
 	return linearFromXY(int(window.x / m_tileWidth), int(window.y / m_tileHeight));
 }
