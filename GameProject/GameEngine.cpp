@@ -2,7 +2,6 @@
 #include "GameEngine.h"
 #include "Events/Events.h"
 #include "Utils/Logger.h"
-#include "EntityLoader.h"
 #include "DiContainer\DiContainer.h"
 #include "Events\EventDispatcher.h"
 #include "ECS\EntityManager.h"

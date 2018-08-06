@@ -5,7 +5,6 @@
 #include "Utils/Logger.h"
 #include <iostream>
 #include <fstream>
-#include "EntityLoader.h"
 #include "ECS/EntityManager.h"
 #include "ECS/EntityContainer.h"
 
@@ -86,6 +85,5 @@ void Game::registerClassFactories()
 	m_container.registerClass<Window>(constructingFunction);
 	m_container.registerClass<GameStateManager>(constructingFunction);
 	m_container.registerClass<EntityContainer>(constructingFunction);
-	m_container.registerClass<EntityLoader>(constructingFunction<EntityContainer, TextureManager, EventDispatcher>);
 	m_container.registerClass<EntityManager>(constructingFunction<EntityContainer, EventDispatcher, TextureManager, Map>);
 }
