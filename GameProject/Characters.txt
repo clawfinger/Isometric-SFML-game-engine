@@ -1,5 +1,16 @@
-Name Player
-Component PositionComponent 350
-Component SpriteComponent Toughguy 0 128
-Component SpriteOrientationComponent 128 0 128 256
-Component VisionComponent 5
+#begin
+name Toughguy
+movementSpeed 300
+textureId Toughguy
+spriteOrigin 0 128
+defaultTextureRect 128 0 128 256
+vision 5
+#end
+#begin
+name Smartguy
+movementSpeed 300
+textureId Smartguy
+spriteOrigin 0 128
+defaultTextureRect 128 0 128 256
+vision 5
+#end

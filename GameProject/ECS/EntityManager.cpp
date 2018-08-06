@@ -35,72 +35,16 @@ EntityManager::~EntityManager()
 {
 }
 
-std::vector<EntityId> EntityManager::loadCharacters()
-{
-	std::ifstream charFile;
-	std::string filename = "Characters.txt";
-
-	charFile.open(filename);
-	if (!charFile.is_open())
-	{
-		Logger::instance().log("ERROR: Characters file " + filename + " failed to load!");
-		return std::vector<EntityId>();
-	}
-
-	std::string line;
-	EntityId entity = m_entityContainer->createEntity(m_entityTypes[EntityType::player]);
-
-	while (std::getline(charFile, line))
-	{
-		std::stringstream s_stream(line);
-		std::string type;
-		s_stream >> type;
-		if (type == "Name") {
-			std::string name;
-			s_stream >> name;
-			Logger::instance().log("Loaded character: " + name);
-		}
-		else if (type == "Component")
-		{
-			std::string comp;
-			s_stream >> comp;
-			if (comp == typeName<SpriteComponent>())
-			{
-				SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity, comp);
-				if (spriteComp)
-				{
-					s_stream >> comp;
-					spriteComp->create(m_textureManager->get(comp));
-					spriteComp->readData(s_stream);
-				}
-			}
-			else
-			{
-				ComponentBase* component = m_entityContainer->getComponent<ComponentBase>(entity, comp);
-				if (component)
-					component->readData(s_stream);
-				else
-				{
-					Logger::instance().log("ERROR: Cannot get component " + comp + " from entity container!");
-				}
-			}
-		}
-	}
-	m_chacters.push_back(entity);
-	charFile.close();
-	return m_chacters;
-}
-
 void EntityManager::spawnCharacters()
 {
 	//change map for multiple characters spawn
 	sf::Vector2f playerSpawn = m_map->getPlayerSpawnCoordinate();
-	for (auto characterId : m_chacters)
+	for (auto characterId : m_charactersIds)
 	{
 		PositionComponent* positionComponent =
 			m_entityContainer->getComponent<PositionComponent>(characterId, typeName<PositionComponent>());
 		positionComponent->setPosition(playerSpawn);
-		m_eventDispatcher->dispatch(new EntityCreatedEvent(characterId, m_entityTypes[EntityType::player]));
+		m_eventDispatcher->dispatch(new EntityCreatedEvent(characterId, m_entityTypes[EntityType::character]));
 	}
 }
 
@@ -168,6 +112,43 @@ void EntityManager::loadEntityTypes()
 	charFile.close();
 }
 
+std::vector<EntityId> EntityManager::loadCharacters()
+{
+
+	std::ifstream charactersFile;
+	std::string filename = "Characters.txt";
+
+	std::string line;
+	charactersFile.open(filename);
+
+	while (std::getline(charactersFile, line))
+	{
+		std::stringstream s_stream(line);
+		std::string type;
+		s_stream >> type;
+		if (type == "#begin")
+		{
+			CharacterData data;
+			std::stringstream ss;
+			std::getline(charactersFile, line);
+			while (line != "#end")
+			{
+				ss << line << std::endl;
+				std::getline(charactersFile, line);
+			}
+			ClassMetaInfo<CharacterData>::deserialize(data, ss);
+			m_charactersData.emplace(data.name, data);
+		}
+	}
+	charactersFile.close();
+
+	for (const auto& character : m_charactersData)
+	{
+		m_charactersIds.push_back(createCharacterFromData(character.second));
+	}
+	return m_charactersIds;
+}
+
 void EntityManager::loadEnemies()
 {
 	std::ifstream enemiesFile;
@@ -185,7 +166,6 @@ void EntityManager::loadEnemies()
 		{
 			EnemyData data;
 			std::stringstream ss;
-			std::string name;
 			std::getline(enemiesFile, line);
 			while (line != "#end")
 			{
@@ -193,15 +173,50 @@ void EntityManager::loadEnemies()
 				std::getline(enemiesFile, line);
 			}
 			ClassMetaInfo<EnemyData>::deserialize(data, ss);
-			m_enemies.emplace(data.name, data);
+			m_enemiesData.emplace(data.name, data);
 		}
 	}
 	enemiesFile.close();
+
+
 }
 
 EnemyData & EntityManager::getRandomEnemyData()
 {
-	int max = m_enemies.size() - 1;
-	auto random_it = std::next(std::begin(m_enemies), getRandomInRange<int>(0, max));
+	int max = m_enemiesData.size() - 1;
+	auto random_it = std::next(std::begin(m_enemiesData), getRandomInRange<int>(0, max));
 	return random_it->second;
+}
+
+EntityId EntityManager::createCharacterFromData(const CharacterData & data) const
+{
+	EntityId entity = m_entityContainer->createEntity(m_entityTypes.at(EntityType::character));
+
+	SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+	if (spriteComp)
+	{
+		spriteComp->create(m_textureManager->get(data.textureId));
+		spriteComp->getSprite().setOrigin(data.spriteOrigin);
+	}
+	PositionComponent* positionComponent =
+		m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+	if (positionComponent)
+	{
+		positionComponent->setActorSpeed(data.movementSpeed);
+		sf::Vector2f enemySpawn = m_map->getEnemySpawnCoordinate();
+		positionComponent->setPosition(enemySpawn);
+	}
+	SpriteOrientationComponent* orientationComponent =
+		m_entityContainer->getComponent<SpriteOrientationComponent>(entity, typeName<SpriteOrientationComponent>());
+	if (orientationComponent)
+	{
+		orientationComponent->setRightTextureRect(data.defaultTextureRect);
+	}
+	VisionComponent* visionComponent =
+		m_entityContainer->getComponent<VisionComponent>(entity, typeName<VisionComponent>());
+	if (visionComponent)
+	{
+		visionComponent->setVision(data.vision);
+	}
+	return entity;
 }

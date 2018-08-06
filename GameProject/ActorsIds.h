@@ -33,3 +33,23 @@ struct EnemyData
 	float movementSpeed;
 	int vision;
 };
+
+struct CharacterData
+{
+	CharacterData()
+	{
+		ClassMetaInfo<CharacterData>::registerMember<std::string>("name", &CharacterData::name);
+		ClassMetaInfo<CharacterData>::registerMember<sf::IntRect>("defaultTextureRect", &CharacterData::defaultTextureRect);
+		ClassMetaInfo<CharacterData>::registerMember<sf::Vector2f>("spriteOrigin", &CharacterData::spriteOrigin);
+		ClassMetaInfo<CharacterData>::registerMember<std::string>("textureId", &CharacterData::textureId);
+		ClassMetaInfo<CharacterData>::registerMember<float>("movementSpeed", &CharacterData::movementSpeed);
+		ClassMetaInfo<CharacterData>::registerMember<int>("vision", &CharacterData::vision);
+
+	}
+	std::string name;
+	sf::IntRect defaultTextureRect;
+	sf::Vector2f spriteOrigin;
+	std::string textureId;
+	float movementSpeed;
+	int vision;
+};

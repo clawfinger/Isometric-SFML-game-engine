@@ -29,7 +29,7 @@ sf::IntRect & SpriteOrientationComponent::getRightTextureRect()
 	return m_rightTextureRect;
 }
 
-void SpriteOrientationComponent::setRightTextureRect(sf::IntRect & rect)
+void SpriteOrientationComponent::setRightTextureRect(const sf::IntRect & rect)
 {
 	m_rightTextureRect = rect;
 }

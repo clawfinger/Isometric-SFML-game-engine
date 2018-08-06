@@ -6,6 +6,6 @@ using EntityId = uint32_t;
 
 namespace EntityType
 {
-	static std::string player = "Player";
+	static std::string character = "Character";
 	static std::string enemy = "Enemy";
 }
