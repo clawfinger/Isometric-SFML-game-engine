@@ -19,9 +19,7 @@ public:
 	void render();
 	void handlePlayerInput(sf::Event& event);
 	void onDeactivate();
-private:
-	void handleKeyboardInput(sf::Keyboard::Key key);
-	void handleMouseInput(sf::Vector2i mouseCoords);
+
 private:
 	DiContainer* m_container;
 	std::shared_ptr<Window> m_window;

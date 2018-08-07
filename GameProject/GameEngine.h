@@ -1,11 +1,14 @@
 #pragma once
+#include <memory>
+#include <unordered_map>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Event.hpp>
 #include "Events\Observer.h"
 #include "SFML\System\Time.hpp"
 #include "ECS/Entity.h"
-#include <memory>
-#include <unordered_map>
 
 class Window;
+class Map;
 class SystemBase;
 class EventDispatcher;
 class DiContainer;
@@ -22,8 +25,14 @@ public:
 	void notify(IEvent* event);
 	EntityId getActiveCharacter();
 
+	void handlePlayerInput(sf::Event & event);
+
 private:
 	void initSystems();
+
+	void handleKeyboardInput(sf::Keyboard::Key key);
+	void handleMouseInput(sf::Vector2i mouseCoords);
+
 	void handleMapCreatedEvent(IEvent* event);
 
 private:
@@ -32,6 +41,8 @@ private:
 	DiContainer* m_container;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<EntityManager> m_entityManager;
+	std::shared_ptr<Window> m_window;
+	std::shared_ptr<Map> m_map;
 	RenderSystem* m_render;
 	std::unordered_map<std::string, SystemBase*> m_systems;
 };

@@ -9,12 +9,16 @@
 #include "ECS\Systems\RenderSystem.h"
 #include "ECS\Systems\SpriteOrientationSystem.h"
 #include "ECS\Systems\EntityVisionSystem.h"
+#include "Map.h"
+#include "Window.h"
 
 GameEngine::GameEngine(DiContainer* container): m_container(container)
 {
 	initSystems();
 	m_eventDispatcher = m_container->get<EventDispatcher>();
 	m_entityManager = m_container->get<EntityManager>();
+	m_map = m_container->get<Map>();
+	m_window = m_container->get<Window>();
 	m_characters = m_entityManager->loadCharacters();
 
 	if (!m_characters.empty())
@@ -71,5 +75,53 @@ void GameEngine::handleMapCreatedEvent(IEvent * event)
 	{
 		m_entityManager->spawnCharacters();
 		m_entityManager->spawnEnemy(currentEvent->mapType);
+	}
+}
+
+void GameEngine::handlePlayerInput(sf::Event& event)
+{
+	switch (event.type)
+	{
+	case sf::Event::KeyReleased:
+	case sf::Event::KeyPressed:
+		handleKeyboardInput(event.key.code);
+		break;
+	case sf::Event::MouseButtonPressed:
+	{
+		if (event.mouseButton.button == sf::Mouse::Left)
+		{
+			sf::Vector2i coords = sf::Vector2i(event.mouseButton.x, event.mouseButton.y);
+			handleMouseInput(coords);
+			break;
+		}
+	}
+	}
+}
+
+void GameEngine::handleKeyboardInput(sf::Keyboard::Key key)
+{
+	sf::Vector2f viewMoveVector;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		viewMoveVector.y = -1;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		viewMoveVector.y = 1;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		viewMoveVector.x = -1;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		viewMoveVector.x = 1;
+
+	m_window->setViewMoveVector(viewMoveVector);
+}
+
+void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
+{
+	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(mouseCoords);
+	int mapIndex = m_map->mapIndexFromWindow(mouse.x, mouse.y);
+	sf::Vector2i mapXY = m_map->XYfromWindow(mouse);
+
+	if (m_map->isWalkable(m_map->XYfromLinear(mapIndex)))
+	{
+		IEvent* tileClicked = new SetDestinationForEntityEvent(getActiveCharacter(), mapIndex);
+		m_eventDispatcher->dispatch(tileClicked);
 	}
 }
