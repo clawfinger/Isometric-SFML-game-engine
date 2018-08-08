@@ -50,11 +50,11 @@ public:
 	int mapIndexFromWindow(float x, float y);
 	int mapIndexFromWindow(sf::Vector2f window);
 
-	inline sf::Vector2f windowFromMap(float x, float y);
-	inline sf::Vector2f windowFromMap(sf::Vector2f);
+	sf::Vector2f windowFromMap(float x, float y);
+	sf::Vector2f windowFromMap(sf::Vector2f);
 
-	inline int linearFromXY(int x, int y);
-	inline sf::Vector2f XYfromLinear(int linear);
+	int linearFromXY(int x, int y);
+	sf::Vector2f XYfromLinear(int linear);
 
 	sf::Vector2i XYfromWindow(sf::Vector2f& windowCoords);
 
