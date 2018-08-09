@@ -9,6 +9,7 @@
 #include "ECS\Systems\RenderSystem.h"
 #include "ECS\Systems\SpriteOrientationSystem.h"
 #include "ECS\Systems\EntityVisionSystem.h"
+#include "ECS\Systems\EntityMapPositionSystem.h"
 #include "Map.h"
 #include "Window.h"
 
@@ -66,6 +67,7 @@ void GameEngine::initSystems()
 	m_systems[typeName<MovementSystem>()] = new MovementSystem(m_container);
 	m_systems[typeName<SpriteOrientationSystem>()] = new SpriteOrientationSystem(m_container); 
 	m_systems[typeName<EntityVisionSystem>()] = new EntityVisionSystem(m_container);
+	m_systems[typeName<EntityMapPositionSystem>()] = new EntityMapPositionSystem(m_container);
 }
 
 void GameEngine::handleMapCreatedEvent(IEvent * event)
@@ -119,9 +121,32 @@ void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
 	int mapIndex = m_map->mapIndexFromWindow(mouse.x, mouse.y);
 	sf::Vector2i mapXY = m_map->XYfromWindow(mouse);
 
+	EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
+	EntityId entity = EPSystem->getEntityAtMapXY(mapXY.x, mapXY.y);
+	if (!(entity < 0))
+	{
+		if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
+		{
+			m_activeCharacter = entity;
+			//send active char changed event
+			return;
+		}
+	}
 	if (m_map->isWalkable(m_map->XYfromLinear(mapIndex)))
 	{
 		IEvent* tileClicked = new SetDestinationForEntityEvent(getActiveCharacter(), mapIndex);
 		m_eventDispatcher->dispatch(tileClicked);
 	}
 }
+
+	template<typename T>
+	T* GameEngine::getSystem(const std::string& name)
+	{
+		auto iterator = m_systems.find(name);
+		if (iterator != m_systems.end())
+		{
+			return dynamic_cast<T*>(iterator->second);
+		}
+		else
+			return nullptr;
+	}

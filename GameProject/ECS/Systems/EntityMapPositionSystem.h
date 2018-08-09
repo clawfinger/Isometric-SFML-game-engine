@@ -19,7 +19,7 @@ public:
 
 private:
 	void handleEntitySpawnEvent(IEvent* event);
-
+	bool isNear(const sf::Vector2f& left, const sf::Vector2f& right, float treshold = 2.0f);
 private:
 	std::shared_ptr<EntityContainer> m_entityContainer;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;

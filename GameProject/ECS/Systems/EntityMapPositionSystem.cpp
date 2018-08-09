@@ -49,10 +49,31 @@ EntityId EntityMapPositionSystem::getEntityAtMapXY(int x, int y)
 		PositionComponent* positionComponent =
 			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
 
-		
-		if(m_entityContainer->HasComponent(entity, typeName<PathComponent>()))
-		PathComponent* pathComponent =
-			m_entityContainer->getComponent<PathComponent>(entity, typeName<PathComponent>());
+		if (isNear(positionComponent->getPosition(), mapPosition))
+			return entity;
+		else
+		{		
+			if(m_entityContainer->HasComponent(entity, typeName<PathComponent>()))
+			{
+				PathComponent* pathComponent =
+					m_entityContainer->getComponent<PathComponent>(entity, typeName<PathComponent>());
+				if (pathComponent->isPathSet())
+				{
+					if (isNear(positionComponent->getPosition(), pathComponent->getPath().top()))
+						return entity;
+				}
+			}
+		}
 	}
 	return -1;
+}
+
+bool EntityMapPositionSystem::isNear(const sf::Vector2f& left, const sf::Vector2f& right, float treshold)
+{
+	bool Xok = abs(left.x - right.x) < treshold;
+	bool Yok = abs(left.y - right.y) < treshold;
+	if (Xok && Yok)
+		return true;
+	else
+		return false;
 }
