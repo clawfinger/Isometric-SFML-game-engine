@@ -119,10 +119,9 @@ void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
 {
 	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(mouseCoords);
 	int mapIndex = m_map->mapIndexFromWindow(mouse.x, mouse.y);
-	sf::Vector2i mapXY = m_map->XYfromWindow(mouse);
 
 	EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
-	EntityId entity = EPSystem->getEntityAtMapXY(mapXY.x, mapXY.y);
+	EntityId entity = EPSystem->getEntityAtCoordinates(mouse);
 	if (!(entity < 0))
 	{
 		if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
@@ -134,7 +133,7 @@ void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
 	}
 	if (m_map->isWalkable(m_map->XYfromLinear(mapIndex)))
 	{
-		IEvent* tileClicked = new SetDestinationForEntityEvent(getActiveCharacter(), mapIndex);
+		IEvent* tileClicked = new SetDestinationForEntityEvent(m_activeCharacter, mapIndex);
 		m_eventDispatcher->dispatch(tileClicked);
 	}
 }

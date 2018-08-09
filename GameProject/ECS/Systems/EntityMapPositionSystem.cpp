@@ -5,7 +5,9 @@
 #include "../../Events/Events.h"
 #include "../../Events/EventDispatcher.h"
 #include "../Components/PathComponent.h"
+#include "../Components/SpriteComponent.h"
 #include "../Components/PositionComponent.h"
+#include "../../Utils/Utility.h"
 #include "../../Map.h"
 
 EntityMapPositionSystem::EntityMapPositionSystem(DiContainer* container): SystemBase(typeName<EntityMapPositionSystem>())
@@ -41,39 +43,20 @@ void EntityMapPositionSystem::handleEntitySpawnEvent(IEvent* event)
 	}
 }
 
-EntityId EntityMapPositionSystem::getEntityAtMapXY(int x, int y)
+EntityId EntityMapPositionSystem::getEntityAtCoordinates(const sf::Vector2f & mouse)
 {
-	sf::Vector2f mapPosition = m_map->windowFromMap(x, y);
-	for (EntityId entity: m_entities)
+	for (EntityId entity : m_entities)
 	{
 		PositionComponent* positionComponent =
 			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+		SpriteComponent* spriteComponent =
+			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
 
-		if (isNear(positionComponent->getPosition(), mapPosition))
+		if (isInside(mouse.x, mouse.y, positionComponent->getPosition().y,
+			positionComponent->getPosition().x, spriteComponent->getSprite().getGlobalBounds().width,
+			spriteComponent->getSprite().getGlobalBounds().height))
 			return entity;
-		else
-		{		
-			if(m_entityContainer->HasComponent(entity, typeName<PathComponent>()))
-			{
-				PathComponent* pathComponent =
-					m_entityContainer->getComponent<PathComponent>(entity, typeName<PathComponent>());
-				if (pathComponent->isPathSet())
-				{
-					if (isNear(positionComponent->getPosition(), pathComponent->getPath().top()))
-						return entity;
-				}
-			}
-		}
+
 	}
 	return -1;
-}
-
-bool EntityMapPositionSystem::isNear(const sf::Vector2f& left, const sf::Vector2f& right, float treshold)
-{
-	bool Xok = abs(left.x - right.x) < treshold;
-	bool Yok = abs(left.y - right.y) < treshold;
-	if (Xok && Yok)
-		return true;
-	else
-		return false;
 }

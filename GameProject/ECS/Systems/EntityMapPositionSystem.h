@@ -15,11 +15,11 @@ public:
 	~EntityMapPositionSystem();
 	void update(sf::Time deltaTime);
 	void notify(IEvent* event);
-    EntityId getEntityAtMapXY(int x, int y);
+	EntityId getEntityAtCoordinates(const sf::Vector2f& mouse);
 
 private:
 	void handleEntitySpawnEvent(IEvent* event);
-	bool isNear(const sf::Vector2f& left, const sf::Vector2f& right, float treshold = 2.0f);
+
 private:
 	std::shared_ptr<EntityContainer> m_entityContainer;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
