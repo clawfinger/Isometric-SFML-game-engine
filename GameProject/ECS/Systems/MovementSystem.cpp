@@ -22,21 +22,18 @@ MovementSystem::MovementSystem(DiContainer* container):
 
 	m_eventDispatcher->subscribe(typeName<EntityCreatedEvent>(), this);
 	m_eventDispatcher->subscribe(typeName<SetDestinationForEntityEvent>(), this);
+
+	m_reachTilePauseTime = sf::seconds(0.15f);
 }
 
 void MovementSystem::update(sf::Time deltatime)
-{
-	sf::Time time = sf::seconds(0.15f);
+{	
 	for (EntityId entity : m_entities)
 	{
 		PathComponent* pathComponent =
 			m_entityContainer->getComponent<PathComponent>(entity, typeName<PathComponent>());
 		PositionComponent* positionComponent =
 			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
-
-		//If entity reach tile pause is not finished
-		if (positionComponent->getPauseClock().getElapsedTime() < time)
-			return;
 
 		if (pathComponent->isPathSet())
 		{
@@ -57,8 +54,11 @@ void MovementSystem::update(sf::Time deltatime)
 					positionComponent->setPosition(pathComponent->getPath().top());
 					m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top(), entity));
 					pathComponent->getPath().pop();
-					//restart entity tile reach pause
-					positionComponent->getPauseClock().restart();
+					//check if pause is needed;
+					if (!pathComponent->isPathSet())
+					{
+
+					}
 				}
 				else
 				{
