@@ -59,3 +59,10 @@ bool Vector::isVectorsIntersects(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c,
 		orientedArea(c, d, b) * orientedArea(c, d, a) < 0;
 
 }
+
+bool isInside(float pointX, float pointY, float top, float left, int width, int height)
+{
+	bool Xok = (pointX >= left) && (pointX <= (left + width));
+	bool Yok = (pointY >= top) && (pointY <= (top + height));
+	return Xok && Yok;
+}

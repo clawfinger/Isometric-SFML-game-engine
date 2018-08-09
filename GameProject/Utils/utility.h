@@ -45,8 +45,11 @@ private:
 	std::vector<std::string> m_strings;
 };
 
+template<typename T>
 struct Point
 {
-	int x;
-	int y;
+	T x;
+	T y;
 };
+
+bool isInside(float pointX, float pointY, float top, float left, int width, int height);
