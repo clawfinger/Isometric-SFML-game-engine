@@ -7,7 +7,6 @@
 #include "../Components/PathComponent.h"
 #include "../Components/SpriteComponent.h"
 #include "../Components/PositionComponent.h"
-#include "../../Utils/Utility.h"
 #include "../../Map.h"
 
 EntityMapPositionSystem::EntityMapPositionSystem(DiContainer* container): SystemBase(typeName<EntityMapPositionSystem>())
@@ -43,6 +42,14 @@ void EntityMapPositionSystem::handleEntitySpawnEvent(IEvent* event)
 	}
 }
 
+bool isInside(float pointX, float pointY, float top, float left, int width, int height)
+{
+	//TODO: redo the isInside check
+	bool Xok = (pointX >= left) && (pointX <= (left + width));
+	bool Yok = (pointY >= top) && (pointY <= (top + width));
+	return Xok && Yok;
+}
+
 EntityId EntityMapPositionSystem::getEntityAtCoordinates(const sf::Vector2f & mouse)
 {
 	for (EntityId entity : m_entities)
@@ -52,8 +59,10 @@ EntityId EntityMapPositionSystem::getEntityAtCoordinates(const sf::Vector2f & mo
 		SpriteComponent* spriteComponent =
 			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
 
-		if (isInside(mouse.x, mouse.y, positionComponent->getPosition().y,
-			positionComponent->getPosition().x, spriteComponent->getSprite().getGlobalBounds().width,
+		if (isInside(mouse.x, mouse.y,
+			positionComponent->getPosition().y,
+			positionComponent->getPosition().x,
+			spriteComponent->getSprite().getGlobalBounds().width,
 			spriteComponent->getSprite().getGlobalBounds().height))
 			return entity;
 

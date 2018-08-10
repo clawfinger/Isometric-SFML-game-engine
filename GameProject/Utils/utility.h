@@ -51,5 +51,3 @@ struct Point
 	T x;
 	T y;
 };
-
-bool isInside(float pointX, float pointY, float top, float left, int width, int height);
