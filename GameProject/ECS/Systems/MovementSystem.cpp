@@ -34,6 +34,12 @@ void MovementSystem::update(sf::Time deltatime)
 			m_entityContainer->getComponent<PathComponent>(entity, typeName<PathComponent>());
 		PositionComponent* positionComponent =
 			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+		//standing on tile, waiting the pause;
+		if (positionComponent->getPauseTime().asSeconds() > 0)
+		{
+			positionComponent->getPauseTime() -= deltatime;
+			continue;
+		}
 
 		if (pathComponent->isPathSet())
 		{
@@ -55,9 +61,10 @@ void MovementSystem::update(sf::Time deltatime)
 					m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top(), entity));
 					pathComponent->getPath().pop();
 					//check if pause is needed;
-					if (!pathComponent->isPathSet())
+					if (pathComponent->isPathSet())
 					{
-
+						//setting pause time
+						positionComponent->setPauseTime(m_reachTilePauseTime);
 					}
 				}
 				else
