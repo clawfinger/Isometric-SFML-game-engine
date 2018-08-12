@@ -8,6 +8,8 @@ class EventDispatcher;
 class DiContainer;
 class Map;
 
+const uint32_t INVALIDID = 4294967295;
+
 class EntityMapPositionSystem : public SystemBase, public Observer
 {
 public:

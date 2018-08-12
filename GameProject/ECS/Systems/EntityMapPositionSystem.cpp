@@ -67,5 +67,5 @@ EntityId EntityMapPositionSystem::getEntityAtCoordinates(const sf::Vector2f & mo
 			return entity;
 
 	}
-	return -1;
+	return INVALIDID;
 }

@@ -122,7 +122,7 @@ void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
 
 	EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
 	EntityId entity = EPSystem->getEntityAtCoordinates(mouse);
-	if (!(entity < 0))
+	if (entity != INVALIDID)
 	{
 		if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
 		{
