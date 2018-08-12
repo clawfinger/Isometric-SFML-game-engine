@@ -3,6 +3,7 @@
 #include <string>
 
 using EntityId = uint32_t;
+const uint32_t INVALIDID = 4294967295;
 
 namespace EntityType
 {
