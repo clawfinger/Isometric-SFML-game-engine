@@ -67,28 +67,25 @@ void EntityVisionSystem::handleEntityReachTileEvent(IEvent * event)
 		else
 			Logger::instance().log("Player " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
 
-		if (checkEnemyInSight())
+		if (checkEnemyInSight(currentEvent->entity))
 			Logger::instance().log("Battle!");
 	}
 }
 
-bool EntityVisionSystem::checkEnemyInSight()
+bool EntityVisionSystem::checkEnemyInSight(EntityId character)
 {
-	for (EntityId character : m_characters)
+	PositionComponent* characterPositionComponent =
+		m_entityContainer->getComponent<PositionComponent>(character, typeName<PositionComponent>());
+	for (EntityId enemy : m_enemies)
 	{
-		PositionComponent* characterPositionComponent =
-			m_entityContainer->getComponent<PositionComponent>(character, typeName<PositionComponent>());
-		for (EntityId enemy : m_enemies)
-		{
-			PositionComponent* enemyPositionComponent =
-				m_entityContainer->getComponent<PositionComponent>(enemy, typeName<PositionComponent>());
-			VisionComponent* enemyVisionComponent =
-				m_entityContainer->getComponent<VisionComponent>(enemy, typeName<VisionComponent>());
+		PositionComponent* enemyPositionComponent =
+			m_entityContainer->getComponent<PositionComponent>(enemy, typeName<PositionComponent>());
+		VisionComponent* enemyVisionComponent =
+			m_entityContainer->getComponent<VisionComponent>(enemy, typeName<VisionComponent>());
 
-			if (isVisible(characterPositionComponent->getPosition(), enemyPositionComponent->getPosition(), enemyVisionComponent->getVision()))
-			{
-				return true;
-			}
+		if (isVisible(characterPositionComponent->getPosition(), enemyPositionComponent->getPosition(), enemyVisionComponent->getVision()))
+		{
+			return true;
 		}
 	}
 	return false;
@@ -99,65 +96,69 @@ bool EntityVisionSystem::isVisible(sf::Vector2f & from, sf::Vector2f & to, int l
 	sf::Vector2i mapFrom = m_map->XYfromWindow(from);
 	sf::Vector2i mapTo = m_map->XYfromWindow(to);
 
-	int lenX = std::abs(mapFrom.x - mapTo.x);
-	int lenY = std::abs(mapFrom.y - mapTo.y);
-
-	int currentX = mapFrom.x;
-	int currentY = mapFrom.y;
+	int lenX = mapFrom.x - mapTo.x;
+	int lenY = mapFrom.y - mapTo.y;
 
 	int currentLengthOfSight = 0;
 	if (lenX == 0)
 	{
-		for (int i = currentY; i <= currentY + lenY; i++)
+		if (lenY > 0)
+			std::swap(mapFrom.y, mapTo.y);
+		while (mapFrom.y != mapTo.y)
 		{
-			if (!m_map->getMapTile(currentX, i).isTransparent() || currentLengthOfSight > lengthOfSight)
+			if (!m_map->getMapTile(mapFrom.x, mapFrom.y).isTransparent() || currentLengthOfSight > lengthOfSight)
 				return false;
 			currentLengthOfSight++;
+			mapFrom.y++;
 		}
 	}
 	else if (lenY == 0)
 	{
-		for (int i = currentX; i <= currentX + lenX; i++)
+		if (lenX > 0)
+			std::swap(mapFrom.x, mapTo.x);
+		while (mapFrom.x != mapTo.x)
 		{
-			if (!m_map->getMapTile(i, currentY).isTransparent() || currentLengthOfSight > lengthOfSight)
+			if (!m_map->getMapTile(mapFrom.x, mapFrom.y).isTransparent() || currentLengthOfSight > lengthOfSight)
 				return false;
 			currentLengthOfSight++;
-		}
-	}
-	else if (lenX >= lenY)
-	{
-		float error = 0;
-		float coefficient = float(lenY) / lenX;
-
-		for (int i = 0; i <= lenX; i++)
-		{
-			currentX++;
-			error += coefficient;
-			if (error > 0.5)
-			{
-				currentY++;
-				error -= 1;
-			}
-			if (!m_map->getMapTile(currentX, currentY).isTransparent() || currentLengthOfSight >= lengthOfSight)
-				return false;
-			currentLengthOfSight++;
+			mapFrom.x++;
 		}
 	}
 	else
 	{
+		bool steep = std::abs(lenY) > std::abs(lenX);
 		float error = 0;
-		float coefficient = float(lenX) / lenY;
+		float coefficient = 0;
+		if(std::abs(lenY) < std::abs(lenX))
+			coefficient = std::abs(float(lenY) / lenX);
+		else
+			coefficient = std::abs(float(lenX) / lenY);
 
-		for (int i = 0; i <= lenY; i++)
+		if (steep)
 		{
-			currentY++;
+			std::swap(mapFrom.x, mapFrom.y);
+			std::swap(mapTo.x, mapTo.y);
+		}
+
+		if (mapFrom.x - mapTo.x > 0)
+		{
+			std::swap(mapFrom.x, mapTo.x);
+			std::swap(mapFrom.y, mapTo.y);
+		}
+
+		int Ysign = (mapFrom.y - mapTo.y > 0) ? -1 : 1;
+
+		while (mapFrom.x != mapTo.x)
+		{
+			mapFrom.x++;
 			error += coefficient;
 			if (error > 0.5)
 			{
-				currentX++;
+				mapFrom.y += Ysign;
 				error -= 1;
 			}
-			if (!m_map->getMapTile(currentX, currentY).isTransparent() || currentLengthOfSight > lengthOfSight)
+			//Logger::instance().log(std::to_string(steep ? mapFrom.y : mapFrom.x) + ':' + std::to_string(steep ? mapFrom.x : mapFrom.y));
+			if (!m_map->getMapTile(steep? mapFrom.y: mapFrom.x, steep? mapFrom.x: mapFrom.y).isTransparent() || currentLengthOfSight >= lengthOfSight)
 				return false;
 			currentLengthOfSight++;
 		}
