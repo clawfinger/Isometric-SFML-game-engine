@@ -20,7 +20,7 @@ public:
 private:
 	void handleEntitySpawnEvent(IEvent* event);
 	void handleEntityReachTileEvent(IEvent * event);
-	bool checkEnemyInSight(EntityId character);
+	std::vector<EntityId> checkEnemyInSight(EntityId character);
 	bool isVisible(sf::Vector2f& from, sf::Vector2f& to, int lengthOfSight);
 
 private:

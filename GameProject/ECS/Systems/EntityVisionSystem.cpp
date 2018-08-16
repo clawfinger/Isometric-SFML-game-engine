@@ -67,13 +67,18 @@ void EntityVisionSystem::handleEntityReachTileEvent(IEvent * event)
 		else
 			Logger::instance().log("Player " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
 
-		if (checkEnemyInSight(currentEvent->entity))
+		std::vector<EntityId> enemiesInBattle = checkEnemyInSight(currentEvent->entity);
+		if (!enemiesInBattle.empty())
+		{
 			Logger::instance().log("Battle!");
+			m_eventDispatcher->dispatch(new BattleStartedEvent(enemiesInBattle));
+		}
 	}
 }
 
-bool EntityVisionSystem::checkEnemyInSight(EntityId character)
+std::vector<EntityId> EntityVisionSystem::checkEnemyInSight(EntityId character)
 {
+	std::vector<EntityId> enemiesInBattle;
 	PositionComponent* characterPositionComponent =
 		m_entityContainer->getComponent<PositionComponent>(character, typeName<PositionComponent>());
 	for (EntityId enemy : m_enemies)
@@ -85,10 +90,27 @@ bool EntityVisionSystem::checkEnemyInSight(EntityId character)
 
 		if (isVisible(characterPositionComponent->getPosition(), enemyPositionComponent->getPosition(), enemyVisionComponent->getVision()))
 		{
-			return true;
+			//if the character is in field of view if enemy
+			enemiesInBattle.push_back(enemy);
+			//check the other enemies in the field if view of the enemy that initiated the battle
+			for (EntityId subEnemy : m_enemies)
+			{
+				if (subEnemy == enemy)
+					continue;
+
+				PositionComponent* subEnemyPositionComponent =
+					m_entityContainer->getComponent<PositionComponent>(subEnemy, typeName<PositionComponent>());
+				VisionComponent* subEnemyVisionComponent =
+					m_entityContainer->getComponent<VisionComponent>(subEnemy, typeName<VisionComponent>());
+				if (isVisible(enemyPositionComponent->getPosition(), subEnemyPositionComponent->getPosition(), subEnemyVisionComponent->getVision()))
+				{
+					enemiesInBattle.push_back(subEnemy);
+				}
+			}
+			break;
 		}
 	}
-	return false;
+	return enemiesInBattle;
 }
 
 bool EntityVisionSystem::isVisible(sf::Vector2f & from, sf::Vector2f & to, int lengthOfSight)

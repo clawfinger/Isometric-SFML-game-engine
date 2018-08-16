@@ -30,3 +30,8 @@ std::string EntityChangedOrientationEvent::name()
 {
 	return typeName<EntityChangedOrientationEvent>();
 }
+
+std::string BattleStartedEvent::name()
+{
+	return typeName<BattleStartedEvent>();
+}

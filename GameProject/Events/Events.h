@@ -59,3 +59,12 @@ public:
 	EntityId entity;
 };
 REGISTER_TYPENAME(EntityChangedOrientationEvent)
+
+class BattleStartedEvent : public IEvent
+{
+public:
+	BattleStartedEvent(std::vector<EntityId> enemies) : enemies(enemies) {}
+	std::string name();
+	std::vector<EntityId> enemies;
+};
+REGISTER_TYPENAME(BattleStartedEvent)
