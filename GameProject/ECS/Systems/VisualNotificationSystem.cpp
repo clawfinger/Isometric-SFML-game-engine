@@ -29,3 +29,8 @@ void VisualNotificationSystem::notify(IEvent * event)
 void VisualNotificationSystem::draw(std::shared_ptr<Window> window)
 {
 }
+
+void NotificationBase::draw(std::shared_ptr<Window> window)
+{
+	window->draw(m_sprite);
+}
