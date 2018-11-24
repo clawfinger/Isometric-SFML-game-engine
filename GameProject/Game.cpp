@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "game.h"
 #include "State/GameLevelState.h"
 #include "ActorsIds.h"
@@ -7,6 +6,7 @@
 #include <fstream>
 #include "ECS/EntityManager.h"
 #include "ECS/EntityContainer.h"
+#include "DiContainer/ConstructingFunctions.h"
 
 Game::Game() : isRunning(true)
 {

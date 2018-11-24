@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "ConstructingFunctions.h"
+class DiContainer;
 
 enum class FactoryType
 {
@@ -18,7 +18,7 @@ template <typename ReturnT>
 class Factory : public IFactory
 {
 public:
-	using constructingFunction = ReturnT*(*)(const DiContainer& cont);
+	using constructingFunction = ReturnT * (*)(const DiContainer& cont);
 	~Factory() {};
 	Factory(constructingFunction function, FactoryType type) :
 		m_function(function), m_type(type), m_instance(nullptr) {};

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Commands.h"
 
 std::string SetPathCommand::name()

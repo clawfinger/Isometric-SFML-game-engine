@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "CommandExecutors.h"
 #include "../Utils/Logger.h"
 

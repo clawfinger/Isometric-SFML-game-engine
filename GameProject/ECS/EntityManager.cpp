@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "SFML/System/Vector2.hpp"
 #include "../Utils/Logger.h"
 #include "../Utils/Utility.h"

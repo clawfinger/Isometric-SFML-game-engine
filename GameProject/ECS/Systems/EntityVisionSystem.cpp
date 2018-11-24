@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "EntityVisionSystem.h"
 #include "../Components/PositionComponent.h"
 #include "../Components/VisionComponent.h"

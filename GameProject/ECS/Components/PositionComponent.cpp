@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "PositionComponent.h"
 #include <sstream>
 

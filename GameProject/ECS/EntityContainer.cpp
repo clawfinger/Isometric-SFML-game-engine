@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "EntityContainer.h"
 #include "Components/PathComponent.h"
 #include "Components/SpriteComponent.h"

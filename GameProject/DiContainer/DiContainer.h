@@ -4,6 +4,7 @@
 #include "../Utils/Logger.h"
 #include "../Utils/Meta.h"
 
+
 class DiContainer
 {
 public:
@@ -17,13 +18,13 @@ private:
 };
 
 template<typename ReturnT>
-inline void DiContainer::registerClass(typename Factory<ReturnT>::constructingFunction function, FactoryType type)
+void DiContainer::registerClass(typename Factory<ReturnT>::constructingFunction function, FactoryType type)
 {
 	std::string name = typeName<ReturnT>();
 	if (name == "DEFAULT")
 		Logger::instance().log("ERROR: Registering class without REGISTER TYPENAME macro defined!");
 	m_factories[name] = new Factory<ReturnT>(function, type);
-}
+};
 
 template<typename ReturnT>
 inline std::shared_ptr<ReturnT> DiContainer::get() const
@@ -35,4 +36,4 @@ inline std::shared_ptr<ReturnT> DiContainer::get() const
 	}
 	else
 		return nullptr;
-}
+};

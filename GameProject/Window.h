@@ -25,7 +25,7 @@ public:
 	void update(sf::Time deltaTime);
 	void draw(sf::Drawable& drawable);
 
-	void moveView(sf::Vector2f& movement);
+	void moveView(sf::Vector2f movement);
 	void resizeView(sf::Vector2f& newSize);
 	sf::View& getView();
 

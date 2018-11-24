@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "window.h"
 
 Window::Window(): m_viewSpeed(600.0)
@@ -58,7 +57,7 @@ void Window::draw(sf::Drawable & drawable)
 	m_window.draw(drawable);
 }
 
-void Window::moveView(sf::Vector2f & movement)
+void Window::moveView(sf::Vector2f movement)
 {
 	m_mainView.move(movement);
 	m_window.setView(m_mainView);

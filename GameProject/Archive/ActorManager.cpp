@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Utils/Logger.h"
 #include "TextureManager.h"
 #include "Map.h"

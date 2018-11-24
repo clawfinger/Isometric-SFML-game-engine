@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "EventDispatcher.h"
 #include "Events.h"
 #include "../Utils/Logger.h"

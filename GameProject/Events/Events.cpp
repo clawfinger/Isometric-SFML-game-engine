@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Events.h"
 
 std::string EntityCreatedEvent::name()

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "../../ECS/EntityContainer.h"
 #include "../Components/PathComponent.h"
 #include "../Components/PositionComponent.h"

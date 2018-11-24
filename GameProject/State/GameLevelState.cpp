@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "GameLevelState.h"
 #include "../Events/Events.h"
 #include <SFML/System/Time.hpp>

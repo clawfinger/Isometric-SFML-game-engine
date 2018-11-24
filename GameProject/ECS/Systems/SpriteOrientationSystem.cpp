@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "SpriteOrientationSystem.h"
 #include "../../DiContainer/DiContainer.h"
 #include "../../Events/Events.h"

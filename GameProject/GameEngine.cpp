@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "GameEngine.h"
 #include "Events/Events.h"
 #include "Utils/Logger.h"

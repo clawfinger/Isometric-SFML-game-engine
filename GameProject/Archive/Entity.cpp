@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Entity.h"
 
 void Entity::create(sf::Texture & texture)

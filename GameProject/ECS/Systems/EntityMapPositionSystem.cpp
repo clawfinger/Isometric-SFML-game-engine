@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "EntityMapPositionSystem.h"
 #include "../../ECS/EntityContainer.h"
 #include "../../DiContainer/DiContainer.h"

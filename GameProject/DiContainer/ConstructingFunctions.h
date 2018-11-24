@@ -1,7 +1,5 @@
 #pragma once
-#include "../stdafx.h"
-
-class DiContainer;
+#include "DiContainer.h"
 
 template<typename ResultT>
 ResultT* constructingFunction(const DiContainer& cont)

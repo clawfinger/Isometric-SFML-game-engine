@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Actor.h"
 #include "PathFollower.h"
 #include "Window.h"

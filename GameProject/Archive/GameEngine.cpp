@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "GameEngine.h"
 #include "ActorManager.h"
 #include "Window.h"
