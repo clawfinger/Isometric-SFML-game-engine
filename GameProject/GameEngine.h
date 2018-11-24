@@ -31,7 +31,7 @@ private:
 	void initSystems();
 
 	template<typename T>
-	T* GameEngine::getSystem(const std::string& name);
+	T* getSystem(const std::string& name);
 
 	void handleKeyboardInput(sf::Keyboard::Key key);
 	void handleMouseInput(sf::Vector2i mouseCoords);
