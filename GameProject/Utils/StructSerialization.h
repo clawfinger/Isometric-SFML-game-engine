@@ -115,9 +115,9 @@ public:
 	static std::string serialize(const Class& object)
 	{
 		std::string result;
+		std::stringstream ss;
 		for (const auto& pair : m_members)
 		{
-			std::stringstream ss;
 			ss << pair.first << ' ';
 			ss << pair->second->toString(object) << std::endl;
 		}
