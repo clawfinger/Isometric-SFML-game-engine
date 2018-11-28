@@ -15,7 +15,7 @@ public:
 	~RenderSystem();
 
 	void update(sf::Time deltaTime);
-	void notify(IEvent* event);
+	//void notify(IEvent* event);
 	void draw(std::shared_ptr<Window> window);
 private:
 	void handleEntitySpawnEvent(IEvent* event);

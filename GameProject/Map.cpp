@@ -338,10 +338,6 @@ void Map::draw(std::shared_ptr<Window> window)
 	}
 }
 
-void Map::notify(IEvent * event)
-{
-
-}
 
 std::vector<int> Map::neighbors(int position)
 {

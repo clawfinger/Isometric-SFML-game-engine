@@ -15,6 +15,7 @@ RenderSystem::RenderSystem(DiContainer* container): SystemBase(typeName<RenderSy
 	m_entityContainer = container->get<EntityContainer>();
 	m_eventDispatcher = container->get<EventDispatcher>();
 	m_eventDispatcher->subscribe(typeName<EntityCreatedEvent>(), this);
+	registerCallBack(typeName<EntityCreatedEvent>(), std::bind(&RenderSystem::handleEntitySpawnEvent, this, std::placeholders::_1));
 }
 
 
@@ -35,11 +36,11 @@ void RenderSystem::update(sf::Time deltaTime)
 	}
 }
 
-void RenderSystem::notify(IEvent * event)
-{
-	if (event->name() == typeName<EntityCreatedEvent>())
-		handleEntitySpawnEvent(event);
-}
+//void RenderSystem::notify(IEvent * event)
+//{
+//	if (event->name() == typeName<EntityCreatedEvent>())
+//		handleEntitySpawnEvent(event);
+//}
 
 void RenderSystem::draw(std::shared_ptr<Window> window)
 {

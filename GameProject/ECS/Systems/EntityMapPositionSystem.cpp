@@ -15,6 +15,8 @@ EntityMapPositionSystem::EntityMapPositionSystem(DiContainer* container): System
 	m_map = container->get<Map>();
 
 	m_eventDispatcher->subscribe(typeName<EntityCreatedEvent>(), this);
+	registerCallBack(typeName<EntityCreatedEvent>(), std::bind(&EntityMapPositionSystem::handleEntitySpawnEvent, this, std::placeholders::_1));
+
 }
 
 EntityMapPositionSystem::~EntityMapPositionSystem()
@@ -26,11 +28,11 @@ void EntityMapPositionSystem::update(sf::Time deltaTime)
 {
 }
 
-void EntityMapPositionSystem::notify(IEvent * event)
-{
-	if (event->name() == typeName<EntityCreatedEvent>())
-		handleEntitySpawnEvent(event);
-}
+//void EntityMapPositionSystem::notify(IEvent * event)
+//{
+//	if (event->name() == typeName<EntityCreatedEvent>())
+//		handleEntitySpawnEvent(event);
+//}
 
 void EntityMapPositionSystem::handleEntitySpawnEvent(IEvent* event)
 {

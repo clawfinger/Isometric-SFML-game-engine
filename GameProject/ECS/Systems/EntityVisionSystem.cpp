@@ -21,6 +21,8 @@ EntityVisionSystem::EntityVisionSystem(DiContainer* container): SystemBase(typeN
 
 	m_eventDispatcher->subscribe(typeName<EntityCreatedEvent>(), this);
 	m_eventDispatcher->subscribe(typeName<PlayerReachTileEvent>(), this);
+	registerCallBack(typeName<EntityCreatedEvent>(), std::bind(&EntityVisionSystem::handleEntitySpawnEvent, this, std::placeholders::_1));
+	registerCallBack(typeName<PlayerReachTileEvent>(), std::bind(&EntityVisionSystem::handleEntityReachTileEvent, this, std::placeholders::_1));
 }
 
 
@@ -33,13 +35,13 @@ void EntityVisionSystem::update(sf::Time deltaTime)
 {
 }
 
-void EntityVisionSystem::notify(IEvent * event)
-{
-	if (event->name() == typeName<EntityCreatedEvent>())
-		handleEntitySpawnEvent(event);
-	else if (event->name() == typeName<PlayerReachTileEvent>())
-		handleEntityReachTileEvent(event);
-}
+//void EntityVisionSystem::notify(IEvent * event)
+//{
+//	if (event->name() == typeName<EntityCreatedEvent>())
+//		handleEntitySpawnEvent(event);
+//	else if (event->name() == typeName<PlayerReachTileEvent>())
+//		handleEntityReachTileEvent(event);
+//}
 
 void EntityVisionSystem::handleEntitySpawnEvent(IEvent * event)
 {

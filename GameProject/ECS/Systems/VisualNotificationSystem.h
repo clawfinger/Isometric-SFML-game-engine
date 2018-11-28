@@ -34,7 +34,7 @@ public:
 	~VisualNotificationSystem();
 
 	void update(sf::Time deltaTime);
-	void notify(IEvent* event);
+	//void notify(IEvent* event);
 	void draw(std::shared_ptr<Window> window);
 private:
 	std::shared_ptr<EntityContainer> m_entityContainer;

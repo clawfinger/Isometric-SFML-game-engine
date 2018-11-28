@@ -22,7 +22,7 @@ public:
 	~GameEngine();
 	void draw(std::shared_ptr<Window> window);
 	void update(sf::Time deltaTime);
-	void notify(IEvent* event);
+	//void notify(IEvent* event);
 	EntityId getActiveCharacter();
 
 	void handlePlayerInput(sf::Event & event);

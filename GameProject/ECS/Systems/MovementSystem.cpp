@@ -21,6 +21,8 @@ MovementSystem::MovementSystem(DiContainer* container):
 
 	m_eventDispatcher->subscribe(typeName<EntityCreatedEvent>(), this);
 	m_eventDispatcher->subscribe(typeName<SetDestinationForEntityEvent>(), this);
+	registerCallBack(typeName<EntityCreatedEvent>(), std::bind(&MovementSystem::handleEntitySpawnEvent, this, std::placeholders::_1));
+	registerCallBack(typeName<SetDestinationForEntityEvent>(), std::bind(&MovementSystem::handleSetDestinationEvent, this, std::placeholders::_1));
 
 	m_reachTilePauseTime = sf::seconds(0.15f);
 }
@@ -80,13 +82,13 @@ void MovementSystem::update(sf::Time deltatime)
 	}
 }
 
-void MovementSystem::notify(IEvent * event)
-{
-	if (event->name() == typeName<EntityCreatedEvent>())
-		handleEntitySpawnEvent(event);
-	else if (event->name() == typeName<SetDestinationForEntityEvent>())
-		handleSetDestinationEvent(event);
-}
+//void MovementSystem::notify(IEvent * event)
+//{
+//	if (event->name() == typeName<EntityCreatedEvent>())
+//		handleEntitySpawnEvent(event);
+//	else if (event->name() == typeName<SetDestinationForEntityEvent>())
+//		handleSetDestinationEvent(event);
+//}
 
 void MovementSystem::handleEntitySpawnEvent(IEvent * event)
 {	

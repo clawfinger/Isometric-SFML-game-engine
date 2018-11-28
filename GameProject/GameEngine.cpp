@@ -25,6 +25,7 @@ GameEngine::GameEngine(DiContainer* container): m_container(container)
 		m_activeCharacter = m_characters[0];
 
 	m_eventDispatcher->subscribe(typeName<MapCreatedEvent>(), this);
+	registerCallBack(typeName<MapCreatedEvent>(), std::bind(&GameEngine::handleMapCreatedEvent, this, std::placeholders::_1));
 }
 
 
@@ -45,13 +46,13 @@ void GameEngine::update(sf::Time deltaTime)
 	}
 }
 
-void GameEngine::notify(IEvent * event)
-{
-	if (event->name() == typeName<MapCreatedEvent>())
-	{
-		handleMapCreatedEvent(event);
-	}
-}
+//void GameEngine::notify(IEvent * event)
+//{
+//	if (event->name() == typeName<MapCreatedEvent>())
+//	{
+//		handleMapCreatedEvent(event);
+//	}
+//}
 
 EntityId GameEngine::getActiveCharacter()
 {

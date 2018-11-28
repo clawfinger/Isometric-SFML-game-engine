@@ -15,7 +15,7 @@ public:
 	EntityVisionSystem(DiContainer* container);
 	~EntityVisionSystem();
 	void update(sf::Time deltaTime);
-	void notify(IEvent* event);
+	//void notify(IEvent* event);
 
 private:
 	void handleEntitySpawnEvent(IEvent* event);

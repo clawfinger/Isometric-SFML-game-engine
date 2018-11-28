@@ -17,19 +17,21 @@ SpriteOrientationSystem::SpriteOrientationSystem(DiContainer * container): Syste
 
 	m_eventDispatcher->subscribe(typeName<EntityCreatedEvent>(), this);
 	m_eventDispatcher->subscribe(typeName<EntityChangedOrientationEvent>(), this);
+	registerCallBack(typeName<EntityCreatedEvent>(), std::bind(&SpriteOrientationSystem::handleEntitySpawnEvent, this, std::placeholders::_1));
+	registerCallBack(typeName<EntityChangedOrientationEvent>(), std::bind(&SpriteOrientationSystem::handleOrientationChangeEvent, this, std::placeholders::_1));
 }
 
 SpriteOrientationSystem::~SpriteOrientationSystem()
 {
 }
 
-void SpriteOrientationSystem::notify(IEvent * event)
-{
-	if (event->name() == typeName<EntityCreatedEvent>())
-		handleEntitySpawnEvent(event);
-	else if (event->name() == typeName<EntityChangedOrientationEvent>())
-		handleOrientationChangeEvent(event);
-}
+//void SpriteOrientationSystem::notify(IEvent * event)
+//{
+//	if (event->name() == typeName<EntityCreatedEvent>())
+//		handleEntitySpawnEvent(event);
+//	else if (event->name() == typeName<EntityChangedOrientationEvent>())
+//		handleOrientationChangeEvent(event);
+//}
 
 void SpriteOrientationSystem::handleEntitySpawnEvent(IEvent * event)
 {

@@ -16,7 +16,7 @@ public:
 	~MovementSystem();
 
 	void update(sf::Time deltaTime);
-	void notify(IEvent* event);
+	//void notify(IEvent* event);
 private:
 	void handleEntitySpawnEvent(IEvent* event);
 	void handleSetDestinationEvent(IEvent* event);

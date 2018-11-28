@@ -1,6 +1,5 @@
 #pragma once
 #include "TextureManager.h"
-#include "Events/Observer.h"
 #include "Events/EventDispatcher.h"
 #include "Utils/Meta.h"
 #include "LevelInfo.h"
@@ -35,7 +34,7 @@ private:
 	bool m_transparent;
 };
 
-class Map : public Observer
+class Map
 {
 public:
 	Map(std::shared_ptr<TextureManager> textures, std::shared_ptr<EventDispatcher> dispatcher);
@@ -64,7 +63,7 @@ public:
 	int manhattanLength(int from, int to);
 
 	void draw(std::shared_ptr<Window> window);
-	void notify(IEvent* event);
+
 private:
 	std::vector<int> neighbors(int position);
 	inline bool isWithinMap(int x, int y);
