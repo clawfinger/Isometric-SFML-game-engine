@@ -3,14 +3,6 @@ name Toughguy
 movementSpeed 300
 textureId Toughguy
 spriteOrigin 0 128
-defaultTextureRect 128 0 128 256
-vision 5
-#end
-#begin
-name Smartguy
-movementSpeed 300
-textureId Smartguy
-spriteOrigin 0 128
-defaultTextureRect 128 0 128 256
+defaultTextureRect 0 0 128 256
 vision 5
 #end

@@ -1,0 +1,8 @@
+#begin
+name Rat
+movementSpeed 150
+textureId Rat
+spriteOrigin 0 0
+defaultTextureRect 128 0 128 128
+vision 3
+#end

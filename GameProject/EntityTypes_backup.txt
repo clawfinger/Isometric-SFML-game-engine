@@ -1,0 +1,2 @@
+Character PathComponent SpriteComponent PositionComponent SpriteOrientationComponent VisionComponent
+Enemy PathComponent SpriteComponent PositionComponent AIControlledComponent SpriteOrientationComponent VisionComponent

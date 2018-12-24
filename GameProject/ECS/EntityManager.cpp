@@ -49,6 +49,9 @@ void EntityManager::spawnCharacters()
 
 void EntityManager::spawnEnemy(LevelTypes mapType)
 {
+	//-----------
+	return;
+	//-----------
 	loadEnemies();
 	EnemyData data = getRandomEnemyData();
 

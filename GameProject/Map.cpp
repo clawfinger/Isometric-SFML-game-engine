@@ -137,7 +137,7 @@ void Map::loadLevel(LevelTypes name)
 				case 'A':
 					tile.setWalkability(true);
 					index = getRandomInRange<int>(0, floorTileTags.size() - 1);
-					tile.sprite().setTexture(m_textureManager->get(std::string(floorTileTags.begin() + index, floorTileTags.begin() + index + 1)));
+					tile.sprite().setTexture(m_textureManager->get(std::string("A")));
 					tile.setTransparent(true);
 					break;
 				default:
@@ -306,34 +306,48 @@ int Map::manhattanLength(int from, int to)
 
 void Map::draw(std::shared_ptr<Window> window)
 {
-	sf::Vector2f viewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
-	sf::Vector2f viewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
+	//sf::Vector2f viewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
+	//sf::Vector2f viewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
 
-	int startX = int(viewTopLeft.x) / m_tileWidth - 1;
-	int endX = int(viewDownRight.x) / m_tileWidth + 2;
+	//int startX = int(viewTopLeft.x) / m_tileWidth - 1;
+	//int endX = int(viewDownRight.x) / m_tileWidth + 2;
 
-	int startY = int(viewTopLeft.y) / m_tileHeight - 1;
-	int endY = int(viewDownRight.y) / m_tileHeight + 2;
+	//int startY = int(viewTopLeft.y) / m_tileHeight - 1;
+	//int endY = int(viewDownRight.y) / m_tileHeight + 2;
 
-	if (startX < 0 || startX > m_mapWidth)
-		startX = 0;
-	if (startY < 0 || startY > m_mapHeight)
-		startY = 0;
+	//if (startX < 0 || startX > m_mapWidth)
+	//	startX = 0;
+	//if (startY < 0 || startY > m_mapHeight)
+	//	startY = 0;
 
-	if (endX > m_mapWidth)
-		endX = m_mapWidth;
-	if (endY > m_mapHeight)
-		endY = m_mapHeight;
+	//if (endX > m_mapWidth)
+	//	endX = m_mapWidth;
+	//if (endY > m_mapHeight)
+	//	endY = m_mapHeight;
 
-	for (int y = startY; y < endY; y++)
+	//for (int y = startY; y < endY; y++)
+	//{
+	//	for (int x = startX; x < endX; x++)
+	//	{
+	//		MapTile& current = getMapTile(x, y);
+	//		sf::Vector2f position(float(x * m_tileWidth), float(y * m_tileHeight));
+	//		current.setPosition(position);
+	//		if(!current.isEmpty())
+	//			window->draw(getMapTile(x, y).sprite());
+	//	}
+	//}
+
+	for (int i = 0; i < m_mapWidth; i++)
 	{
-		for (int x = startX; x < endX; x++)
+		for (int j = 0; j < m_mapHeight; j++)
 		{
-			MapTile& current = getMapTile(x, y);
-			sf::Vector2f position(float(x * m_tileWidth), float(y * m_tileHeight));
+			MapTile& current = getMapTile(i, j);
+			float screenX = (i - j) * 0.5 * m_tileWidth;
+			float screenY = (i + j) * 0.5 * 0.57735 * m_tileHeight;
+			sf::Vector2f position(screenX, screenY);
 			current.setPosition(position);
 			if(!current.isEmpty())
-				window->draw(getMapTile(x, y).sprite());
+				window->draw(getMapTile(i, j).sprite());
 		}
 	}
 }
