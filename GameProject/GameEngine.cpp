@@ -118,24 +118,27 @@ void GameEngine::handleKeyboardInput(sf::Keyboard::Key key)
 void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
 {
 	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(mouseCoords);
-	int mapIndex = m_map->mapIndexFromWindow(mouse.x, mouse.y);
+	sf::Vector2i mapTile = m_map->isoXYfromWindow(mouse);
+	LOG("Clicked: " + std::to_string(mapTile.x) + ":" + std::to_string(mapTile.y));
 
-	EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
-	EntityId entity = EPSystem->getEntityAtCoordinates(mouse);
-	if (entity != INVALIDID)
-	{
-		if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
-		{
-			m_activeCharacter = entity;
-			//send active char changed event
-			return;
-		}
-	}
-	if (m_map->isWalkable(m_map->XYfromLinear(mapIndex)))
-	{
-		IEvent* tileClicked = new SetDestinationForEntityEvent(m_activeCharacter, mapIndex);
-		m_eventDispatcher->dispatch(tileClicked);
-	}
+	//int mapIndex = m_map->mapIndexFromWindow(mouse.x, mouse.y);
+
+	//EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
+	//EntityId entity = EPSystem->getEntityAtCoordinates(mouse);
+	//if (entity != INVALIDID)
+	//{
+	//	if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
+	//	{
+	//		m_activeCharacter = entity;
+	//		//send active char changed event
+	//		return;
+	//	}
+	//}
+	//if (m_map->isWalkable(m_map->XYfromLinear(mapIndex)))
+	//{
+	//	IEvent* tileClicked = new SetDestinationForEntityEvent(m_activeCharacter, mapIndex);
+	//	m_eventDispatcher->dispatch(tileClicked);
+	//}
 }
 
 	template<typename T>

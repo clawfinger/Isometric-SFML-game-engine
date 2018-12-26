@@ -16,3 +16,6 @@ public:
 	stdOutLogger();
 	void log(std::string logMessage);
 };
+
+#define LOG(message) \
+	Logger::instance().log(message)

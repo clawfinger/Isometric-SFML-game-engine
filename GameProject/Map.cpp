@@ -18,6 +18,7 @@ Map::Map(std::shared_ptr<TextureManager> textures, std::shared_ptr<EventDispatch
 	m_textureManager(textures),
 	m_EventDispatcher(dispatcher)
 {
+	initMatrix();
 }
 
 MapTile::MapTile(sf::Texture& texture): m_walkable(true), m_empty(false), m_transparent(true)
@@ -383,4 +384,18 @@ bool Map::isWithinMap(int x, int y)
 int Map::costForTile(int linearPos)
 {
 	return 1;
+}
+
+void Map::initMatrix()
+{
+	m_matrix.translate(64, 0);
+	m_matrix.scale(sqrt(2.0) / 2.0, sqrt(2.0) / (2 / 0.57735));
+	m_matrix.rotate(45);
+	m_matrix = m_matrix.getInverse();
+}
+
+sf::Vector2i Map::isoXYfromWindow(sf::Vector2f& windowCoords)
+{
+	sf::Vector2f orthCoord = m_matrix.transformPoint(windowCoords.x, windowCoords.y);
+	return sf::Vector2i(floor(orthCoord.x / m_tileWidth), floor(orthCoord.y / m_tileHeight));
 }

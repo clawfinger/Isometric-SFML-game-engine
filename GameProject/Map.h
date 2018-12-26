@@ -57,6 +57,8 @@ public:
 
 	sf::Vector2i XYfromWindow(sf::Vector2f& windowCoords);
 
+	sf::Vector2i isoXYfromWindow(sf::Vector2f& windowCoords);
+
 	sf::Vector2f getPlayerSpawnCoordinate(); //to be removed
 	sf::Vector2f getEnemySpawnCoordinate(); //to be removed
 
@@ -68,6 +70,7 @@ private:
 	std::vector<int> neighbors(int position);
 	inline bool isWithinMap(int x, int y);
 	int costForTile(int linearPos); // now always return 1; can change this in future
+	void initMatrix();
 
 private:
 	std::shared_ptr<TextureManager> m_textureManager;
@@ -81,5 +84,6 @@ private:
 	int m_tileHeight;
 	sf::Vector2f m_playerSpawnPosition;
 	sf::Vector2f m_enemySpawnPosition;
+	sf::Transform m_matrix;
 };
 REGISTER_TYPENAME(Map)
