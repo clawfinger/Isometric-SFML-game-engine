@@ -83,7 +83,7 @@ void Map::loadLevel(LevelTypes name)
 	mapFile.open(levelFileName);
 	if (!mapFile.is_open())
 	{
-		Logger::instance().log("ERROR: Level file " + levelFileName + " failed to load!");
+		LOG("ERROR: Level file " + levelFileName + " failed to load!");
 		return;
 	}
 	std::stringstream s_stream;
@@ -98,7 +98,7 @@ void Map::loadLevel(LevelTypes name)
 	}
 	else
 	{
-		Logger::instance().log("ERROR: missing tag mapSize in level map file. Level size is set to Zero");
+		LOG("ERROR: missing tag mapSize in level map file. Level size is set to Zero");
 	}
 	s_stream >> tag;
 	if (tag == "tileSize")
@@ -107,7 +107,7 @@ void Map::loadLevel(LevelTypes name)
 	}
 	else
 	{
-		Logger::instance().log("ERROR: missing tag tileSize in level map file. Tile size is set to Zero");
+		LOG("ERROR: missing tag tileSize in level map file. Tile size is set to Zero");
 	}
 	s_stream >> tag;
 	if (tag == "mapTiles")
@@ -153,7 +153,7 @@ void Map::loadLevel(LevelTypes name)
 	}
 	else
 	{
-		Logger::instance().log("ERROR: missing tag mapTiles in level map file. Level not loaded");
+		LOG("ERROR: missing tag mapTiles in level map file. Level not loaded");
 
 	}
 	s_stream >> tag;

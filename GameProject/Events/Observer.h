@@ -27,7 +27,7 @@ public:
 				callback(event);
 		}
 		else
-			Logger::instance().log("Cannot find callback for event " + event->name());
+			LOG("Cannot find callback for event " + event->name());
 	}
 
 	void registerCallBack(const std::string& eventName, std::function<void(IEvent*)> f)

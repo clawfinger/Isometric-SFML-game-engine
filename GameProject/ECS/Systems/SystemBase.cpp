@@ -25,7 +25,7 @@ void SystemBase::addEntity(EntityId entity)
 	if (!haseEntity(entity))
 		m_entities.push_back(entity);
 	else
-		Logger::instance().log("ERROR: Adding duplicate of entity " + std::to_string(entity) + " to system " + m_name);
+		LOG("ERROR: Adding duplicate of entity " + std::to_string(entity) + " to system " + m_name);
 }
 
 bool SystemBase::haseEntity(EntityId entity)
@@ -39,7 +39,7 @@ void SystemBase::removeEntity(EntityId entity)
 	if (entityIter != m_entities.end())
 		m_entities.erase(entityIter);
 	else
-		Logger::instance().log("ERROR: Adding duplicate of entity " + std::to_string(entity) + " from system " + m_name);
+		LOG("ERROR: Adding duplicate of entity " + std::to_string(entity) + " from system " + m_name);
 }
 
 std::string & SystemBase::name()

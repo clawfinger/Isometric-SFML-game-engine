@@ -53,12 +53,12 @@ inline T * EntityContainer::getComponent(EntityId id, const std::string & compon
 		}
 		else
 		{
-			Logger::instance().log("ERROR: Component " + componentName + " not found in entity with id=" + std::to_string(id));
+			LOG("ERROR: Component " + componentName + " not found in entity with id=" + std::to_string(id));
 		}
 	}
 	else
 	{
-		Logger::instance().log("ERROR: Cannot find Entity data for entity with id=" + std::to_string(id));
+		LOG("ERROR: Cannot find Entity data for entity with id=" + std::to_string(id));
 	}
 	return nullptr;
 }

@@ -94,7 +94,7 @@ void EntityManager::loadEntityTypes()
 	charFile.open(filename);
 	if (!charFile.is_open())
 	{
-		Logger::instance().log("ERROR: EntityTypes file " + filename + " failed to load!");
+		LOG("ERROR: EntityTypes file " + filename + " failed to load!");
 		return;
 	}
 

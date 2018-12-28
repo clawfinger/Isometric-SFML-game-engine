@@ -7,7 +7,7 @@ void SetPathCommandExecutor::execute(ICommand* command)
 
 	//if (concreteCommand == nullptr)
 	//{
-	//	Logger::instance().log("ERROR: Wrong command passed to SetPathCommandExecutor");
+	//	LOG("ERROR: Wrong command passed to SetPathCommandExecutor");
 	//}
 	//else
 	//{
@@ -27,7 +27,7 @@ void ViewMoveCommandExecutor::execute(ICommand * command)
 	ViewMoveCommand* concreteCommand = static_cast<ViewMoveCommand*>(command);
 	//if (concreteCommand == nullptr)
 	//{
-	//	Logger::instance().log("ERROR: Wrong command passed to ViewMoveCommandExecutor");
+	//	LOG("ERROR: Wrong command passed to ViewMoveCommandExecutor");
 	//}
 	//else
 	//{

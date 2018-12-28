@@ -24,7 +24,7 @@ void EventDispatcher::unsubscribe(std::string eventName, Observer * observer)
 		subscription->second.removeObserver(observer);
 	}
 	else
-		Logger::instance().log("No subscribers for " + eventName);
+		LOG("No subscribers for " + eventName);
 }
 
 void EventDispatcher::dispatch(IEvent * event)

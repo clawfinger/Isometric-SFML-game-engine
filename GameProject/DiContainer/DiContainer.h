@@ -22,7 +22,7 @@ void DiContainer::registerClass(typename Factory<ReturnT>::constructingFunction 
 {
 	std::string name = typeName<ReturnT>();
 	if (name == "DEFAULT")
-		Logger::instance().log("ERROR: Registering class without REGISTER TYPENAME macro defined!");
+		LOG("ERROR: Registering class without REGISTER TYPENAME macro defined!");
 	m_factories[name] = new Factory<ReturnT>(function, type);
 };
 

@@ -21,6 +21,6 @@ void CommandDispatcher::execute(ICommand* command)
 	if (m_executors.find(command->name()) != m_executors.end())
 		m_executors[command->name()]->execute(command);
 	else
-		Logger::instance().log("ERROR: Cannot find executor for " + command->name());
+		LOG("ERROR: Cannot find executor for " + command->name());
 }
 

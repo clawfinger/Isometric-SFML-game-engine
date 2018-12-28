@@ -64,14 +64,14 @@ void EntityVisionSystem::handleEntityReachTileEvent(IEvent * event)
 	if (nullptr != currentEvent)
 	{
 		if (m_entityContainer->HasComponent(currentEvent->entity, typeName<AIControlledComponent>()))
-			Logger::instance().log("Enemy " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
+			LOG("Enemy " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
 		else
-			Logger::instance().log("Player " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
+			LOG("Player " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
 
 		std::vector<EntityId> enemiesInBattle = checkEnemyInSight(currentEvent->entity);
 		if (!enemiesInBattle.empty())
 		{
-			Logger::instance().log("Battle!");
+			LOG("Battle!");
 			m_eventDispatcher->dispatch(new BattleStartedEvent(enemiesInBattle));
 		}
 	}
@@ -180,7 +180,7 @@ bool EntityVisionSystem::isVisible(sf::Vector2f & from, sf::Vector2f & to, int l
 				mapFrom.y += Ysign;
 				error -= 1;
 			}
-			//Logger::instance().log(std::to_string(steep ? mapFrom.y : mapFrom.x) + ':' + std::to_string(steep ? mapFrom.x : mapFrom.y));
+			//LOG(std::to_string(steep ? mapFrom.y : mapFrom.x) + ':' + std::to_string(steep ? mapFrom.x : mapFrom.y));
 			if (!m_map->getMapTile(steep? mapFrom.y: mapFrom.x, steep? mapFrom.x: mapFrom.y).isTransparent() || currentLengthOfSight >= lengthOfSight)
 				return false;
 			currentLengthOfSight++;

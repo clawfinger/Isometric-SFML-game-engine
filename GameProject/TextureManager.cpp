@@ -11,7 +11,7 @@ void TextureManager::preloadTextures()
 	mapFile.open(levelFileName);
 	if (!mapFile.is_open())
 	{
-		Logger::instance().log("ERROR: Texture file " + levelFileName + " failed to load!");
+		LOG("ERROR: Texture file " + levelFileName + " failed to load!");
 		return;
 	}
 	std::stringstream s_stream;
@@ -33,7 +33,7 @@ void TextureManager::load(std::string id, const std::string & filename)
 	std::unique_ptr<sf::Texture> newTexture(new sf::Texture());
 	if (!newTexture->loadFromFile(filename))
 	{
-		Logger::instance().log("TextureManager::load - Failed to load texture by " + filename);
+		LOG("TextureManager::load - Failed to load texture by " + filename);
 		return;
 	}
 	newTexture->setSmooth(true);
@@ -52,7 +52,7 @@ sf::Texture& TextureManager::get(std::string id) const
 		return *found->second;
 	else
 	{
-		Logger::instance().log("Texture " + id + " not found. Aborting");
+		LOG("Texture " + id + " not found. Aborting");
 		abort();
 	}
 }

@@ -24,7 +24,7 @@ void SpriteOrientationComponent::readData(std::stringstream& stream)
 sf::IntRect & SpriteOrientationComponent::getRightTextureRect()
 {
 	if (m_rightTextureRect.height == 0 || m_rightTextureRect.width == 0)
-		Logger::instance().log("ERROR: requested empty TextureRect from SpriteOrientationComponent");
+		LOG("ERROR: requested empty TextureRect from SpriteOrientationComponent");
 	return m_rightTextureRect;
 }
 

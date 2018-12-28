@@ -69,13 +69,13 @@ bool EntityContainer::HasComponent(EntityId id, const std::string & componentNam
 		//else
 		//{
 		//	//TODO: Do i really need this???
-		//	Logger::instance().log("ERROR: Component " + componentName + " not found in entity with id=" + std::to_string(id));
+		//	LOG("ERROR: Component " + componentName + " not found in entity with id=" + std::to_string(id));
 		//	return false;
 		//}
 	}
 	else
 	{
-		Logger::instance().log("ERROR: Cannot find Entity data for entity with id=" + std::to_string(id));
+		LOG("ERROR: Cannot find Entity data for entity with id=" + std::to_string(id));
 		return false;
 	}
 	return false;
@@ -97,12 +97,12 @@ void EntityContainer::addComponentToEntity(EntityId id, const std::string & comp
 			if (factory != m_componentFactories.end())
 				entityIter->second.second.push_back(factory->second());
 			else
-				Logger::instance().log("ERROR: Cannot find factory for component " + componentName + " while adding to " + std::to_string(id));
+				LOG("ERROR: Cannot find factory for component " + componentName + " while adding to " + std::to_string(id));
 		}
 	}
 	else
 	{
-		Logger::instance().log("ERROR: Cannot find Entity data for entity with id=" + std::to_string(id));
+		LOG("ERROR: Cannot find Entity data for entity with id=" + std::to_string(id));
 		return;
 	}
 }
