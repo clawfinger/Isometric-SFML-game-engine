@@ -10,7 +10,7 @@ PathComponent::~PathComponent()
 {
 }
 
-void PathComponent::setPath(const std::stack<sf::Vector2f>& path, int pathEnd)
+void PathComponent::setPath(const std::stack<sf::Vector2f>& path, const sf::Vector2f& pathEnd)
 {
 	if (pathEnd != m_pathEnd)
 	{
@@ -24,7 +24,7 @@ std::stack<sf::Vector2f>& PathComponent::getPath()
 	return m_path;
 }
 
-int PathComponent::getPathEnd()
+sf::Vector2f& PathComponent::getPathEnd()
 {
 	return m_pathEnd;
 }

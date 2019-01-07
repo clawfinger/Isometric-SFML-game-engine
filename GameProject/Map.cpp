@@ -198,8 +198,11 @@ MapTile& Map::getMapTile(int x, int y)
 	return m_mapTiles[y * m_mapWidth + x];
 }
 
-std::stack<sf::Vector2f> Map::calculatePath(int start, int end)
+std::stack<sf::Vector2f> Map::calculatePath(const sf::Vector2f& from, const sf::Vector2f& to)
 {
+	int start = linearFromXY(from.x, from.y);
+	int end = linearFromXY(to.x, to.y);
+
 	auto heuristic = [&](int start, int end)
 	{
 		sf::Vector2f from = XYfromLinear(start);
@@ -265,7 +268,7 @@ sf::Vector2f Map::windowFromMap(float x, float y)
 	return sf::Vector2f(x * m_tileWidth, y * m_tileHeight);
 }
 
-sf::Vector2f Map::windowFromMap(sf::Vector2f map)
+sf::Vector2f Map::windowFromMap(const sf::Vector2f& map)
 {
 	return sf::Vector2f(map.x * m_tileWidth, map.y * m_tileHeight);
 }

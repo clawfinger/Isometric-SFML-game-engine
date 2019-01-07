@@ -10,14 +10,14 @@ class PathComponent : public ComponentBase
 public:
 	PathComponent();
 	~PathComponent();
-	void setPath(const std::stack<sf::Vector2f>& path, int pathEnd);
+	void setPath(const std::stack<sf::Vector2f>& path, const sf::Vector2f& pathEnd);
 	std::stack<sf::Vector2f>& getPath();
 
-	int getPathEnd();
+	sf::Vector2f& getPathEnd();
 	bool isPathSet();
 	void readData(std::stringstream& stream);
 private:
 	std::stack<sf::Vector2f> m_path;
-	int m_pathEnd;
+	sf::Vector2f m_pathEnd;
 };
 REGISTER_TYPENAME(PathComponent)

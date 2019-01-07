@@ -44,13 +44,13 @@ public:
 	int mapWidth();
 	int mapHeight();
 	MapTile& getMapTile(int x, int y);
-	std::stack<sf::Vector2f> calculatePath(int start, int end);
+	std::stack<sf::Vector2f> calculatePath(const sf::Vector2f& from, const sf::Vector2f& to);
 
 	int mapIndexFromWindow(float x, float y);
 	int mapIndexFromWindow(sf::Vector2f window);
 
 	sf::Vector2f windowFromMap(float x, float y);
-	sf::Vector2f windowFromMap(sf::Vector2f);
+	sf::Vector2f windowFromMap(const sf::Vector2f& map);
 
 	sf::Vector2i XYfromWindow(sf::Vector2f& windowCoords);
 
