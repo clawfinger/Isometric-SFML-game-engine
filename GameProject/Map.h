@@ -65,8 +65,8 @@ private:
 	inline bool isWithinMap(int x, int y);
 	int costForTile(int linearPos); // now always return 1; can change this in future
 	void initMatrix();
-	int linearFromXY(int x, int y);
-	sf::Vector2f XYfromLinear(int linear);
+	inline int linearFromXY(int x, int y);
+	inline sf::Vector2f XYfromLinear(int linear);
 
 private:
 	std::shared_ptr<TextureManager> m_textureManager;
