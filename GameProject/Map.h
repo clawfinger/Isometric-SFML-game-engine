@@ -52,9 +52,6 @@ public:
 	sf::Vector2f windowFromMap(float x, float y);
 	sf::Vector2f windowFromMap(sf::Vector2f);
 
-	int linearFromXY(int x, int y);
-	sf::Vector2f XYfromLinear(int linear);
-
 	sf::Vector2i XYfromWindow(sf::Vector2f& windowCoords);
 
 	sf::Vector2i isoXYfromWindow(sf::Vector2f& windowCoords);
@@ -71,6 +68,8 @@ private:
 	inline bool isWithinMap(int x, int y);
 	int costForTile(int linearPos); // now always return 1; can change this in future
 	void initMatrix();
+	int linearFromXY(int x, int y);
+	sf::Vector2f XYfromLinear(int linear);
 
 private:
 	std::shared_ptr<TextureManager> m_textureManager;
