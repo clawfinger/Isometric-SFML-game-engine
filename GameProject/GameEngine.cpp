@@ -118,7 +118,7 @@ void GameEngine::handleKeyboardInput(sf::Keyboard::Key key)
 void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
 {
 	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(mouseCoords);
-	sf::Vector2i mapTile = m_map->isoXYfromWindow(mouse);
+	sf::Vector2i mapTile = m_map->orthoXYfromIsometricCoords(mouse);
 	LOG("Clicked: " + std::to_string(mapTile.x) + ":" + std::to_string(mapTile.y));
 
 	//int mapIndex = m_map->mapIndexFromWindow(mouse.x, mouse.y);

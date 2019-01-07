@@ -51,7 +51,7 @@ public:
 
 	sf::Vector2i XYfromWindow(sf::Vector2f& windowCoords);
 
-	sf::Vector2i isoXYfromWindow(sf::Vector2f& windowCoords);
+	sf::Vector2i orthoXYfromIsometricCoords(sf::Vector2f& windowCoords);
 
 	sf::Vector2f getPlayerSpawnCoordinate(); //to be removed
 	sf::Vector2f getEnemySpawnCoordinate(); //to be removed

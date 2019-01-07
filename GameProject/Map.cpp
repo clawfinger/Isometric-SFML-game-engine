@@ -384,11 +384,10 @@ void Map::initMatrix()
 	m_matrix.translate(64, 0);
 	m_matrix.scale(sqrt(2.0) / 2.0, sqrt(2.0) / (2 / 0.57735));
 	m_matrix.rotate(45);
-	m_matrix = m_matrix.getInverse();
 }
 
-sf::Vector2i Map::isoXYfromWindow(sf::Vector2f& windowCoords)
+sf::Vector2i Map::orthoXYfromIsometricCoords(sf::Vector2f& windowCoords)
 {
-	sf::Vector2f orthCoord = m_matrix.transformPoint(windowCoords.x, windowCoords.y);
+	sf::Vector2f orthCoord = m_matrix.getInverse().transformPoint(windowCoords.x, windowCoords.y);
 	return sf::Vector2i(floor(orthCoord.x / m_tileWidth), floor(orthCoord.y / m_tileHeight));
 }
