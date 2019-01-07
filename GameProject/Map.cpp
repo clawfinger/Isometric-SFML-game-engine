@@ -253,14 +253,15 @@ std::stack<sf::Vector2f> Map::calculatePath(const sf::Vector2f& from, const sf::
 	return result;
 }
 
-sf::Vector2f Map::windowFromMap(float x, float y)
-{
-	return sf::Vector2f(x * m_tileWidth, y * m_tileHeight);
-}
-
 sf::Vector2f Map::windowFromMap(const sf::Vector2f& map)
 {
 	return sf::Vector2f(map.x * m_tileWidth, map.y * m_tileHeight);
+}
+
+
+sf::Vector2i Map::mapFromWindow(sf::Vector2f& windowCoords)
+{
+	return sf::Vector2i(int(windowCoords.x / m_tileWidth), int(windowCoords.y / m_tileHeight));
 }
 
 int Map::linearFromXY(int x, int y)
@@ -273,11 +274,6 @@ sf::Vector2f Map::XYfromLinear(int linear)
 	float y = float(linear / m_mapWidth);
 	float x = float(linear % m_mapWidth);
 	return sf::Vector2f(x, y);
-}
-
-sf::Vector2i Map::XYfromWindow(sf::Vector2f& windowCoords)
-{
-	return sf::Vector2i(int(windowCoords.x / m_tileWidth), int(windowCoords.y / m_tileHeight));
 }
 
 sf::Vector2f Map::getPlayerSpawnCoordinate()

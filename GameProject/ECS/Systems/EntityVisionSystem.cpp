@@ -116,8 +116,8 @@ std::vector<EntityId> EntityVisionSystem::checkEnemyInSight(EntityId character)
 
 bool EntityVisionSystem::isVisible(sf::Vector2f & from, sf::Vector2f & to, int lengthOfSight)
 {
-	sf::Vector2i mapFrom = m_map->XYfromWindow(from);
-	sf::Vector2i mapTo = m_map->XYfromWindow(to);
+	sf::Vector2i mapFrom = m_map->mapFromWindow(from);
+	sf::Vector2i mapTo = m_map->mapFromWindow(to);
 
 	int lenX = mapFrom.x - mapTo.x;
 	int lenY = mapFrom.y - mapTo.y;
