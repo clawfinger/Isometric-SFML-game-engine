@@ -2,7 +2,7 @@
 name Toughguy
 movementSpeed 300
 textureId Toughguy
-spriteOrigin 64 210
-defaultTextureRect 0 0 128 256
+spriteOrigin 64 128
+defaultTextureRect 0 0 128 128
 vision 5
 #end
