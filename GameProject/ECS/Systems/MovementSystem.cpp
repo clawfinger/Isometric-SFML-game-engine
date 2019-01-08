@@ -122,7 +122,7 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
 			pathComponent->setPath(tempPath, pathComponent->getPath().top());
 			return;
 		}
-		pathComponent->setPath(m_map->calculatePath(positionComponent->getPosition(), currentEvent->destination), currentEvent->destination);
+		pathComponent->setPath(m_map->calculatePath(m_map->orthoXYfromIsometricCoords(positionComponent->getPosition()), currentEvent->destination), currentEvent->destination);
 	}
 }
 

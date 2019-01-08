@@ -242,26 +242,21 @@ std::stack<sf::Vector2f> Map::calculatePath(const sf::Vector2f& from, const sf::
 		}
 	}
 	std::stack<sf::Vector2f> result;
-	result.push(windowFromMap(XYfromLinear(end)));
+	result.push(isometricEntityPositionFromMap(XYfromLinear(end)));
 	int prev = cameFrom[end];
 	while (cameFrom[prev] != prev)
 	{
-		result.push(windowFromMap(XYfromLinear(prev)));
+		result.push(isometricEntityPositionFromMap(XYfromLinear(prev)));
 		prev = cameFrom[prev];
 	}
-	result.push(windowFromMap(XYfromLinear(start)));
+	result.push(isometricEntityPositionFromMap(XYfromLinear(start)));
 	return result;
 }
 
-sf::Vector2f Map::windowFromMap(const sf::Vector2f& map)
+sf::Vector2f Map::isometricEntityPositionFromMap(const sf::Vector2f& map)
 {
-	return sf::Vector2f(map.x * m_tileWidth, map.y * m_tileHeight);
-}
-
-
-sf::Vector2i Map::mapFromWindow(sf::Vector2f& windowCoords)
-{
-	return sf::Vector2i(int(windowCoords.x / m_tileWidth), int(windowCoords.y / m_tileHeight));
+	sf::Vector2f tileCenter(map.x * m_tileWidth + m_tileWidth / 2, map.y * m_tileHeight + m_tileHeight / 2);
+	return m_matrix.transformPoint(tileCenter.x, tileCenter.y);
 }
 
 int Map::linearFromXY(int x, int y)
@@ -278,12 +273,12 @@ sf::Vector2f Map::XYfromLinear(int linear)
 
 sf::Vector2f Map::getPlayerSpawnCoordinate()
 {
-	return windowFromMap(m_playerSpawnPosition);
+	return isometricEntityPositionFromMap(m_playerSpawnPosition);
 }
 
 sf::Vector2f Map::getEnemySpawnCoordinate()
 {
-	return windowFromMap(m_enemySpawnPosition);
+	return isometricEntityPositionFromMap(m_enemySpawnPosition);
 
 }
 
@@ -382,8 +377,8 @@ void Map::initMatrix()
 	m_matrix.rotate(45);
 }
 
-sf::Vector2i Map::orthoXYfromIsometricCoords(sf::Vector2f& windowCoords)
+sf::Vector2f Map::orthoXYfromIsometricCoords(sf::Vector2f& windowCoords)
 {
 	sf::Vector2f orthCoord = m_matrix.getInverse().transformPoint(windowCoords.x, windowCoords.y);
-	return sf::Vector2i(floor(orthCoord.x / m_tileWidth), floor(orthCoord.y / m_tileHeight));
+	return sf::Vector2f(floor(orthCoord.x / m_tileWidth), floor(orthCoord.y / m_tileHeight));
 }

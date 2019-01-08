@@ -118,10 +118,9 @@ void GameEngine::handleKeyboardInput(sf::Keyboard::Key key)
 void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
 {
 	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(mouseCoords);
-	sf::Vector2i mapTile = m_map->orthoXYfromIsometricCoords(mouse);
+	sf::Vector2f mapTile = m_map->orthoXYfromIsometricCoords(mouse);
 	LOG("Clicked: " + std::to_string(mapTile.x) + ":" + std::to_string(mapTile.y));
 
-	//int mapIndex = m_map->mapIndexFromWindow(mouse.x, mouse.y);
 
 	//EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
 	//EntityId entity = EPSystem->getEntityAtCoordinates(mouse);
@@ -134,11 +133,11 @@ void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
 	//		return;
 	//	}
 	//}
-	//if (m_map->isWalkable(m_map->XYfromLinear(mapIndex)))
-	//{
-	//	IEvent* tileClicked = new SetDestinationForEntityEvent(m_activeCharacter, mapIndex);
-	//	m_eventDispatcher->dispatch(tileClicked);
-	//}
+	if (m_map->isWalkable(mapTile))
+	{
+		IEvent* tileClicked = new SetDestinationForEntityEvent(m_activeCharacter, mapTile);
+		m_eventDispatcher->dispatch(tileClicked);
+	}
 }
 
 	template<typename T>

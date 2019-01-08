@@ -46,11 +46,9 @@ public:
 	MapTile& getMapTile(int x, int y);
 	std::stack<sf::Vector2f> calculatePath(const sf::Vector2f& from, const sf::Vector2f& to);
 
-	sf::Vector2f windowFromMap(const sf::Vector2f& map);
+	sf::Vector2f isometricEntityPositionFromMap(const sf::Vector2f& map);
 
-	sf::Vector2i mapFromWindow(sf::Vector2f& windowCoords);
-
-	sf::Vector2i orthoXYfromIsometricCoords(sf::Vector2f& windowCoords);
+	sf::Vector2f orthoXYfromIsometricCoords(sf::Vector2f& windowCoords);
 
 	sf::Vector2f getPlayerSpawnCoordinate(); //to be removed
 	sf::Vector2f getEnemySpawnCoordinate(); //to be removed
