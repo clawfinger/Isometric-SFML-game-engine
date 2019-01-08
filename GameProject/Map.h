@@ -64,6 +64,7 @@ private:
 	void initMatrix();
 	inline int linearFromXY(int x, int y);
 	inline sf::Vector2f XYfromLinear(int linear);
+	sf::Vector2f tilePositionFromMap(int x, int y);
 
 private:
 	std::shared_ptr<TextureManager> m_textureManager;

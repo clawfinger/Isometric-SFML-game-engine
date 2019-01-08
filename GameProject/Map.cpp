@@ -255,6 +255,7 @@ std::stack<sf::Vector2f> Map::calculatePath(const sf::Vector2f& from, const sf::
 
 sf::Vector2f Map::isometricEntityPositionFromMap(const sf::Vector2f& map)
 {
+	//returning center of tile in isometric
 	sf::Vector2f tileCenter(map.x * m_tileWidth + m_tileWidth / 2, map.y * m_tileHeight + m_tileHeight / 2);
 	return m_matrix.transformPoint(tileCenter.x, tileCenter.y);
 }
@@ -269,6 +270,13 @@ sf::Vector2f Map::XYfromLinear(int linear)
 	float y = float(linear / m_mapWidth);
 	float x = float(linear % m_mapWidth);
 	return sf::Vector2f(x, y);
+}
+
+sf::Vector2f Map::tilePositionFromMap(int x, int y)
+{
+	float screenX = (x - y) * 0.5 * m_tileWidth;
+	float screenY = (x + y) * 0.5 * 0.57735 * m_tileHeight;
+	return sf::Vector2f(screenX, screenY);
 }
 
 sf::Vector2f Map::getPlayerSpawnCoordinate()
@@ -327,10 +335,7 @@ void Map::draw(std::shared_ptr<Window> window)
 		for (int j = 0; j < m_mapHeight; j++)
 		{
 			MapTile& current = getMapTile(i, j);
-			float screenX = (i - j) * 0.5 * m_tileWidth;
-			float screenY = (i + j) * 0.5 * 0.57735 * m_tileHeight;
-			sf::Vector2f position(screenX, screenY);
-			current.setPosition(position);
+			current.setPosition(tilePositionFromMap(i, j));
 			if(!current.isEmpty())
 				window->draw(getMapTile(i, j).sprite());
 		}
