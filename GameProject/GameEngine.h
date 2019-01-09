@@ -34,7 +34,7 @@ private:
 	T* getSystem(const std::string& name);
 
 	void handleKeyboardInput(sf::Keyboard::Key key);
-	void handleMouseInput(sf::Vector2i mouseCoords);
+	void handleMouseInput(const Vector2i& mouseCoords);
 
 	void handleMapCreatedEvent(IEvent* event);
 

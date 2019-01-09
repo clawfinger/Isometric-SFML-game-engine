@@ -92,7 +92,7 @@ void GameEngine::handlePlayerInput(sf::Event& event)
 	{
 		if (event.mouseButton.button == sf::Mouse::Left)
 		{
-			sf::Vector2i coords = sf::Vector2i(event.mouseButton.x, event.mouseButton.y);
+			Vector2i coords = Vector2i(event.mouseButton.x, event.mouseButton.y);
 			handleMouseInput(coords);
 			break;
 		}
@@ -115,9 +115,9 @@ void GameEngine::handleKeyboardInput(sf::Keyboard::Key key)
 	m_window->setViewMoveVector(viewMoveVector);
 }
 
-void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
+void GameEngine::handleMouseInput(const Vector2i& mouseCoords)
 {
-	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(mouseCoords);
+	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(sf::Vector2i(mouseCoords.x, mouseCoords.y));
 	Vector2f mapTile = m_map->orthoXYfromIsometricCoords(Vector2f(mouse.x, mouse.y));
 	LOG("Clicked: " + std::to_string(mapTile.x) + ":" + std::to_string(mapTile.y));
 

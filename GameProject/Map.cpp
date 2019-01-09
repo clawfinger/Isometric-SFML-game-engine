@@ -349,12 +349,12 @@ std::vector<int> Map::neighbors(int position)
 {
 	std::vector<int> result;
 	Vector2f pos = XYfromLinear(position);
-	std::vector<sf::Vector2i> neighborPoints;
+	std::vector<Vector2i> neighborPoints;
 
-	neighborPoints.push_back(sf::Vector2i(int(pos.x + 1), int(pos.y)));
-	neighborPoints.push_back(sf::Vector2i(int(pos.x - 1), int(pos.y)));
-	neighborPoints.push_back(sf::Vector2i(int(pos.x), int(pos.y + 1)));
-	neighborPoints.push_back(sf::Vector2i(int(pos.x), int(pos.y - 1)));
+	neighborPoints.push_back(Vector2i(int(pos.x + 1), int(pos.y)));
+	neighborPoints.push_back(Vector2i(int(pos.x - 1), int(pos.y)));
+	neighborPoints.push_back(Vector2i(int(pos.x), int(pos.y + 1)));
+	neighborPoints.push_back(Vector2i(int(pos.x), int(pos.y - 1)));
 
 	for (auto point : neighborPoints)
 	{
