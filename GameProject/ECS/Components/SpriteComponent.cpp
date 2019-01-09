@@ -27,7 +27,7 @@ sf::Sprite & SpriteComponent::getSprite()
 	return m_sprite;
 }
 
-void SpriteComponent::setPosition(const sf::Vector2f & position)
+void SpriteComponent::setPosition(const Vector2f & position)
 {
 	m_sprite.setPosition(position.x, position.y);
 }

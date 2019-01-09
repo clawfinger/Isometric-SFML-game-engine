@@ -13,9 +13,9 @@ void SetPathCommandExecutor::execute(ICommand* command)
 	//{
 	//	if (concreteCommand->m_unit->pathComponent()->getPathEnd() != concreteCommand->m_destination)
 	//	{
-	//		sf::Vector2f playerPosition = concreteCommand->m_unit->getPosition();
+	//		Vector2f playerPosition = concreteCommand->m_unit->getPosition();
 	//		int linearMapPlayerPosition = m_map.mapIndexFromWindow(playerPosition.x, playerPosition.y);
-	//		std::stack<sf::Vector2f> newPath = m_map.calculatePath(linearMapPlayerPosition, concreteCommand->m_destination);
+	//		std::stack<Vector2f> newPath = m_map.calculatePath(linearMapPlayerPosition, concreteCommand->m_destination);
 	//		newPath.push(m_map.windowFromMap(m_map.XYfromLinear(linearMapPlayerPosition)));
 	//		concreteCommand->m_unit->pathComponent()->setPath(newPath, concreteCommand->m_destination);
 	//	}
@@ -31,6 +31,6 @@ void ViewMoveCommandExecutor::execute(ICommand * command)
 	//}
 	//else
 	//{
-	//	m_window.setViewMoveVector(sf::Vector2f(concreteCommand->x_direction, concreteCommand->y_direction) * concreteCommand->m_speed);
+	//	m_window.setViewMoveVector(Vector2f(concreteCommand->x_direction, concreteCommand->y_direction) * concreteCommand->m_speed);
 	//}
 }

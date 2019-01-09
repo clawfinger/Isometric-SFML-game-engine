@@ -114,10 +114,10 @@ std::vector<EntityId> EntityVisionSystem::checkEnemyInSight(EntityId character)
 	return enemiesInBattle;
 }
 
-bool EntityVisionSystem::isVisible(sf::Vector2f & from, sf::Vector2f & to, int lengthOfSight)
+bool EntityVisionSystem::isVisible(Vector2f & from, Vector2f & to, int lengthOfSight)
 {
-	sf::Vector2f mapFrom = m_map->orthoXYfromIsometricCoords(from);
-	sf::Vector2f mapTo = m_map->orthoXYfromIsometricCoords(to);
+	Vector2f mapFrom = m_map->orthoXYfromIsometricCoords(from);
+	Vector2f mapTo = m_map->orthoXYfromIsometricCoords(to);
 
 	int lenX = mapFrom.x - mapTo.x;
 	int lenY = mapFrom.y - mapTo.y;

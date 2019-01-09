@@ -21,7 +21,7 @@ private:
 	void handleEntitySpawnEvent(IEvent* event);
 	void handleEntityReachTileEvent(IEvent * event);
 	std::vector<EntityId> checkEnemyInSight(EntityId character);
-	bool isVisible(sf::Vector2f& from, sf::Vector2f& to, int lengthOfSight);
+	bool isVisible(Vector2f& from, Vector2f& to, int lengthOfSight);
 
 private:
 	std::shared_ptr<EntityContainer> m_entityContainer;

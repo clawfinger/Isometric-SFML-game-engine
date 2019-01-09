@@ -49,10 +49,13 @@ void RenderSystem::draw(std::shared_ptr<Window> window)
 		PositionComponent* positionComponent =
 			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
 
-		sf::Vector2f viewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
-		sf::Vector2f viewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
+		sf::Vector2f SFviewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
+		sf::Vector2f SFviewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
 
-		sf::Vector2f entityPosition = positionComponent->getPosition();
+		Vector2f viewTopLeft(SFviewTopLeft.x, SFviewTopLeft.y);
+		Vector2f viewDownRight(SFviewDownRight.x, SFviewDownRight.y);
+
+		Vector2f entityPosition = positionComponent->getPosition();
 
 		entityPosition.x = std::round(entityPosition.x);
 		entityPosition.y = std::round(entityPosition.y);

@@ -57,9 +57,9 @@ void Window::draw(sf::Drawable & drawable)
 	m_window.draw(drawable);
 }
 
-void Window::moveView(sf::Vector2f movement)
+void Window::moveView(const Vector2f& movement)
 {
-	m_mainView.move(movement);
+	m_mainView.move(movement.x, movement.y);
 	m_window.setView(m_mainView);
 }
 
@@ -68,9 +68,9 @@ void Window::update(sf::Time deltaTime)
 	moveView(m_viewMoveVector * deltaTime.asSeconds() * m_viewSpeed);
 }
 
-void Window::resizeView(sf::Vector2f & newSize)
+void Window::resizeView(const Vector2f & newSize)
 {
-	m_mainView.setSize(newSize);
+	m_mainView.setSize(newSize.x, newSize.y);
 	m_window.setView(m_mainView);
 }
 
@@ -95,7 +95,7 @@ void Window::setup(const std::string & windowTitle, const sf::Vector2u & size)
 	create();
 }
 
-void Window::setViewMoveVector(const sf::Vector2f & moveVector)
+void Window::setViewMoveVector(const Vector2f & moveVector)
 {
 	m_viewMoveVector = moveVector;
 }

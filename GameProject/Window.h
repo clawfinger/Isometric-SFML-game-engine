@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "Utils/Meta.h"
+#include "Utils/Vector2D.h"
 
 class Window
 {
@@ -25,12 +26,12 @@ public:
 	void update(sf::Time deltaTime);
 	void draw(sf::Drawable& drawable);
 
-	void moveView(sf::Vector2f movement);
-	void resizeView(sf::Vector2f& newSize);
+	void moveView(const Vector2f& movement);
+	void resizeView(const Vector2f& newSize);
 	sf::View& getView();
 
 	sf::RenderWindow& getRenderWindow();
-	void setViewMoveVector(const sf::Vector2f& moveVector);
+	void setViewMoveVector(const Vector2f& moveVector);
 
 private:
 	void destroy();
@@ -43,7 +44,7 @@ private:
 	std::string m_windowTitle;
 	sf::Vector2u m_windowSize;
 	sf::View m_mainView;
-	sf::Vector2f m_viewMoveVector;
+	Vector2f m_viewMoveVector;
 	float m_viewSpeed;
 };
 REGISTER_TYPENAME(Window)

@@ -5,7 +5,7 @@ std::string EntityCreatedEvent::name()
 	return typeName<EntityCreatedEvent>();
 }
 
-SetDestinationForEntityEvent::SetDestinationForEntityEvent(EntityId entity, const sf::Vector2f& index):
+SetDestinationForEntityEvent::SetDestinationForEntityEvent(EntityId entity, const Vector2f& index):
 	destination(index), entity(entity)
 {
 }

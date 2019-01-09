@@ -102,7 +102,7 @@ void GameEngine::handlePlayerInput(sf::Event& event)
 
 void GameEngine::handleKeyboardInput(sf::Keyboard::Key key)
 {
-	sf::Vector2f viewMoveVector;
+	Vector2f viewMoveVector;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		viewMoveVector.y = -1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
@@ -118,7 +118,7 @@ void GameEngine::handleKeyboardInput(sf::Keyboard::Key key)
 void GameEngine::handleMouseInput(sf::Vector2i mouseCoords)
 {
 	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(mouseCoords);
-	sf::Vector2f mapTile = m_map->orthoXYfromIsometricCoords(mouse);
+	Vector2f mapTile = m_map->orthoXYfromIsometricCoords(Vector2f(mouse.x, mouse.y));
 	LOG("Clicked: " + std::to_string(mapTile.x) + ":" + std::to_string(mapTile.y));
 
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "../Utils/utility.h"
 #include "../Utils/Meta.h"
+#include "../Utils/Vector2D.h"
 #include "../ECS/Entity.h"
 #include "../LevelInfo.h"
 
@@ -25,19 +26,19 @@ REGISTER_TYPENAME(EntityCreatedEvent)
 class SetDestinationForEntityEvent : public IEvent
 {
 public:
-	SetDestinationForEntityEvent(EntityId entity, const sf::Vector2f& mapIndex);
+	SetDestinationForEntityEvent(EntityId entity, const Vector2f& mapIndex);
 	std::string name();
 	EntityId entity;
-	sf::Vector2f destination;
+	Vector2f destination;
 };
 REGISTER_TYPENAME(SetDestinationForEntityEvent)
 
 class PlayerReachTileEvent : public IEvent
 {
 public:
-	PlayerReachTileEvent(sf::Vector2f pos, EntityId entity) : pos(pos), entity(entity) {}
+	PlayerReachTileEvent(Vector2f pos, EntityId entity) : pos(pos), entity(entity) {}
 	std::string name();
-	sf::Vector2f pos;
+	Vector2f pos;
 	EntityId entity;
 };
 REGISTER_TYPENAME(PlayerReachTileEvent)

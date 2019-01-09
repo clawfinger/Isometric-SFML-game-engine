@@ -2,6 +2,7 @@
 #include <memory>
 #include "SystemBase.h"
 #include "../../Events/Observer.h"
+#include "../../Utils/Vector2D.h"
 
 class PositionComponent;
 class EntityContainer;
@@ -20,7 +21,7 @@ public:
 private:
 	void handleEntitySpawnEvent(IEvent* event);
 	void handleSetDestinationEvent(IEvent* event);
-	void updateOrientation(const sf::Vector2f& movement, EntityId id);
+	void updateOrientation(const Vector2f& movement, EntityId id);
 
 private:
 	std::shared_ptr<EntityContainer> m_entityContainer;

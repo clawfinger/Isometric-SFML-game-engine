@@ -37,7 +37,7 @@ EntityManager::~EntityManager()
 void EntityManager::spawnCharacters()
 {
 	//change map for multiple characters spawn
-	sf::Vector2f playerSpawn = m_map->getPlayerSpawnCoordinate();
+	Vector2f playerSpawn = m_map->getPlayerSpawnCoordinate();
 	for (auto characterId : m_charactersIds)
 	{
 		PositionComponent* positionComponent =
@@ -61,14 +61,14 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
 	if (spriteComp)
 	{
 		spriteComp->create(m_textureManager->get(data.textureId));
-		spriteComp->getSprite().setOrigin(data.spriteOrigin);
+		spriteComp->getSprite().setOrigin(sf::Vector2f(data.spriteOrigin.x, data.spriteOrigin.y));
 	}
 	PositionComponent* positionComponent =
 		m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
 	if (positionComponent)
 	{
 		positionComponent->setActorSpeed(data.movementSpeed);
-		sf::Vector2f enemySpawn = m_map->getEnemySpawnCoordinate();
+		Vector2f enemySpawn = m_map->getEnemySpawnCoordinate();
 		positionComponent->setPosition(enemySpawn);
 	}
 	SpriteOrientationComponent* orientationComponent =
@@ -198,14 +198,14 @@ EntityId EntityManager::createCharacterFromData(const CharacterData & data) cons
 	if (spriteComp)
 	{
 		spriteComp->create(m_textureManager->get(data.textureId));
-		spriteComp->getSprite().setOrigin(data.spriteOrigin);
+		spriteComp->getSprite().setOrigin(sf::Vector2f(data.spriteOrigin.x, data.spriteOrigin.y));
 	}
 	PositionComponent* positionComponent =
 		m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
 	if (positionComponent)
 	{
 		positionComponent->setActorSpeed(data.movementSpeed);
-		sf::Vector2f enemySpawn = m_map->getEnemySpawnCoordinate();
+		Vector2f enemySpawn = m_map->getEnemySpawnCoordinate();
 		positionComponent->setPosition(enemySpawn);
 	}
 	SpriteOrientationComponent* orientationComponent =

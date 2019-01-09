@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML/System/Vector2.hpp>
+#include "Vector2D.h"
 #include <math.h>
 #include <string>
 #include <vector>
@@ -19,7 +19,7 @@ namespace Vector
 		return vector / length<T>(vector);
 	}
 
-	bool isVectorsIntersects(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c, sf::Vector2f d);
+	bool isVectorsIntersects(Vector2f a, Vector2f b, Vector2f c, Vector2f d);
 }
 
 template<typename T>

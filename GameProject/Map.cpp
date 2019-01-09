@@ -4,6 +4,7 @@
 #include <queue>
 #include <sstream>
 #include <memory>
+#include <stdlib.h>
 #include "Events/Events.h"
 #include "Utils/Logger.h"
 #include "Utils/Utility.h"
@@ -55,9 +56,9 @@ void MapTile::setTransparent(bool transparent)
 {
 }
 
-void MapTile::setPosition(const sf::Vector2f & position)
+void MapTile::setPosition(const Vector2f & position)
 {
-	m_sprite.setPosition(position);
+	m_sprite.setPosition(sf::Vector2f(position.x, position.y));
 }
 
 void MapTile::setPosition(float x, float y)
@@ -170,7 +171,7 @@ void Map::loadLevel(LevelTypes name)
 	m_EventDispatcher->dispatch(new MapCreatedEvent(name));
 }
 
-bool Map::isWalkable(const sf::Vector2f& tile)
+bool Map::isWalkable(const Vector2f& tile)
 {
 	if (isWithinMap(int(tile.x), int(tile.y)))
 		return m_mapTiles[int(tile.y) * m_mapWidth + int(tile.x)].isWalkable();
@@ -198,15 +199,15 @@ MapTile& Map::getMapTile(int x, int y)
 	return m_mapTiles[y * m_mapWidth + x];
 }
 
-std::stack<sf::Vector2f> Map::calculatePath(const sf::Vector2f& from, const sf::Vector2f& to)
+std::stack<Vector2f> Map::calculatePath(const Vector2f& from, const Vector2f& to)
 {
 	int start = linearFromXY(from.x, from.y);
 	int end = linearFromXY(to.x, to.y);
 
 	auto heuristic = [&](int start, int end)
 	{
-		sf::Vector2f from = XYfromLinear(start);
-		sf::Vector2f to = XYfromLinear(end);
+		Vector2f from = XYfromLinear(start);
+		Vector2f to = XYfromLinear(end);
 		return sqrt(pow((from.x - to.x), 2) + pow((from.y - to.y), 2));
 	};
 
@@ -241,7 +242,7 @@ std::stack<sf::Vector2f> Map::calculatePath(const sf::Vector2f& from, const sf::
 			}
 		}
 	}
-	std::stack<sf::Vector2f> result;
+	std::stack<Vector2f> result;
 	result.push(isometricEntityPositionFromMap(XYfromLinear(end)));
 	int prev = cameFrom[end];
 	while (cameFrom[prev] != prev)
@@ -253,11 +254,12 @@ std::stack<sf::Vector2f> Map::calculatePath(const sf::Vector2f& from, const sf::
 	return result;
 }
 
-sf::Vector2f Map::isometricEntityPositionFromMap(const sf::Vector2f& map)
+Vector2f Map::isometricEntityPositionFromMap(const Vector2f& map)
 {
 	//returning center of tile in isometric
-	sf::Vector2f tileCenter(map.x * m_tileWidth + m_tileWidth / 2, map.y * m_tileHeight + m_tileHeight / 2);
-	return m_matrix.transformPoint(tileCenter.x, tileCenter.y);
+	Vector2f tileCenter(map.x * m_tileWidth + m_tileWidth / 2, map.y * m_tileHeight + m_tileHeight / 2);
+	sf::Vector2f newPoint = m_matrix.transformPoint(tileCenter.x, tileCenter.y);
+	return Vector2f(newPoint.x, newPoint.y);
 }
 
 int Map::linearFromXY(int x, int y)
@@ -265,26 +267,26 @@ int Map::linearFromXY(int x, int y)
 	return y * m_mapWidth + x;
 }
 
-sf::Vector2f Map::XYfromLinear(int linear)
+Vector2f Map::XYfromLinear(int linear)
 {
 	float y = float(linear / m_mapWidth);
 	float x = float(linear % m_mapWidth);
-	return sf::Vector2f(x, y);
+	return Vector2f(x, y);
 }
 
-sf::Vector2f Map::tilePositionFromMap(int x, int y)
+Vector2f Map::tilePositionFromMap(int x, int y)
 {
 	float screenX = (x - y) * 0.5 * m_tileWidth;
 	float screenY = (x + y) * 0.5 * 0.57735 * m_tileHeight;
-	return sf::Vector2f(screenX, screenY);
+	return Vector2f(screenX, screenY);
 }
 
-sf::Vector2f Map::getPlayerSpawnCoordinate()
+Vector2f Map::getPlayerSpawnCoordinate()
 {
 	return isometricEntityPositionFromMap(m_playerSpawnPosition);
 }
 
-sf::Vector2f Map::getEnemySpawnCoordinate()
+Vector2f Map::getEnemySpawnCoordinate()
 {
 	return isometricEntityPositionFromMap(m_enemySpawnPosition);
 
@@ -292,15 +294,15 @@ sf::Vector2f Map::getEnemySpawnCoordinate()
 
 int Map::manhattanLength(int from, int to)
 {
-	sf::Vector2f fromCoord = XYfromLinear(from);
-	sf::Vector2f toCoord = XYfromLinear(to);
+	Vector2f fromCoord = XYfromLinear(from);
+	Vector2f toCoord = XYfromLinear(to);
 	return abs(fromCoord.x - toCoord.x) + abs(fromCoord.y - toCoord.y);
 }
 
 void Map::draw(std::shared_ptr<Window> window)
 {
-	//sf::Vector2f viewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
-	//sf::Vector2f viewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
+	//Vector2f viewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
+	//Vector2f viewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
 
 	//int startX = int(viewTopLeft.x) / m_tileWidth - 1;
 	//int endX = int(viewDownRight.x) / m_tileWidth + 2;
@@ -323,7 +325,7 @@ void Map::draw(std::shared_ptr<Window> window)
 	//	for (int x = startX; x < endX; x++)
 	//	{
 	//		MapTile& current = getMapTile(x, y);
-	//		sf::Vector2f position(float(x * m_tileWidth), float(y * m_tileHeight));
+	//		Vector2f position(float(x * m_tileWidth), float(y * m_tileHeight));
 	//		current.setPosition(position);
 	//		if(!current.isEmpty())
 	//			window->draw(getMapTile(x, y).sprite());
@@ -346,7 +348,7 @@ void Map::draw(std::shared_ptr<Window> window)
 std::vector<int> Map::neighbors(int position)
 {
 	std::vector<int> result;
-	sf::Vector2f pos = XYfromLinear(position);
+	Vector2f pos = XYfromLinear(position);
 	std::vector<sf::Vector2i> neighborPoints;
 
 	neighborPoints.push_back(sf::Vector2i(int(pos.x + 1), int(pos.y)));
@@ -382,8 +384,8 @@ void Map::initMatrix()
 	m_matrix.rotate(45);
 }
 
-sf::Vector2f Map::orthoXYfromIsometricCoords(sf::Vector2f& windowCoords)
+Vector2f Map::orthoXYfromIsometricCoords(const Vector2f& windowCoords)
 {
 	sf::Vector2f orthCoord = m_matrix.getInverse().transformPoint(windowCoords.x, windowCoords.y);
-	return sf::Vector2f(floor(orthCoord.x / m_tileWidth), floor(orthCoord.y / m_tileHeight));
+	return Vector2f(floor(orthCoord.x / m_tileWidth), floor(orthCoord.y / m_tileHeight));
 }

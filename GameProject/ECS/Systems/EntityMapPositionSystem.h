@@ -15,7 +15,7 @@ public:
 	~EntityMapPositionSystem();
 	void update(sf::Time deltaTime);
 	//void notify(IEvent* event);
-	EntityId getEntityAtCoordinates(const sf::Vector2f& mouse);
+	EntityId getEntityAtCoordinates(const Vector2f& mouse);
 
 private:
 	void handleEntitySpawnEvent(IEvent* event);

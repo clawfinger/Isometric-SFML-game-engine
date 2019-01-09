@@ -46,17 +46,17 @@ void MovementSystem::update(sf::Time deltatime)
 		{
 			if (pathComponent->getPath().top() != positionComponent->getPosition())
 			{
-				sf::Vector2f playerMoveVector = pathComponent->getPath().top() - positionComponent->getPosition();
-				sf::Vector2f normalazedVector = Vector::normalize<sf::Vector2f>(playerMoveVector);
+				Vector2f playerMoveVector = pathComponent->getPath().top() - positionComponent->getPosition();
+				Vector2f normalazedVector = Vector::normalize<Vector2f>(playerMoveVector);
 
 				//Update sprite orientation if needed
 				if (m_entityContainer->HasComponent(entity, typeName<SpriteOrientationComponent>()))
 					updateOrientation(normalazedVector, entity);
 
-				sf::Vector2f movement = normalazedVector * deltatime.asSeconds() * positionComponent->actorSpeed();
+				Vector2f movement = normalazedVector * deltatime.asSeconds() * positionComponent->actorSpeed();
 
 				//Entity reach tile on current move
-				if (Vector::length<sf::Vector2f>(playerMoveVector) < Vector::length<sf::Vector2f>(movement))
+				if (Vector::length<Vector2f>(playerMoveVector) < Vector::length<Vector2f>(movement))
 				{
 					positionComponent->setPosition(pathComponent->getPath().top());
 					m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top(), entity));
@@ -117,7 +117,7 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
 		//player reset entity path while it was moving, finishing current movement
 		if (pathComponent->isPathSet())
 		{
-			std::stack<sf::Vector2f> tempPath;
+			std::stack<Vector2f> tempPath;
 			tempPath.push(pathComponent->getPath().top());
 			pathComponent->setPath(tempPath, pathComponent->getPath().top());
 			return;
@@ -126,7 +126,7 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
 	}
 }
 
-void MovementSystem::updateOrientation(const sf::Vector2f & movement, EntityId id)
+void MovementSystem::updateOrientation(const Vector2f & movement, EntityId id)
 {
 	SpriteOrientationComponent* orientationComponent =
 		m_entityContainer->getComponent<SpriteOrientationComponent>(id, typeName<SpriteOrientationComponent>());

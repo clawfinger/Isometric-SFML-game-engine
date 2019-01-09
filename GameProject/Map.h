@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "Events/EventDispatcher.h"
 #include "Utils/Meta.h"
+#include "Utils/Vector2D.h"
 #include "LevelInfo.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -23,7 +24,7 @@ public:
 	void setEmpty(bool empty);
 	void setTransparent(bool transparent);
 
-	void setPosition(const sf::Vector2f& position);
+	void setPosition(const Vector2f& position);
 	void setPosition(float x, float y);
 
 	sf::Sprite& sprite();
@@ -39,19 +40,19 @@ class Map
 public:
 	Map(std::shared_ptr<TextureManager> textures, std::shared_ptr<EventDispatcher> dispatcher);
 	void loadLevel(LevelTypes name);
-	bool isWalkable(const sf::Vector2f& tile);
+	bool isWalkable(const Vector2f& tile);
 	bool isWalkable(int x, int y);
 	int mapWidth();
 	int mapHeight();
 	MapTile& getMapTile(int x, int y);
-	std::stack<sf::Vector2f> calculatePath(const sf::Vector2f& from, const sf::Vector2f& to);
+	std::stack<Vector2f> calculatePath(const Vector2f& from, const Vector2f& to);
 
-	sf::Vector2f isometricEntityPositionFromMap(const sf::Vector2f& map);
+	Vector2f isometricEntityPositionFromMap(const Vector2f& map);
 
-	sf::Vector2f orthoXYfromIsometricCoords(sf::Vector2f& windowCoords);
+	Vector2f orthoXYfromIsometricCoords(const Vector2f& windowCoords);
 
-	sf::Vector2f getPlayerSpawnCoordinate(); //to be removed
-	sf::Vector2f getEnemySpawnCoordinate(); //to be removed
+	Vector2f getPlayerSpawnCoordinate(); //to be removed
+	Vector2f getEnemySpawnCoordinate(); //to be removed
 
 	int manhattanLength(int from, int to);
 
@@ -63,8 +64,8 @@ private:
 	int costForTile(int linearPos); // now always return 1; can change this in future
 	void initMatrix();
 	inline int linearFromXY(int x, int y);
-	inline sf::Vector2f XYfromLinear(int linear);
-	sf::Vector2f tilePositionFromMap(int x, int y);
+	inline Vector2f XYfromLinear(int linear);
+	Vector2f tilePositionFromMap(int x, int y);
 
 private:
 	std::shared_ptr<TextureManager> m_textureManager;
@@ -76,8 +77,8 @@ private:
 	int m_mapHeight;
 	int m_tileWidth;
 	int m_tileHeight;
-	sf::Vector2f m_playerSpawnPosition;
-	sf::Vector2f m_enemySpawnPosition;
+	Vector2f m_playerSpawnPosition;
+	Vector2f m_enemySpawnPosition;
 	sf::Transform m_matrix;
 };
 REGISTER_TYPENAME(Map)

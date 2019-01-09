@@ -51,7 +51,7 @@ bool isInside(float pointX, float pointY, float top, float left, int width, int 
 	return Xok && Yok;
 }
 
-EntityId EntityMapPositionSystem::getEntityAtCoordinates(const sf::Vector2f & mouse)
+EntityId EntityMapPositionSystem::getEntityAtCoordinates(const Vector2f & mouse)
 {
 	for (EntityId entity : m_entities)
 	{

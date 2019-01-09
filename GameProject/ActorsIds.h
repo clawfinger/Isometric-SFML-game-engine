@@ -1,6 +1,5 @@
 #pragma once
 #include "SFML/Graphics/Rect.hpp"
-#include "SFML/System/Vector2.hpp"
 #include "Utils/StructSerialization.h"
 
 namespace EnemyId
@@ -20,7 +19,7 @@ struct EnemyData
 	{
 		ClassMetaInfo<EnemyData>::registerMember<std::string>("name", &EnemyData::name);
 		ClassMetaInfo<EnemyData>::registerMember<sf::IntRect>("defaultTextureRect", &EnemyData::defaultTextureRect);
-		ClassMetaInfo<EnemyData>::registerMember<sf::Vector2f>("spriteOrigin", &EnemyData::spriteOrigin);
+		ClassMetaInfo<EnemyData>::registerMember<Vector2f>("spriteOrigin", &EnemyData::spriteOrigin);
 		ClassMetaInfo<EnemyData>::registerMember<std::string>("textureId", &EnemyData::textureId);
 		ClassMetaInfo<EnemyData>::registerMember<float>("movementSpeed", &EnemyData::movementSpeed);
 		ClassMetaInfo<EnemyData>::registerMember<int>("vision", &EnemyData::vision);
@@ -28,7 +27,7 @@ struct EnemyData
 	}
 	std::string name;
 	sf::IntRect defaultTextureRect;
-	sf::Vector2f spriteOrigin;
+	Vector2f spriteOrigin;
 	std::string textureId;
 	float movementSpeed;
 	int vision;
@@ -40,7 +39,7 @@ struct CharacterData
 	{
 		ClassMetaInfo<CharacterData>::registerMember<std::string>("name", &CharacterData::name);
 		ClassMetaInfo<CharacterData>::registerMember<sf::IntRect>("defaultTextureRect", &CharacterData::defaultTextureRect);
-		ClassMetaInfo<CharacterData>::registerMember<sf::Vector2f>("spriteOrigin", &CharacterData::spriteOrigin);
+		ClassMetaInfo<CharacterData>::registerMember<Vector2f>("spriteOrigin", &CharacterData::spriteOrigin);
 		ClassMetaInfo<CharacterData>::registerMember<std::string>("textureId", &CharacterData::textureId);
 		ClassMetaInfo<CharacterData>::registerMember<float>("movementSpeed", &CharacterData::movementSpeed);
 		ClassMetaInfo<CharacterData>::registerMember<int>("vision", &CharacterData::vision);
@@ -48,7 +47,7 @@ struct CharacterData
 	}
 	std::string name;
 	sf::IntRect defaultTextureRect;
-	sf::Vector2f spriteOrigin;
+	Vector2f spriteOrigin;
 	std::string textureId;
 	float movementSpeed;
 	int vision;

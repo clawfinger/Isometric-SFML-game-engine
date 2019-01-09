@@ -3,7 +3,7 @@
 #include <memory>
 #include <unordered_map>
 #include "SFML/Graphics/Rect.hpp"
-#include "SFML/System/Vector2.hpp"
+#include "Vector2D.h"
 
 template <typename Class>
 class AbstractMember
@@ -77,12 +77,12 @@ private:
 	sf::IntRect Class::* m_memberPointer;
 };
 
-//specialization for sf::Vector2f
+//specialization for Vector2f
 template <typename Class>
-class Member<Class, sf::Vector2f> : public AbstractMember<Class>
+class Member<Class, Vector2f> : public AbstractMember<Class>
 {
 public:
-	Member(sf::Vector2f Class::* pointer) : m_memberPointer(pointer) {}
+	Member(Vector2f Class::* pointer) : m_memberPointer(pointer) {}
 	std::string toString(const Class& object) const
 	{
 		std::stringstream ss;
@@ -98,7 +98,7 @@ public:
 		ss >> (object.*m_memberPointer).y;
 	}
 private:
-	sf::Vector2f Class::* m_memberPointer;
+	Vector2f Class::* m_memberPointer;
 };
 
 //Main meta info class

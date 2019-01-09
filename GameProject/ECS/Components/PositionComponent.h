@@ -10,10 +10,10 @@ public:
 	PositionComponent();
 	~PositionComponent();
 
-	sf::Vector2f& getPosition();
-	void setPosition(const sf::Vector2f& position);
+	Vector2f& getPosition();
+	void setPosition(const Vector2f& position);
 
-	void move(const sf::Vector2f& movement);
+	void move(const Vector2f& movement);
 	float actorSpeed() const { return m_actorSpeed; }
 	void setActorSpeed(float val) { m_actorSpeed = val; }
 	void readData(std::stringstream& stream);
@@ -21,7 +21,7 @@ public:
 	sf::Time& getPauseTime(){ return m_pauseTime; }
 
 private:
-	sf::Vector2f m_position;
+	Vector2f m_position;
 	float m_actorSpeed;
 	sf::Time m_pauseTime;
 };

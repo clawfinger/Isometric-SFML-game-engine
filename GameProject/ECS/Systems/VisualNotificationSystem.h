@@ -22,7 +22,7 @@ public:
 
 protected:
 	sf::Time m_duration;
-	sf::Vector2f m_position;
+	Vector2f m_position;
 	sf::Sprite m_sprite;
 	std::string m_type;
 };

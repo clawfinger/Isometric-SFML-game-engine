@@ -13,7 +13,7 @@ public:
 	void create(sf::Texture& texture);
 	void create(sf::Texture & texture, const sf::IntRect & textureRect);
 	sf::Sprite& getSprite();
-	void setPosition(const sf::Vector2f& position);
+	void setPosition(const Vector2f& position);
 	void readData(std::stringstream& stream);
 private:
 	sf::Sprite m_sprite;

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "../../Utils/Vector2D.h"
 
 class ComponentBase
 {

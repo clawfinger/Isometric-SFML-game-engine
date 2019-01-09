@@ -10,17 +10,17 @@ PositionComponent::~PositionComponent()
 {
 }
 
-sf::Vector2f& PositionComponent::getPosition()
+Vector2f& PositionComponent::getPosition()
 {
 	return m_position;
 }
 
-void PositionComponent::setPosition(const sf::Vector2f & position)
+void PositionComponent::setPosition(const Vector2f & position)
 {
 	m_position = position;
 }
 
-void PositionComponent::move(const sf::Vector2f & movement)
+void PositionComponent::move(const Vector2f & movement)
 {
 	m_position += movement;
 }
