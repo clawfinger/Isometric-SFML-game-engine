@@ -18,60 +18,47 @@ public:
 template<typename T>
 Vector2D<T> operator+(const Vector2D<T>& left, const Vector2D<T>& right)
 {
-	Vector2D<T> result;
-	result.x = left.x + right.x;
-	result.y = left.y + right.y;
-	return result;
+	return Vector2D<T>(left.x + right.x, left.y + right.y);
 }
 
 template<typename T>
 Vector2D<T> operator-(const Vector2D<T>& left, const Vector2D<T>& right)
 {
-	Vector2D<T> result;
-	result.x = left.x - right.x;
-	result.y = left.y - right.y;
-	return result;
+	return Vector2D<T>(left.x - right.x, left.y - right.y);
+
 }
 
 template<typename T>
 bool operator==(const Vector2D<T>& left, const Vector2D<T>& right)
 {
-	return left.x == right.x &&
-		left.x == right.x;
+	return left.x == right.x &&	left.x == right.x;
 }
 
 template<typename T>
 bool operator!=(const Vector2D<T>& left, const Vector2D<T>& right)
 {
-	return left.x != right.x ||
-		left.x != right.x;
+	return left.x != right.x ||	left.x != right.x;
 }
 
 template<typename T>
 Vector2D<T> operator/(const Vector2D<T>& left, T value)
 {
-	Vector2D<T> result;
-	result.x = left.x / value;
-	result.y = left.y / value;
-	return result;
+	return Vector2D<T>(left.x / right.x, left.y / right.y);
+
 }
 
 template<typename T>
 Vector2D<T> operator*(const Vector2D<T>& left, T value)
 {
-	Vector2D<T> result;
-	result.x = left.x * value;
-	result.y = left.y * value;
-	return result;
+	return Vector2D<T>(left.x * right.x, left.y * right.y);
+
 }
 
 template<typename T>
 Vector2D<T> operator*(T value, const Vector2D<T>& left)
 {
-	Vector2D<T> result;
-	result.x = left.x * value;
-	result.y = left.y * value;
-	return result;
+	return Vector2D<T>(left.x + value, left.y + value);
+
 }
 
 //probably better way to compare floats
