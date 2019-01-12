@@ -71,12 +71,6 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
 		Vector2f enemySpawn = m_map->getEnemySpawnCoordinate();
 		positionComponent->setPosition(enemySpawn);
 	}
-	SpriteOrientationComponent* orientationComponent =
-		m_entityContainer->getComponent<SpriteOrientationComponent>(entity, typeName<SpriteOrientationComponent>());
-	if (orientationComponent)
-	{
-		orientationComponent->setRightTextureRect(data.defaultTextureRect);
-	}
 	VisionComponent* visionComponent =
 		m_entityContainer->getComponent<VisionComponent>(entity, typeName<VisionComponent>());
 	if (visionComponent)
@@ -207,12 +201,6 @@ EntityId EntityManager::createCharacterFromData(const CharacterData & data) cons
 		positionComponent->setActorSpeed(data.movementSpeed);
 		Vector2f enemySpawn = m_map->getEnemySpawnCoordinate();
 		positionComponent->setPosition(enemySpawn);
-	}
-	SpriteOrientationComponent* orientationComponent =
-		m_entityContainer->getComponent<SpriteOrientationComponent>(entity, typeName<SpriteOrientationComponent>());
-	if (orientationComponent)
-	{
-		orientationComponent->setRightTextureRect(data.defaultTextureRect);
 	}
 	VisionComponent* visionComponent =
 		m_entityContainer->getComponent<VisionComponent>(entity, typeName<VisionComponent>());

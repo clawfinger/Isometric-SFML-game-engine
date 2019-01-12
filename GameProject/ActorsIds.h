@@ -38,7 +38,6 @@ struct CharacterData
 	CharacterData()
 	{
 		ClassMetaInfo<CharacterData>::registerMember<std::string>("name", &CharacterData::name);
-		ClassMetaInfo<CharacterData>::registerMember<sf::IntRect>("defaultTextureRect", &CharacterData::defaultTextureRect);
 		ClassMetaInfo<CharacterData>::registerMember<Vector2f>("spriteOrigin", &CharacterData::spriteOrigin);
 		ClassMetaInfo<CharacterData>::registerMember<std::string>("textureId", &CharacterData::textureId);
 		ClassMetaInfo<CharacterData>::registerMember<float>("movementSpeed", &CharacterData::movementSpeed);

@@ -65,7 +65,6 @@ void GameEngine::initSystems()
 	m_systems[typeName<RenderSystem>()] = m_render;
 
 	m_systems[typeName<MovementSystem>()] = new MovementSystem(m_container);
-	m_systems[typeName<SpriteOrientationSystem>()] = new SpriteOrientationSystem(m_container); 
 	m_systems[typeName<EntityVisionSystem>()] = new EntityVisionSystem(m_container);
 	m_systems[typeName<EntityMapPositionSystem>()] = new EntityMapPositionSystem(m_container);
 }
@@ -123,7 +122,7 @@ void GameEngine::handleMouseInput(const Vector2i& mouseCoords)
 
 
 	//EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
-	//EntityId entity = EPSystem->getEntityAtCoordinates(mouse);
+	//EntityId entity = EPSystem->getEntityAtCoordinates(Vector2f(mouse.x, mouse.y));
 	//if (entity != INVALIDID)
 	//{
 	//	if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())

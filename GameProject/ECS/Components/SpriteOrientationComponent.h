@@ -18,11 +18,8 @@ public:
 	SpriteOrientation orientation() const { return m_orientation; }
 	void setOrientation(SpriteOrientation val) { m_orientation = val; }
 	void readData(std::stringstream& stream);
-	sf::IntRect& getRightTextureRect();
-	void setRightTextureRect(const sf::IntRect& rect);
 
 private:
 	SpriteOrientation m_orientation;
-	sf::IntRect m_rightTextureRect;
 };
 REGISTER_TYPENAME(SpriteOrientationComponent)
