@@ -31,5 +31,8 @@ AnimationComponent::Animation& AnimationComponent::getStateAnimation(const std::
 		return it->second;
 	}
 	else
+	{
 		LOG("Animation component: Animation not found for state " + state);
+		return m_animations[state];
+	}
 }

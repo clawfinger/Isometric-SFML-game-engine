@@ -9,6 +9,7 @@
 #include "ECS\Systems\SpriteOrientationSystem.h"
 #include "ECS\Systems\EntityVisionSystem.h"
 #include "ECS\Systems\EntityMapPositionSystem.h"
+#include "ECS\Systems\AnimationSystem.h"
 #include "Map.h"
 #include "Window.h"
 
@@ -67,6 +68,7 @@ void GameEngine::initSystems()
 	m_systems[typeName<MovementSystem>()] = new MovementSystem(m_container);
 	m_systems[typeName<EntityVisionSystem>()] = new EntityVisionSystem(m_container);
 	m_systems[typeName<EntityMapPositionSystem>()] = new EntityMapPositionSystem(m_container);
+	m_systems[typeName<AnimationSystem>()] = new AnimationSystem(m_container);
 }
 
 void GameEngine::handleMapCreatedEvent(IEvent * event)
