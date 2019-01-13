@@ -28,6 +28,7 @@ private:
 	void loadEnemies();
 	EnemyData& getRandomEnemyData();
 	EntityId createCharacterFromData(const CharacterData& data) const;
+	void createAnimationComponent(EntityId entity, const std::string textureId) const;
 
 private:
 	std::shared_ptr<EntityContainer> m_entityContainer;

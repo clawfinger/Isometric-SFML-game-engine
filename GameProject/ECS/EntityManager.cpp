@@ -10,6 +10,7 @@
 #include "../ECS/Components/PositionComponent.h"
 #include "../ECS/Components/SpriteOrientationComponent.h"
 #include "../ECS/Components/VisionComponent.h"
+#include "../ECS/Components/AnimationComponent.h"
 #include "../Map.h"
 #include "Entity.h"
 #include "EntityManager.h"
@@ -77,6 +78,7 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
 	{
 		visionComponent->setVision(data.vision);
 	}
+	createAnimationComponent(entity, data.textureId);
 	m_eventDispatcher->dispatch(new EntityCreatedEvent(entity, m_entityTypes[EntityType::enemy]));
 }
 
@@ -208,5 +210,29 @@ EntityId EntityManager::createCharacterFromData(const CharacterData & data) cons
 	{
 		visionComponent->setVision(data.vision);
 	}
+	createAnimationComponent(entity, data.textureId);
 	return entity;
+}
+void EntityManager::createAnimationComponent(EntityId entity, const std::string textureId) const
+{
+	std::ifstream animationFile;
+	std::string filename = "images/" + textureId + "_animations.txt";
+
+	animationFile.open(filename);
+
+	if (animationFile.is_open())
+	{
+		std::stringstream s_stream;
+		s_stream << animationFile.rdbuf();
+
+		AnimationComponent* animationComponent =
+			m_entityContainer->getComponent<AnimationComponent>(entity, typeName<AnimationComponent>());
+		if (animationComponent)
+		{
+			animationComponent->readData(s_stream);
+		}
+	}
+	else
+		LOG("Cannot open animation file for textureId " + textureId);
+	animationFile.close();
 }

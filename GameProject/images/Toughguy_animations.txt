@@ -1,0 +1,6 @@
+1
+moving
+name mouseMoving
+frameCount 24
+frameTime 0.0417
+infinite 1
