@@ -27,7 +27,5 @@ private:
 	std::shared_ptr<EntityContainer> m_entityContainer;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<Map> m_map;
-
-	sf::Time m_reachTilePauseTime;
 };
 REGISTER_TYPENAME(MovementSystem)

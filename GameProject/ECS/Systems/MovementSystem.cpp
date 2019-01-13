@@ -2,6 +2,7 @@
 #include "../Components/PathComponent.h"
 #include "../Components/PositionComponent.h"
 #include "../Components/SpriteOrientationComponent.h"
+#include "../Components/EntityStateComponent.h"
 #include "../../DiContainer/DiContainer.h"
 #include "../../Events/Events.h"
 #include "../../Map.h"
@@ -23,8 +24,6 @@ MovementSystem::MovementSystem(DiContainer* container):
 	m_eventDispatcher->subscribe(typeName<SetDestinationForEntityEvent>(), this);
 	registerCallBack(typeName<EntityCreatedEvent>(), std::bind(&MovementSystem::handleEntitySpawnEvent, this, std::placeholders::_1));
 	registerCallBack(typeName<SetDestinationForEntityEvent>(), std::bind(&MovementSystem::handleSetDestinationEvent, this, std::placeholders::_1));
-
-	m_reachTilePauseTime = sf::seconds(0.15f);
 }
 
 void MovementSystem::update(sf::Time deltatime)
@@ -35,12 +34,6 @@ void MovementSystem::update(sf::Time deltatime)
 			m_entityContainer->getComponent<PathComponent>(entity, typeName<PathComponent>());
 		PositionComponent* positionComponent =
 			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
-		//standing on tile, waiting the pause;
-		if (positionComponent->getPauseTime().asSeconds() > 0)
-		{
-			positionComponent->getPauseTime() -= deltatime;
-			continue;
-		}
 
 		if (pathComponent->isPathSet())
 		{
@@ -61,11 +54,13 @@ void MovementSystem::update(sf::Time deltatime)
 					positionComponent->setPosition(pathComponent->getPath().top());
 					m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top(), entity));
 					pathComponent->getPath().pop();
-					//check if pause is needed;
-					if (pathComponent->isPathSet())
+					//if entity is reached destination setting state to idle
+					if (!pathComponent->isPathSet())
 					{
-						//setting pause time
-						positionComponent->setPauseTime(m_reachTilePauseTime);
+						EntityStateComponent* stateComponent =
+							m_entityContainer->getComponent<EntityStateComponent>(entity, typeName<EntityStateComponent>());
+						stateComponent->setState(EntityState::idle);
+						LOG("Entity " + std::to_string(entity) + " state is set to idle");
 					}
 				}
 				else
@@ -122,7 +117,13 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
 			pathComponent->setPath(tempPath, pathComponent->getPath().top());
 			return;
 		}
-		pathComponent->setPath(m_map->calculatePath(m_map->orthoXYfromIsometricCoords(positionComponent->getPosition()), currentEvent->destination), currentEvent->destination);
+		pathComponent->setPath(m_map->calculatePath(m_map->orthoXYfromIsometricCoords(positionComponent->getPosition()), currentEvent->destination),
+			currentEvent->destination);
+		//Entity started moving. Setting state to moving
+		EntityStateComponent* stateComponent =
+			m_entityContainer->getComponent<EntityStateComponent>(currentEvent->entity, typeName<EntityStateComponent>());
+		stateComponent->setState(EntityState::moving);
+		LOG("Entity " + std::to_string(currentEvent->entity) + " state is set to moving");
 	}
 }
 
@@ -131,15 +132,22 @@ void MovementSystem::updateOrientation(const Vector2f & movement, EntityId id)
 	SpriteOrientationComponent* orientationComponent =
 		m_entityContainer->getComponent<SpriteOrientationComponent>(id, typeName<SpriteOrientationComponent>());
 
-	if (orientationComponent->orientation() == SpriteOrientation::left && movement.x > 0)
+	if (orientationComponent != nullptr)
 	{
-		orientationComponent->setOrientation(SpriteOrientation::right);
-		m_eventDispatcher->dispatch(new EntityChangedOrientationEvent(id));
+		if (orientationComponent->orientation() == SpriteOrientation::left && movement.x > 0)
+		{
+			orientationComponent->setOrientation(SpriteOrientation::right);
+			m_eventDispatcher->dispatch(new EntityChangedOrientationEvent(id));
+		}
+		else if (orientationComponent->orientation() == SpriteOrientation::right && movement.x < 0)
+		{
+			orientationComponent->setOrientation(SpriteOrientation::left);
+			m_eventDispatcher->dispatch(new EntityChangedOrientationEvent(id));
+		}
 	}
-	else if (orientationComponent->orientation() == SpriteOrientation::right && movement.x < 0)
+	else
 	{
-		orientationComponent->setOrientation(SpriteOrientation::left);
-		m_eventDispatcher->dispatch(new EntityChangedOrientationEvent(id));
+		LOG("Movement system: entity " + std::to_string(id) + " has no orientation component");
 	}
 }
 

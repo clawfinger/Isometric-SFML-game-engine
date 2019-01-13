@@ -5,6 +5,7 @@
 #include "Components/AIControlledComponent.h"
 #include "Components/SpriteOrientationComponent.h"
 #include "Components/VisionComponent.h"
+#include "Components/EntityStateComponent.h"
 #include "../Events/Events.h"
 #include "../Utils/Meta.h"
 
@@ -17,7 +18,7 @@ EntityContainer::EntityContainer() : m_idCounter(0)
 	registerComponentFactory<AIControlledComponent>(typeName<AIControlledComponent>());
 	registerComponentFactory<SpriteOrientationComponent>(typeName<SpriteOrientationComponent>());
 	registerComponentFactory<VisionComponent>(typeName<VisionComponent>());
-
+	registerComponentFactory<EntityStateComponent>(typeName<EntityStateComponent>());
 }
 
 
