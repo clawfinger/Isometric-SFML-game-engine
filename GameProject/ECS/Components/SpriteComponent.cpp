@@ -32,10 +32,17 @@ void SpriteComponent::setPosition(const Vector2f & position)
 	m_sprite.setPosition(position.x, position.y);
 }
 
+Vector2f & SpriteComponent::getSize()
+{
+	return m_size;
+}
+
 void SpriteComponent::readData(std::stringstream & stream)
 {
 	int x = 0;
 	int y = 0;
 	stream >> x >> y;
+	stream >> m_size.x >> m_size.y;
+	
 	m_sprite.setOrigin(float(x), float(y));
 }
