@@ -1,13 +1,7 @@
 #pragma once
 #include "ComponentBase.h"
 #include "../../Utils/Meta.h"
-
-enum class EntityState
-{
-	idle,
-	moving
-};
-
+#include "../../ActorsIds.h"
 
 class EntityStateComponent :public ComponentBase
 {
@@ -15,10 +9,10 @@ public:
 	EntityStateComponent();
 	~EntityStateComponent();
 	void readData(std::stringstream& l_stream);
-	EntityState getState();
-	void setState(EntityState state);
+	std::string& getState();
+	void setState(const std::string& state);
 
 private:
-	EntityState m_state;
+	std::string m_state;
 };
 REGISTER_TYPENAME(EntityStateComponent)

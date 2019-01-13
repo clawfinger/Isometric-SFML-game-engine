@@ -13,12 +13,17 @@ namespace CharacterId
 	static const std::string Smartguy = "Smartguy";
 }
 
+namespace EntityState
+{
+	static const std::string idle = "idle";
+	static const std::string moving = "moving";
+};
+
 struct EnemyData
 {
 	EnemyData()
 	{
 		ClassMetaInfo<EnemyData>::registerMember<std::string>("name", &EnemyData::name);
-		ClassMetaInfo<EnemyData>::registerMember<sf::IntRect>("defaultTextureRect", &EnemyData::defaultTextureRect);
 		ClassMetaInfo<EnemyData>::registerMember<Vector2f>("spriteOrigin", &EnemyData::spriteOrigin);
 		ClassMetaInfo<EnemyData>::registerMember<std::string>("textureId", &EnemyData::textureId);
 		ClassMetaInfo<EnemyData>::registerMember<float>("movementSpeed", &EnemyData::movementSpeed);

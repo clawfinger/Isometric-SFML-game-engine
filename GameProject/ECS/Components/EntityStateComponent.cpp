@@ -14,12 +14,12 @@ void EntityStateComponent::readData(std::stringstream & l_stream)
 {
 }
 
-EntityState EntityStateComponent::getState()
+std::string& EntityStateComponent::getState()
 {
 	return m_state;
 }
 
-void EntityStateComponent::setState(EntityState state)
+void EntityStateComponent::setState(const std::string& state)
 {
 	m_state = state;
 }

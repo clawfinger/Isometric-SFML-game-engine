@@ -1,6 +1,6 @@
 #begin
 name Toughguy
-movementSpeed 300
+movementSpeed 150
 textureId Toughguy
 spriteOrigin 64 128
 vision 5
