@@ -1,5 +1,5 @@
 #include "AnimationComponent.h"
-
+#include "../../Utils/Logger.h"
 
 
 AnimationComponent::AnimationComponent(): ComponentBase(typeName<AnimationComponent>())
@@ -21,4 +21,15 @@ void AnimationComponent::readData(std::stringstream & stream)
 		stream >> state;
 		ClassMetaInfo<Animation>::deserialize(m_animations[state], stream);
 	}
+}
+
+AnimationComponent::Animation& AnimationComponent::getStateAnimation(const std::string & state)
+{
+	auto it = m_animations.find(state);
+	if (it != m_animations.end())
+	{
+		return it->second;
+	}
+	else
+		LOG("Animation component: Animation not found for state " + state);
 }

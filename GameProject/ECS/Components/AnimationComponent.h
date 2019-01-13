@@ -10,14 +10,10 @@
 class AnimationComponent :public ComponentBase
 {
 public:
-	AnimationComponent();
-	~AnimationComponent();
-	void readData(std::stringstream& stream);
-
-private:
 	struct Animation
 	{
-		Animation()
+		Animation() : name("DEFAULT_ANIM_NAME"), frameCount(0), frameTime(0.0), infinite(false),
+			elapsedTime(0), currentFrame(0), playing(true)
 		{
 			ClassMetaInfo<Animation>::registerMember<std::string>("name", &Animation::name);
 			ClassMetaInfo<Animation>::registerMember<int>("frameCount", &Animation::frameCount);
@@ -35,6 +31,11 @@ private:
 
 	};
 
+	AnimationComponent();
+	~AnimationComponent();
+	void readData(std::stringstream& stream);
+	Animation& getStateAnimation(const std::string& state);
+private:
 	//state - animation
 	std::unordered_map<std::string, Animation> m_animations;
 };
