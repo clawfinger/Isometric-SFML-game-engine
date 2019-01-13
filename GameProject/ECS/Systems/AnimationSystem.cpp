@@ -53,11 +53,11 @@ void AnimationSystem::update(sf::Time deltaTime)
 
 					SpriteOrientationComponent* orientComp = m_entityContainer->getComponent<SpriteOrientationComponent>(entity, typeName<SpriteOrientationComponent>());
 
-					int directionSign = 0;
+					int row = currentAnim.row;
 					if (orientComp->orientation() == SpriteOrientation::right)
-						directionSign = 1;
+						row++;
 
-					sf::IntRect frame(currentAnim.currentFrame * size.x, directionSign * size.y, size.x, size.y);
+					sf::IntRect frame(currentAnim.currentFrame * size.x, row * size.y, size.x, size.y);
 					spriteComp->getSprite().setTextureRect(frame);
 					currentAnim.elapsedTime = 0;
 				}

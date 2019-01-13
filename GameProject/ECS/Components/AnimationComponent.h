@@ -19,11 +19,13 @@ public:
 			ClassMetaInfo<Animation>::registerMember<int>("frameCount", &Animation::frameCount);
 			ClassMetaInfo<Animation>::registerMember<float>("frameTime", &Animation::frameTime);
 			ClassMetaInfo<Animation>::registerMember<bool>("infinite", &Animation::infinite);
+			ClassMetaInfo<Animation>::registerMember<int>("row", &Animation::row);
 		}
 		std::string name;
 		int frameCount;
 		float frameTime;
 		bool infinite;
+		int row;
 
 		float elapsedTime;
 		int currentFrame;

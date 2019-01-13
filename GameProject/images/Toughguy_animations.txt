@@ -1,6 +1,13 @@
-1
+2
 moving
 name mouseMoving
 frameCount 24
 frameTime 0.030
+row 0
+infinite 1
+idle
+name mouseIdle
+frameCount 1
+frameTime 0.030
+row 0
 infinite 1
