@@ -6,6 +6,7 @@
 #include "../Components/SpriteComponent.h"
 #include "../Components/AnimationComponent.h"
 #include "../Components/EntityStateComponent.h"
+#include "../Components/SpriteOrientationComponent.h"
 
 
 AnimationSystem::AnimationSystem(DiContainer* container): SystemBase(typeName<AnimationSystem>())
@@ -47,10 +48,16 @@ void AnimationSystem::update(sf::Time deltaTime)
 					currentAnim.currentFrame++;
 					if (currentAnim.currentFrame >= currentAnim.frameCount)
 						currentAnim.currentFrame = 0;
-
 					SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
 					Vector2f& size = spriteComp->getSize();
-					sf::IntRect frame(currentAnim.currentFrame * size.x, 0, size.x, size.y);
+
+					SpriteOrientationComponent* orientComp = m_entityContainer->getComponent<SpriteOrientationComponent>(entity, typeName<SpriteOrientationComponent>());
+
+					int directionSign = 0;
+					if (orientComp->orientation() == SpriteOrientation::right)
+						directionSign = 1;
+
+					sf::IntRect frame(currentAnim.currentFrame * size.x, directionSign * size.y, size.x, size.y);
 					spriteComp->getSprite().setTextureRect(frame);
 					currentAnim.elapsedTime = 0;
 				}
