@@ -55,7 +55,7 @@ void Game::processEvents()
 			return;
 		}
 		else if (event.type == sf::Event::KeyPressed)
-			if (event.key.code == sf::Keyboard::F12)
+			if (event.key.code == sf::Keyboard::F1)
 				m_window->toggleFullScreen();
 
 		m_stateManager->currentState()->handlePlayerInput(event);
