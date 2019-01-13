@@ -24,7 +24,8 @@ struct EnemyData
 	EnemyData()
 	{
 		ClassMetaInfo<EnemyData>::registerMember<std::string>("name", &EnemyData::name);
-		ClassMetaInfo<EnemyData>::registerMember<Vector2f>("originAndSize", &EnemyData::originAndSize);
+		ClassMetaInfo<EnemyData>::registerMember<Vector2f>("spriteOrigin", &EnemyData::spriteOrigin);
+		ClassMetaInfo<EnemyData>::registerMember<Vector2f>("spriteSize", &EnemyData::spriteSize);
 		ClassMetaInfo<EnemyData>::registerMember<std::string>("textureId", &EnemyData::textureId);
 		ClassMetaInfo<EnemyData>::registerMember<float>("movementSpeed", &EnemyData::movementSpeed);
 		ClassMetaInfo<EnemyData>::registerMember<int>("vision", &EnemyData::vision);
@@ -32,7 +33,8 @@ struct EnemyData
 	}
 	std::string name;
 	sf::IntRect defaultTextureRect;
-	Vector2f originAndSize;
+	Vector2f spriteOrigin;
+	Vector2f spriteSize;
 	std::string textureId;
 	float movementSpeed;
 	int vision;
@@ -43,7 +45,8 @@ struct CharacterData
 	CharacterData()
 	{
 		ClassMetaInfo<CharacterData>::registerMember<std::string>("name", &CharacterData::name);
-		ClassMetaInfo<CharacterData>::registerMember<Vector2f>("originAndSize", &CharacterData::originAndSize);
+		ClassMetaInfo<CharacterData>::registerMember<Vector2f>("spriteOrigin", &CharacterData::spriteOrigin);
+		ClassMetaInfo<CharacterData>::registerMember<Vector2f>("spriteSize", &CharacterData::spriteSize);
 		ClassMetaInfo<CharacterData>::registerMember<std::string>("textureId", &CharacterData::textureId);
 		ClassMetaInfo<CharacterData>::registerMember<float>("movementSpeed", &CharacterData::movementSpeed);
 		ClassMetaInfo<CharacterData>::registerMember<int>("vision", &CharacterData::vision);
@@ -51,7 +54,8 @@ struct CharacterData
 	}
 	std::string name;
 	sf::IntRect defaultTextureRect;
-	Vector2f originAndSize;
+	Vector2f spriteOrigin;
+	Vector2f spriteSize;
 	std::string textureId;
 	float movementSpeed;
 	int vision;

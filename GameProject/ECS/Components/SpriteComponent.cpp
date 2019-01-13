@@ -45,4 +45,5 @@ void SpriteComponent::readData(std::stringstream & stream)
 	stream >> m_size.x >> m_size.y;
 	
 	m_sprite.setOrigin(float(x), float(y));
+	m_sprite.setTextureRect(sf::IntRect(0, 0, m_size.x, m_size.y));
 }

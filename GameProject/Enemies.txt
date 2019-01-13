@@ -2,6 +2,7 @@
 name Rat
 movementSpeed 150
 textureId Rat
-originAndSize 0 0 128 128
+spriteOrigin 0 0
+spriteSize 128 128
 vision 3
 #end

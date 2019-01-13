@@ -62,7 +62,9 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
 	if (spriteComp)
 	{
 		spriteComp->create(m_textureManager->get(data.textureId));
-		spriteComp->getSprite().setOrigin(sf::Vector2f(data.spriteOrigin.x, data.spriteOrigin.y));
+		std::stringstream ss;
+		ss << data.spriteOrigin.x << data.spriteOrigin.y << data.spriteSize.x << data.spriteSize.y;
+		spriteComp->readData(ss);
 	}
 	PositionComponent* positionComponent =
 		m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
@@ -194,7 +196,9 @@ EntityId EntityManager::createCharacterFromData(const CharacterData & data) cons
 	if (spriteComp)
 	{
 		spriteComp->create(m_textureManager->get(data.textureId));
-		spriteComp->getSprite().setOrigin(sf::Vector2f(data.spriteOrigin.x, data.spriteOrigin.y));
+		std::stringstream ss;
+		ss << data.spriteOrigin.x << " " << data.spriteOrigin.y << " " << data.spriteSize.x << " " << data.spriteSize.y;
+		spriteComp->readData(ss);
 	}
 	PositionComponent* positionComponent =
 		m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
