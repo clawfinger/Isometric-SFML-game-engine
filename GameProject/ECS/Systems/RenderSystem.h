@@ -20,6 +20,7 @@ public:
 private:
 	void handleEntitySpawnEvent(IEvent* event);
 private:
+	std::vector<EntityId> m_toDraw;
 	std::shared_ptr<EntityContainer> m_entityContainer;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 };

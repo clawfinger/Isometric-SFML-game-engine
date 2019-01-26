@@ -44,33 +44,41 @@ void RenderSystem::update(sf::Time deltaTime)
 
 void RenderSystem::draw(std::shared_ptr<Window> window)
 {
+	m_toDraw.clear();
 	for (EntityId entity : m_entities)
 	{
-		PositionComponent* positionComponent =
-			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
-
 		sf::Vector2f SFviewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
-		sf::Vector2f SFviewDownRight = window->getView().getCenter() + (window->getView().getSize() / 2.0f);
 
-		Vector2f viewTopLeft(SFviewTopLeft.x, SFviewTopLeft.y);
-		Vector2f viewDownRight(SFviewDownRight.x, SFviewDownRight.y);
-
-		Vector2f entityPosition = positionComponent->getPosition();
-
-		entityPosition.x = std::round(entityPosition.x);
-		entityPosition.y = std::round(entityPosition.y);
 
 		SpriteComponent* spriteComponent =
 			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+		sf::FloatRect viewRect(SFviewTopLeft, window->getView().getSize());
 
 		sf::Rect<float> spriteBounds = spriteComponent->getSprite().getLocalBounds();
 
-		if ((entityPosition.x + spriteBounds.width) > viewTopLeft.x &&
-			(entityPosition.y + spriteBounds.height) > viewTopLeft.y &&
-			entityPosition.x < viewDownRight.x && entityPosition.y < viewDownRight.y)
+		if (spriteBounds.intersects(viewRect))
 		{
-			window->draw(spriteComponent->getSprite());
+			m_toDraw.push_back(entity);
 		}
+	}
+
+	std::sort(m_toDraw.begin(), m_toDraw.end(),
+		[&](EntityId entity_l, EntityId entity_r)
+		{
+			PositionComponent* position_l =
+				m_entityContainer->getComponent<PositionComponent>(entity_l, typeName<PositionComponent>());
+			PositionComponent* position_r =
+				m_entityContainer->getComponent<PositionComponent>(entity_r, typeName<PositionComponent>());
+			return (position_l->getPosition().y < position_r->getPosition().y);
+		}
+
+	);
+
+	for (EntityId entity : m_toDraw)
+	{
+		SpriteComponent* spriteComponent =
+			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+		window->draw(spriteComponent->getSprite());
 	}
 }
 
