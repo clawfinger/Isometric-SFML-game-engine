@@ -2,7 +2,15 @@
 name Toughguy
 movementSpeed 150
 textureId Toughguy
-spriteOrigin 64 128
+spriteOrigin 64 120
+spriteSize 128 128
+vision 5
+#end
+#begin
+name frog
+movementSpeed 150
+textureId frog
+spriteOrigin 64 120
 spriteSize 128 128
 vision 5
 #end

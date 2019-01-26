@@ -120,20 +120,21 @@ void GameEngine::handleMouseInput(const Vector2i& mouseCoords)
 {
 	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(sf::Vector2i(mouseCoords.x, mouseCoords.y));
 	Vector2f mapTile = m_map->orthoXYfromIsometricCoords(Vector2f(mouse.x, mouse.y));
-	LOG("Clicked: " + std::to_string(mapTile.x) + ":" + std::to_string(mapTile.y));
 
 
-	//EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
-	//EntityId entity = EPSystem->getEntityAtCoordinates(Vector2f(mouse.x, mouse.y));
-	//if (entity != INVALIDID)
-	//{
-	//	if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
-	//	{
-	//		m_activeCharacter = entity;
-	//		//send active char changed event
-	//		return;
-	//	}
-	//}
+	EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
+	EntityId entity = EPSystem->getEntityAtCoordinates(Vector2f(mouse.x, mouse.y));
+	if (entity != INVALIDID)
+	{
+		if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
+		{
+			m_activeCharacter = entity;
+			//send active char changed event
+			return;
+		}
+	}
+	LOG("Active entity: " + std::to_string(m_activeCharacter));
+
 	if (m_map->isWalkable(mapTile))
 	{
 		IEvent* tileClicked = new SetDestinationForEntityEvent(m_activeCharacter, mapTile);

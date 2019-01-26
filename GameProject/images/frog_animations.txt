@@ -1,0 +1,13 @@
+2
+moving
+name frogMoving
+frameCount 24
+frameTime 0.030
+row 2
+infinite 1
+idle
+name frogIdle
+frameCount 24
+frameTime 0.040
+row 0
+infinite 1

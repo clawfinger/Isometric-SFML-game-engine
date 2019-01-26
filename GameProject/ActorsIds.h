@@ -10,7 +10,7 @@ namespace EnemyId
 namespace CharacterId
 {
 	static const std::string Toughguy = "Toughguy";
-	static const std::string Smartguy = "Smartguy";
+	static const std::string frog = "frog";
 }
 
 namespace EntityState
