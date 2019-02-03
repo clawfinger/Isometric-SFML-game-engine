@@ -17,7 +17,7 @@ Window::~Window()
 
 void Window::beginDraw()
 {
-	m_window.clear();
+	m_window.clear(sf::Color(192, 192, 192, 255));
 }
 
 void Window::endDraw()

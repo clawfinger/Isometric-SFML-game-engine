@@ -117,7 +117,7 @@ void Map::loadLevel(LevelTypes name)
 		{
 			std::string mapLine;
 			s_stream >> mapLine;
-			std::string floorTileTags = "ABCDEF";
+			std::string floorTileTags = "ABC";
 			if (mapLine.size() < size_t(m_mapWidth))
 			{
 				for (size_t i = 0; i < size_t(m_mapWidth - mapLine.size()); i++)
@@ -139,12 +139,13 @@ void Map::loadLevel(LevelTypes name)
 				case 'A':
 					tile.setWalkability(true);
 					index = getRandomInRange<int>(0, floorTileTags.size() - 1);
-					tile.sprite().setTexture(m_textureManager->get(std::string("A")));
+					//tile.sprite().setTexture(m_textureManager->get(std::string("A")));
+					tile.sprite().setTexture(m_textureManager->get(std::string(floorTileTags.begin() + index, floorTileTags.begin() + index + 1)));
 					tile.setTransparent(true);
 					break;
 				default:
 					tile.sprite().setTexture(m_textureManager->get(std::string(mapLine.begin() + i, mapLine.begin() + i + 1)));
-					tile.setWalkability(false);
+					tile.setWalkability(true);
 					tile.setTransparent(false);
 					break;
 				}
@@ -277,7 +278,7 @@ Vector2f Map::XYfromLinear(int linear)
 Vector2f Map::tilePositionFromMap(int x, int y)
 {
 	float screenX = (x - y) * 0.5 * m_tileWidth;
-	float screenY = (x + y) * 0.5 * 0.57735 * m_tileHeight;
+	float screenY = (x + y) * 0.5 * 0.5 * m_tileHeight;
 	return Vector2f(screenX, screenY);
 }
 
@@ -380,7 +381,7 @@ int Map::costForTile(int linearPos)
 void Map::initMatrix()
 {
 	m_matrix.translate(64, 0);
-	m_matrix.scale(sqrt(2.0) / 2.0, sqrt(2.0) / (2 / 0.57735));
+	m_matrix.scale(sqrt(2.0) / 2.0, sqrt(2.0) / (2 / 0.5));
 	m_matrix.rotate(45);
 }
 

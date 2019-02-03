@@ -2,7 +2,7 @@
 name Toughguy
 movementSpeed 150
 textureId Toughguy
-spriteOrigin 64 120
+spriteOrigin 64 117
 spriteSize 128 128
 vision 5
 #end
