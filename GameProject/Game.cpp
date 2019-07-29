@@ -1,11 +1,12 @@
 #include "game.h"
+#include <iostream>
+#include <fstream>
 #include "State/GameLevelState.h"
 #include "ActorsIds.h"
 #include "Utils/Logger.h"
-#include <iostream>
-#include <fstream>
 #include "ECS/EntityManager.h"
 #include "ECS/EntityContainer.h"
+#include "Gui/GuiManager.h"
 #include "DiContainer/ConstructingFunctions.h"
 
 Game::Game() : isRunning(true)
@@ -14,6 +15,7 @@ Game::Game() : isRunning(true)
 	m_window = m_container.get<Window>();
 	m_map = m_container.get<Map>();
 	m_eventDispatcher = m_container.get<EventDispatcher>();
+	m_guiManager = m_container.get<GuiManager>();
 	m_textureManager = m_container.get<TextureManager>();
 	m_stateManager = m_container.get<GameStateManager>();
 
@@ -58,12 +60,14 @@ void Game::processEvents()
 			if (event.key.code == sf::Keyboard::F1)
 				m_window->toggleFullScreen();
 
+		m_guiManager->handlePlayerInput(event);
 		m_stateManager->currentState()->handlePlayerInput(event);
 	}
 }
 
 void Game::update(sf::Time deltaTime)
 {
+	m_guiManager->update(deltaTime);
 	m_stateManager->currentState()->update(deltaTime);
 }
 
@@ -71,7 +75,8 @@ void Game::render()
 {
 	m_window->beginDraw();
 
-	m_stateManager->currentState()->render();	
+	m_stateManager->currentState()->render();
+	m_guiManager->render();
 
 	m_window->endDraw();
 }
@@ -80,10 +85,10 @@ void Game::registerClassFactories()
 {
 	m_container.registerClass<TextureManager>(constructingFunction);
 	m_container.registerClass<EventDispatcher>(constructingFunction);
-
 	m_container.registerClass<Map>(constructingFunction<TextureManager, EventDispatcher>);
 	m_container.registerClass<Window>(constructingFunction);
 	m_container.registerClass<GameStateManager>(constructingFunction);
 	m_container.registerClass<EntityContainer>(constructingFunction);
 	m_container.registerClass<EntityManager>(constructingFunction<EntityContainer, EventDispatcher, TextureManager, Map>);
+	m_container.registerClass<GuiManager>(constructingFunction<EventDispatcher, Window>);
 }
