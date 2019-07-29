@@ -17,7 +17,7 @@ Window::~Window()
 
 void Window::beginDraw()
 {
-	m_window.clear(sf::Color(192, 192, 192, 255));
+	m_window.clear(sf::Color(119, 136, 153, 255));
 }
 
 void Window::endDraw()
@@ -114,5 +114,5 @@ void Window::create()
 		style = sf::Style::Default;
 	//uniform initialisation of sf::VideoMode
 	m_window.create({ m_windowSize.x, m_windowSize.y, 32 }, m_windowTitle, style);
-	m_window.setVerticalSyncEnabled(true);
+	//m_window.setVerticalSyncEnabled(true);
 }
