@@ -52,7 +52,8 @@ void MovementSystem::update(sf::Time deltatime)
 				if (Vector::length<Vector2f>(playerMoveVector) < Vector::length<Vector2f>(movement))
 				{
 					positionComponent->setPosition(pathComponent->getPath().top());
-					m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top(), entity));
+					//m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top(), entity));
+					m_eventDispatcher->dispatch<PlayerReachTileEvent>(pathComponent->getPath().top(), entity);
 					pathComponent->getPath().pop();
 					//if entity is reached destination setting state to idle
 					if (!pathComponent->isPathSet())
@@ -137,12 +138,12 @@ void MovementSystem::updateOrientation(const Vector2f & movement, EntityId id)
 		if (orientationComponent->orientation() == SpriteOrientation::left && movement.x > 0)
 		{
 			orientationComponent->setOrientation(SpriteOrientation::right);
-			m_eventDispatcher->dispatch(new EntityChangedOrientationEvent(id));
+			m_eventDispatcher->dispatch<EntityChangedOrientationEvent>(id);
 		}
 		else if (orientationComponent->orientation() == SpriteOrientation::right && movement.x < 0)
 		{
 			orientationComponent->setOrientation(SpriteOrientation::left);
-			m_eventDispatcher->dispatch(new EntityChangedOrientationEvent(id));
+			m_eventDispatcher->dispatch<EntityChangedOrientationEvent>(id);
 		}
 	}
 	else

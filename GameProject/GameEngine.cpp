@@ -137,8 +137,7 @@ void GameEngine::handleMouseInput(const Vector2i& mouseCoords)
 
 	if (m_map->isWalkable(mapTile))
 	{
-		IEvent* tileClicked = new SetDestinationForEntityEvent(m_activeCharacter, mapTile);
-		m_eventDispatcher->dispatch(tileClicked);
+		m_eventDispatcher->dispatch<SetDestinationForEntityEvent>(m_activeCharacter, mapTile);
 	}
 }
 

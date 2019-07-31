@@ -72,7 +72,7 @@ void EntityVisionSystem::handleEntityReachTileEvent(IEvent * event)
 		if (!enemiesInBattle.empty())
 		{
 			LOG("Battle!");
-			m_eventDispatcher->dispatch(new BattleStartedEvent(enemiesInBattle));
+			m_eventDispatcher->dispatch<BattleStartedEvent>(enemiesInBattle);
 		}
 	}
 }

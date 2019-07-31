@@ -47,5 +47,5 @@ void Subscription::broadcast(IEvent * event)
 	{
 		observer->notify(event);
 	}
-	delete event;
+	//delete event;
 }
