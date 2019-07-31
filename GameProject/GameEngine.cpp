@@ -129,11 +129,11 @@ void GameEngine::handleMouseInput(const Vector2i& mouseCoords)
 		if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
 		{
 			m_activeCharacter = entity;
+			LOG("Active entity: " + std::to_string(m_activeCharacter));
 			//send active char changed event
 			return;
 		}
 	}
-	LOG("Active entity: " + std::to_string(m_activeCharacter));
 
 	if (m_map->isWalkable(mapTile))
 	{
