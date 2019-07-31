@@ -4,7 +4,7 @@
 template<class T>
 static std::string typeName()
 {
-	return std::string("DEFAULT");
+	return std::string();
 }
 
 #define REGISTER_TYPENAME(name) \
