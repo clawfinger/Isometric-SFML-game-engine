@@ -169,7 +169,7 @@ void Map::loadLevel(LevelTypes name)
 		s_stream >> m_enemySpawnPosition.x >> m_enemySpawnPosition.y;
 	}
 	mapFile.close();
-	m_EventDispatcher->dispatch(new MapCreatedEvent(name));
+	m_EventDispatcher->dispatch<MapCreatedEvent>(name);
 }
 
 bool Map::isWalkable(const Vector2f& tile)

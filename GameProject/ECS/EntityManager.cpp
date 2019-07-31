@@ -44,7 +44,7 @@ void EntityManager::spawnCharacters()
 		PositionComponent* positionComponent =
 			m_entityContainer->getComponent<PositionComponent>(characterId, typeName<PositionComponent>());
 		positionComponent->setPosition(playerSpawn);
-		m_eventDispatcher->dispatch(new EntityCreatedEvent(characterId, m_entityTypes[EntityType::character]));
+		m_eventDispatcher->dispatch<EntityCreatedEvent>(characterId, m_entityTypes[EntityType::character]);
 	}
 }
 
@@ -81,7 +81,7 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
 		visionComponent->setVision(data.vision);
 	}
 	createAnimationComponent(entity, data.textureId);
-	m_eventDispatcher->dispatch(new EntityCreatedEvent(entity, m_entityTypes[EntityType::enemy]));
+	m_eventDispatcher->dispatch<EntityCreatedEvent>(entity, m_entityTypes[EntityType::enemy]);
 }
 
 void EntityManager::loadEntityTypes()

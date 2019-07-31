@@ -11,12 +11,12 @@ EventDispatcher::~EventDispatcher()
 {
 }
 
-void EventDispatcher::subscribe(std::string eventName, Observer * observer)
+void EventDispatcher::subscribe(const std::string& eventName, Observer * observer)
 {
 	m_subscriptions[eventName].addObserver(observer);
 }
 
-void EventDispatcher::unsubscribe(std::string eventName, Observer * observer)
+void EventDispatcher::unsubscribe(const std::string& eventName, Observer * observer)
 {
 	auto subscription = m_subscriptions.find(eventName);
 	if (subscription != m_subscriptions.end())
