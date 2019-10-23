@@ -4,7 +4,7 @@
 #include <memory>
 #include "TextureManager.h"
 #include "Events/EventDispatcher.h"
-#include "window.h"
+#include "Window.h"
 #include "Map.h"
 #include "State/GameStateManager.h"
 #include "DiContainer/DiContainer.h"

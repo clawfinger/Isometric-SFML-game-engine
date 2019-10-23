@@ -67,16 +67,16 @@ void SpriteOrientationSystem::handleOrientationChangeEvent(IEvent * event)
 void SpriteOrientationSystem::updateSpriteOrientation(SpriteComponent* spriteComponent,
 													SpriteOrientationComponent* orientationComponent)
 {
-	sf::IntRect textureRect = orientationComponent->getRightTextureRect();
+//	sf::IntRect textureRect = orientationComponent->getRightTextureRect();
 
-	if (orientationComponent->orientation() == SpriteOrientation::left)
-	{
-		textureRect.left = 0;
-		textureRect.top = 0;
-		spriteComponent->getSprite().setTextureRect(textureRect);
-	}
-	else if (orientationComponent->orientation() == SpriteOrientation::right)
-	{
-		spriteComponent->getSprite().setTextureRect(textureRect);
-	}
+//	if (orientationComponent->orientation() == SpriteOrientation::left)
+//	{
+//		textureRect.left = 0;
+//		textureRect.top = 0;
+//		spriteComponent->getSprite().setTextureRect(textureRect);
+//	}
+//	else if (orientationComponent->orientation() == SpriteOrientation::right)
+//	{
+//		spriteComponent->getSprite().setTextureRect(textureRect);
+//	}
 }

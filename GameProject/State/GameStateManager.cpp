@@ -5,7 +5,7 @@
 
 GameStateManager::GameStateManager()
 {
-	registerStateFactory<GameLevelState>(GameStateType::level);
+	registerStateFactory<GameLevelState>(GameStateId::level);
 }
 
 
@@ -30,7 +30,7 @@ void GameStateManager::setContainer(DiContainer* container)
 	m_container = container;
 }
 
-void GameStateManager::activateState(GameStateType state)
+void GameStateManager::activateState(GameStateId state)
 {
 	auto stateFactory = m_stateFactories.find(state);
 	if (stateFactory == m_stateFactories.end())

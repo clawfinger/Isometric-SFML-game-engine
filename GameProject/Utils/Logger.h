@@ -7,7 +7,7 @@ public:
 	static Logger& instance();
 	virtual void log(std::string logMessage) = 0;
 protected:
-	Logger() {};
+    Logger() {}
 };
 
 class stdOutLogger : public Logger

@@ -19,13 +19,13 @@ Game::Game() : isRunning(true)
 	m_textureManager = m_container.get<TextureManager>();
 	m_stateManager = m_container.get<GameStateManager>();
 
-	m_window->setup("SFML", sf::Vector2u(1920, 1080));
+    m_window->setup("SFML", sf::Vector2u(1920, 1080));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
 
 	m_stateManager->setContainer(&m_container);
 	m_textureManager->preloadTextures();
 
-	m_stateManager->activateState(GameStateType::level);
+	m_stateManager->activateState(GameStateId::level);
 }
 
 void Game::run()
@@ -38,12 +38,12 @@ void Game::run()
 		while (timeSinceLastUpdate > m_timePerFrame)
 		{
 			processEvents();
-			update(m_timePerFrame);
+            update(m_timePerFrame);
 
-			timeSinceLastUpdate -= m_timePerFrame;
-		}
-		render();
-	}
+            timeSinceLastUpdate -= m_timePerFrame;
+        }
+        render();
+    }
 }
 
 void Game::processEvents()
@@ -75,8 +75,8 @@ void Game::render()
 {
 	m_window->beginDraw();
 
-	m_stateManager->currentState()->render();
-	m_guiManager->render();
+    m_stateManager->currentState()->render();
+    m_guiManager->render();
 
 	m_window->endDraw();
 }
