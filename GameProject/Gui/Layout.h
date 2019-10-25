@@ -12,7 +12,7 @@ public:
     void onMouseRelease(const Vector2D<int>& mousePos) override;
     void onMouseEnter() override;
     void onMouseLeave() override;
-    void update(sf::Time deltaTime) override;
+    void update(sf::Time deltaTime, const Vector2D<int>& mousePos) override;
     void draw(sf::RenderTarget* target) override;
     void setPosition(const Vector2D<int>& pos) override;
     void setSize(const Vector2D<int>& size) override;
@@ -21,5 +21,6 @@ public:
 private:
     sf::RectangleShape m_background;
     std::unordered_map<std::string, Widget*> m_children;
+    Vector2D<int> m_lastMousePos;
 };
 REGISTER_TYPENAME(Layout)

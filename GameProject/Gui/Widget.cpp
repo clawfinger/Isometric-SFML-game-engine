@@ -1,13 +1,9 @@
 #include "Widget.h"
 
-Widget::Widget(const std::string &name, Widget *parent): m_parent(parent),
-    name(name), m_state(WidgetState::IDLE)
+Widget::Widget(const std::string &name, Widget *parent): m_nowMoved(false), m_parent(parent),
+    name(name), m_state(WidgetState::IDLE),
+    m_hoverable(false), m_movable(false), m_visible(true)
 {
-//    m_rect.setSize(sf::Vector2f(100, 50));
-//    m_rect.setFillColor(sf::Color(0, 0, 0, 95));
-//    m_rect.setOutlineThickness(2);
-//    m_rect.setOutlineColor(sf::Color(sf::Color::Black));
-//    m_rect.setPosition(20, 20);
 }
 
 Widget::~Widget()
@@ -18,6 +14,11 @@ Widget::~Widget()
 void Widget::setPosition(const Vector2D<int> &pos)
 {
     m_position = pos;
+}
+
+const Vector2D<int>& Widget::getPosition() const
+{
+    return m_position;
 }
 
 void Widget::setSize(const Vector2D<int> &size)
@@ -51,4 +52,34 @@ WidgetState Widget::getState() const
 void Widget::setState(const WidgetState &state)
 {
     m_state = state;
+}
+
+bool Widget::isHoverable() const
+{
+    return m_hoverable;
+}
+
+void Widget::setHoverable(bool hoverable)
+{
+    m_hoverable = hoverable;
+}
+
+bool Widget::isMovable() const
+{
+    return m_movable;
+}
+
+void Widget::setMovable(bool movable)
+{
+    m_movable = movable;
+}
+
+bool Widget::isVisible() const
+{
+    return m_visible;
+}
+
+void Widget::setVisible(bool visible)
+{
+    m_visible = visible;
 }

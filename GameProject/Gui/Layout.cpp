@@ -7,31 +7,43 @@ Layout::Layout(const std::string &name, Widget *parent):
     m_background.setFillColor(sf::Color(0, 0, 0, 95));
     m_background.setOutlineThickness(2);
     m_background.setOutlineColor(sf::Color(sf::Color::Black));
+    setHoverable(true);
+    setMovable(true);
 }
 
 void Layout::onMousePress(const Vector2D<int>& mousePos)
 {
-    LOG("Layout::onMousePress");
+    if (isMovable())
+        m_nowMoved = true;
 }
 
 void Layout::onMouseRelease(const Vector2D<int>& mousePos)
 {
-    LOG("Layout::onMouseRelease");
+    if (isMovable())
+        m_nowMoved = false;
 }
 
 void Layout::onMouseEnter()
 {
-    setState(WidgetState::HOVER);
+    if (isHoverable())
+        setState(WidgetState::HOVER);
 }
 
 void Layout::onMouseLeave()
 {
-    setState(WidgetState::IDLE);
+    if (isHoverable())
+        setState(WidgetState::IDLE);
 }
 
-void Layout::update(sf::Time deltaTime)
+void Layout::update(sf::Time deltaTime, const Vector2D<int> &mousePos)
 {
-
+    if (m_nowMoved)
+    {
+        Vector2D<int> delta = m_lastMousePos - mousePos;
+        const Vector2D<int>& pos = getPosition();
+        setPosition(pos - delta);
+    }
+    m_lastMousePos = mousePos;
 }
 
 void Layout::draw(sf::RenderTarget *target)

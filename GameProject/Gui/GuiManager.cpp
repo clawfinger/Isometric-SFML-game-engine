@@ -1,3 +1,4 @@
+#include "SFML/Main.hpp"
 #include "GuiManager.h"
 #include "../Events/Events.h"
 #include "../Window.h"
@@ -15,14 +16,16 @@ GuiManager::GuiManager(std::shared_ptr<EventDispatcher> dispatcher, std::shared_
 
 void GuiManager::update(sf::Time deltaTime)
 {
+    sf::Vector2i mousePos = sf::Mouse::getPosition();
     for (auto widget: m_screenContainer[m_currentState])
-        widget->update(deltaTime);
+        widget->update(deltaTime, Vector2D<int>(mousePos.x, mousePos.y));
 }
 
 void GuiManager::render()
 {
     for (auto widget: m_screenContainer[m_currentState])
-        widget->draw(&m_window->getRenderWindow());
+        if (widget->isVisible())
+            widget->draw(&m_window->getRenderWindow());
 }
 
 void GuiManager::handlePlayerInput(sf::Event& event)
@@ -71,5 +74,7 @@ void GuiManager::handlePlayerInput(sf::Event& event)
         }
         break;
     }
+    default:
+        return;
     }
 }
