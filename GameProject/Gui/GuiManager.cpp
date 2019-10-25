@@ -25,5 +25,51 @@ void GuiManager::render()
 
 void GuiManager::handlePlayerInput(sf::Event& event)
 {
-
+    switch (event.type)
+    {
+    case sf::Event::MouseButtonPressed:
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            for (auto widget: m_screenContainer[GameStateId::level])
+            {
+                Vector2D<int> coords = Vector2D<int>(event.mouseButton.x, event.mouseButton.y);
+                if (widget->isInside(coords))
+                    widget->onMousePress(coords);
+            }
+        }
+        break;
+    }
+    case sf::Event::MouseButtonReleased:
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            for (auto widget: m_screenContainer[GameStateId::level])
+            {
+                Vector2D<int> coords = Vector2D<int>(event.mouseButton.x, event.mouseButton.y);
+                if (widget->isInside(coords))
+                    widget->onMouseRelease(coords);
+            }
+        }
+        break;
+    }
+    case sf::Event::MouseMoved:
+    {
+        for (auto widget: m_screenContainer[GameStateId::level])
+        {
+            Vector2D<int> coords = Vector2D<int>(event.mouseMove.x, event.mouseMove.y);
+            if (widget->isInside(coords))
+            {
+                if (widget->getState() == WidgetState::IDLE)
+                    widget->setState(WidgetState::HOVER);
+            }
+            else
+            {
+                if (widget->getState() == WidgetState::HOVER)
+                    widget->setState(WidgetState::IDLE);
+            }
+        }
+        break;
+    }
+    }
 }

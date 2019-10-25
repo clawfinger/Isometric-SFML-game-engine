@@ -1,4 +1,5 @@
 #include "Layout.h"
+#include "../Utils/Logger.h"
 
 Layout::Layout(const std::string &name, Widget *parent):
     Widget(name, parent)
@@ -8,14 +9,14 @@ Layout::Layout(const std::string &name, Widget *parent):
     m_background.setOutlineColor(sf::Color(sf::Color::Black));
 }
 
-void Layout::onMousePress(const Vector2D<int> &mousePos)
+void Layout::onMousePress(const Vector2D<int>& mousePos)
 {
-
+    LOG("Layout::onMousePress");
 }
 
-void Layout::onMouseRelease(const Vector2D<int> &mousePos)
+void Layout::onMouseRelease(const Vector2D<int>& mousePos)
 {
-
+    LOG("Layout::onMouseRelease");
 }
 
 void Layout::draw(sf::RenderTarget *target)
@@ -34,4 +35,18 @@ void Layout::setSize(const Vector2D<int> &size)
 {
     Widget::setSize(size);
     m_background.setSize(sf::Vector2f(size.x, size.y));
+}
+
+void Layout::setState(const WidgetState &state)
+{
+    if (getState() == state)
+        return;
+
+    Widget::setState(state);
+    if (state == WidgetState::HOVER)
+        m_background.setFillColor(sf::Color(255, 0, 0, 95));
+    else
+        m_background.setFillColor(sf::Color(0, 0, 0, 95));
+
+
 }
