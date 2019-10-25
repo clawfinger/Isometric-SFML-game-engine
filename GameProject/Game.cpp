@@ -19,7 +19,7 @@ Game::Game() : isRunning(true)
 	m_textureManager = m_container.get<TextureManager>();
 	m_stateManager = m_container.get<GameStateManager>();
 
-    m_window->setup("SFML", sf::Vector2u(1920, 1080));
+    m_window->setup("SFML", sf::Vector2u(1280, 1024));
 	m_timePerFrame = sf::seconds(1.0f / 60.0f);
 
 	m_stateManager->setContainer(&m_container);
@@ -76,7 +76,11 @@ void Game::render()
 	m_window->beginDraw();
 
     m_stateManager->currentState()->render();
+
+    sf::View mainView = m_window->getRenderWindow().getView();
+    m_window->getRenderWindow().setView(m_window->getRenderWindow().getDefaultView());
     m_guiManager->render();
+    m_window->getRenderWindow().setView(mainView);
 
 	m_window->endDraw();
 }

@@ -5,7 +5,7 @@
 #include "SFML/Window/Event.hpp"
 #include "../GameState.h"
 #include "../Utils/Meta.h"
-#include "Widget.h"
+#include "Layout.h"
 
 class EventDispatcher;
 class Window;
@@ -21,7 +21,6 @@ public:
 private:
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<Window> m_window;
-    Widget* m_widget;
-	//std::unordered_map<GameStateId, std::vector<>> m_screenContainer;
+    std::unordered_map<GameStateId, std::vector<Widget*>> m_screenContainer;
 };
 REGISTER_TYPENAME(GuiManager)

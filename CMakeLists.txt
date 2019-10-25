@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.14)
 set(CMAKE_CXX_STANDARD 14)
 project(GameProject LANGUAGES CXX)
+
 set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML REQUIRED COMPONENTS main graphics window system)
-add_executable(GameProject
+
+set(HEADERS
     GameProject/Window.h
     GameProject/Game.h
     GameProject/GameEngine.h
@@ -44,6 +46,7 @@ add_executable(GameProject
     GameProject/Events/Subscription.h
     GameProject/Gui/GuiManager.h
     GameProject/Gui/Widget.h
+    GameProject/Gui/Layout.h
     GameProject/State/GameLevelState.h
     GameProject/State/GameStateBase.h
     GameProject/State/GameStateManager.h
@@ -51,6 +54,9 @@ add_executable(GameProject
     GameProject/Utils/Meta.h
     GameProject/Utils/StructSerialization.h
     GameProject/Utils/utility.h
+    )
+
+set(SOURCES
     GameProject/Utils/Vector2D.h
 
     GameProject/Window.cpp
@@ -85,10 +91,17 @@ add_executable(GameProject
     GameProject/Events/Subscription.cpp
     GameProject/Gui/GuiManager.cpp
     GameProject/Gui/Widget.cpp
+    GameProject/Gui/Layout.cpp
     GameProject/State/GameLevelState.cpp
     GameProject/State/GameStateManager.cpp
     GameProject/Utils/Logger.cpp
     GameProject/Utils/utility.cpp
     )
+
+add_executable(GameProject
+    ${HEADERS}
+    ${SOURCES}
+    )
+
 target_link_libraries(GameProject sfml-graphics sfml-main)
 include_directories(${SFML_INCLUDE_DIR})

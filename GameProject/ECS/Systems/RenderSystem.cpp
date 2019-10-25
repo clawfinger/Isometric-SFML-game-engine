@@ -45,16 +45,15 @@ void RenderSystem::update(sf::Time deltaTime)
 void RenderSystem::draw(std::shared_ptr<Window> window)
 {
 	m_toDraw.clear();
+    sf::Vector2f SFviewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
+    sf::FloatRect viewRect(SFviewTopLeft, window->getView().getSize());
+
 	for (EntityId entity : m_entities)
 	{
-		sf::Vector2f SFviewTopLeft = window->getView().getCenter() - (window->getView().getSize() / 2.0f);
-
-
 		SpriteComponent* spriteComponent =
 			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
-		sf::FloatRect viewRect(SFviewTopLeft, window->getView().getSize());
 
-		sf::Rect<float> spriteBounds = spriteComponent->getSprite().getLocalBounds();
+        sf::Rect<float> spriteBounds = spriteComponent->getSprite().getGlobalBounds();
 
 		if (spriteBounds.intersects(viewRect))
 		{
