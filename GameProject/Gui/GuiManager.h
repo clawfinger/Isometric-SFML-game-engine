@@ -16,7 +16,7 @@ public:
 	GuiManager(std::shared_ptr<EventDispatcher> dispatcher, std::shared_ptr<Window> window);
 	void update(sf::Time deltaTime);
 	void render();
-    void handlePlayerInput(sf::Event& event);
+    bool handlePlayerInput(sf::Event& event);
 
 private:
     Vector2D<int> m_lastMousePos;

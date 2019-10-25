@@ -28,8 +28,9 @@ void GuiManager::render()
             widget->draw(&m_window->getRenderWindow());
 }
 
-void GuiManager::handlePlayerInput(sf::Event& event)
+bool GuiManager::handlePlayerInput(sf::Event& event)
 {
+    bool result = false;
     switch (event.type)
     {
     case sf::Event::MouseButtonPressed:
@@ -40,7 +41,10 @@ void GuiManager::handlePlayerInput(sf::Event& event)
             {
                 Vector2D<int> coords = Vector2D<int>(event.mouseButton.x, event.mouseButton.y);
                 if (widget->isInside(coords))
+                {
                     widget->onMousePress(coords);
+                    result = true;
+                }
             }
         }
         break;
@@ -53,7 +57,10 @@ void GuiManager::handlePlayerInput(sf::Event& event)
             {
                 Vector2D<int> coords = Vector2D<int>(event.mouseButton.x, event.mouseButton.y);
                 if (widget->isInside(coords))
+                {
                     widget->onMouseRelease(coords);
+                    result = true;
+                }
             }
         }
         break;
@@ -75,6 +82,7 @@ void GuiManager::handlePlayerInput(sf::Event& event)
         break;
     }
     default:
-        return;
+        return false;
     }
+    return result;
 }
