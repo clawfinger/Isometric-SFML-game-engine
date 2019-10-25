@@ -19,6 +19,7 @@ public:
     void handlePlayerInput(sf::Event& event);
 
 private:
+    GameStateId m_currentState;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<Window> m_window;
     std::unordered_map<GameStateId, std::vector<Widget*>> m_screenContainer;

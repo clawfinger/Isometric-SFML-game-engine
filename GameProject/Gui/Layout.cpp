@@ -19,6 +19,21 @@ void Layout::onMouseRelease(const Vector2D<int>& mousePos)
     LOG("Layout::onMouseRelease");
 }
 
+void Layout::onMouseEnter()
+{
+    setState(WidgetState::HOVER);
+}
+
+void Layout::onMouseLeave()
+{
+    setState(WidgetState::IDLE);
+}
+
+void Layout::update(sf::Time deltaTime)
+{
+
+}
+
 void Layout::draw(sf::RenderTarget *target)
 {
     target->draw(m_background);
