@@ -72,7 +72,7 @@ bool GuiManager::handlePlayerInput(sf::Event& event)
             Vector2D<int> coords = Vector2D<int>(event.mouseMove.x, event.mouseMove.y);
             if (widget->isInside(coords))
             {
-                widget->onMouseEnter();
+                widget->onMouseHover(coords);
             }
             else
             {

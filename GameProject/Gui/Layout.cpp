@@ -7,8 +7,8 @@ Layout::Layout(const std::string &name, Widget *parent):
     m_background.setFillColor(sf::Color(0, 0, 0, 95));
     m_background.setOutlineThickness(2);
     m_background.setOutlineColor(sf::Color(sf::Color::Black));
-    setHoverable(true);
-    setMovable(true);
+//    setHoverable(true);
+//    setMovable(true);
 }
 
 void Layout::onMousePress(const Vector2D<int>& mousePos)
@@ -23,7 +23,7 @@ void Layout::onMouseRelease(const Vector2D<int>& mousePos)
         m_nowMoved = false;
 }
 
-void Layout::onMouseEnter()
+void Layout::onMouseHover(const Vector2D<int> &mousePos)
 {
     if (isHoverable())
         setState(WidgetState::HOVER);

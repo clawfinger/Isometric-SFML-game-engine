@@ -10,7 +10,7 @@ public:
     Layout(const std::string& name, Widget* parent = nullptr);
     void onMousePress(const Vector2D<int>& mousePos) override;
     void onMouseRelease(const Vector2D<int>& mousePos) override;
-    void onMouseEnter() override;
+    void onMouseHover(const Vector2D<int>& mousePos) override;
     void onMouseLeave() override;
     void update(sf::Time deltaTime, const Vector2D<int>& mousePos) override;
     void draw(sf::RenderTarget* target) override;
