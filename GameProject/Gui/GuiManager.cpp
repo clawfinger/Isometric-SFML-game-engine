@@ -2,16 +2,22 @@
 #include "GuiManager.h"
 #include "../Events/Events.h"
 #include "../Window.h"
+#include "Layout.h"
+#include "Button.h"
 
 GuiManager::GuiManager(std::shared_ptr<EventDispatcher> dispatcher, std::shared_ptr<Window> window):
 	m_eventDispatcher(dispatcher),
     m_window(window)
 {
     m_currentState = GameStateId::level;
-    Widget* widget = new Layout("Layout");
-    widget->setSize(Vector2D<int>(100, 50));
-    widget->setPosition(Vector2D<int>(20, 20));
-    m_screenContainer[m_currentState].push_back(widget);
+    Layout* layout = new Layout("Layout");
+    layout->setSize(Vector2D<int>(80, 120));
+    layout->setPosition(Vector2D<int>(10, 10));
+    Widget* button = new Button("Button", layout);
+    button->setSize(Vector2D<int>(60, 30));
+    button->setPosition(Vector2D<int>(10, 10));
+    layout->addWidget(button);
+    m_screenContainer[m_currentState].push_back(layout);
 }
 
 void GuiManager::update(sf::Time deltaTime)

@@ -1,7 +1,8 @@
 #include "Widget.h"
+#include "../Utils/Logger.h"
 
 Widget::Widget(const std::string &name, Widget *parent): m_nowMoved(false), m_parent(parent),
-    name(name), m_state(WidgetState::IDLE),
+    m_name(name), m_state(WidgetState::IDLE),
     m_hoverable(false), m_movable(false), m_visible(true)
 {
 }
@@ -48,6 +49,8 @@ void Widget::update(sf::Time deltaTime, const Vector2D<int> &mousePos)
 
 void Widget::setPosition(const Vector2D<int> &pos)
 {
+    if (m_parent != nullptr && !m_parent->isInside(pos))
+        LOG("Setting child position outside of parent's bound!");
     m_position = pos;
 }
 
@@ -77,6 +80,11 @@ bool Widget::isInside(const Vector2D<int> pos) const
     Vector2D<int> position = getGlobalPosition();
     return (pos.x >= position.x && pos.x <= position.x + m_size.x &&
             pos.y >= position.y && pos.y <= position.y + m_size.y);
+}
+
+const std::string &Widget::getName() const
+{
+    return m_name;
 }
 
 WidgetState Widget::getState() const

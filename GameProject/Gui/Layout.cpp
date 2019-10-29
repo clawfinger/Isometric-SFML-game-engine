@@ -12,16 +12,33 @@ Layout::Layout(const std::string &name, Widget *parent):
 void Layout::onMousePress(const Vector2D<int>& mousePos)
 {
     Widget::onMousePress(mousePos);
+    for (auto child: m_children)
+    {
+        if (child.second->isInside(mousePos))
+            child.second->onMousePress(mousePos);
+    }
 }
 
 void Layout::onMouseRelease(const Vector2D<int>& mousePos)
 {
     Widget::onMouseRelease(mousePos);
+    for (auto child: m_children)
+    {
+        if (child.second->isInside(mousePos))
+            child.second->onMouseRelease(mousePos);
+    }
 }
 
 void Layout::onMouseHover(const Vector2D<int> &mousePos)
 {
     Widget::onMouseHover(mousePos);
+    for (auto child: m_children)
+    {
+        if (child.second->isInside(mousePos))
+            child.second->onMouseHover(mousePos);
+        else
+            child.second->onMouseLeave();
+    }
 }
 
 void Layout::onMouseLeave()
@@ -32,11 +49,15 @@ void Layout::onMouseLeave()
 void Layout::update(sf::Time deltaTime, const Vector2D<int> &mousePos)
 {
     Widget::update(deltaTime, mousePos);
+    for (auto child: m_children)
+        child.second->update(deltaTime, mousePos);
 }
 
 void Layout::draw(sf::RenderTarget *target)
 {
     target->draw(m_background);
+    for (auto child: m_children)
+        child.second->draw(target);
 }
 
 void Layout::setPosition(const Vector2D<int> &pos)
@@ -62,6 +83,14 @@ void Layout::setState(const WidgetState &state)
         m_background.setFillColor(sf::Color(255, 0, 0, 95));
     else
         m_background.setFillColor(sf::Color(0, 0, 0, 95));
+}
 
-
+void Layout::addWidget(Widget *child)
+{
+    if (m_children.count(child->getName()) > 1)
+    {
+        LOG("Layout already have widget with name " + child->getName());
+        delete m_children[child->getName()];
+    }
+    m_children[child->getName()] = child;
 }

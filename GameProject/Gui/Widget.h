@@ -8,14 +8,13 @@
 enum class WidgetState
 {
     IDLE = 0,
-    HOVER,
-    PRESSED
+    HOVER
 };
 
 class Widget
 {
 public:
-    Widget(const std::string& name, Widget* parent = nullptr);
+    Widget(const std::string& m_name, Widget* parent = nullptr);
     virtual ~Widget();
     virtual void onMousePress(const Vector2D<int>& mousePos);
     virtual void onMouseRelease(const Vector2D<int>& mousePos);
@@ -26,8 +25,10 @@ public:
     virtual void setPosition(const Vector2D<int>& pos);
     const Vector2D<int> &getPosition() const;
     virtual void setSize(const Vector2D<int>& size);
+
     Vector2D<int> getGlobalPosition() const;
     bool isInside(const Vector2D<int> pos) const;
+    const std::string& getName() const;
 
     WidgetState getState() const;
     virtual void setState(const WidgetState &state);
@@ -43,7 +44,7 @@ public:
 
 private:
     Widget* m_parent;
-    std::string name;
+    std::string m_name;
     Vector2D<int> m_position;
     Vector2D<int> m_lastMousePos;
     Vector2D<int> m_size;

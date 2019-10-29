@@ -7,7 +7,7 @@
 class Layout : public Widget
 {
 public:
-    Layout(const std::string& name, Widget* parent = nullptr);
+    Layout(const std::string& m_name, Widget* parent = nullptr);
     void onMousePress(const Vector2D<int>& mousePos) override;
     void onMouseRelease(const Vector2D<int>& mousePos) override;
     void onMouseHover(const Vector2D<int>& mousePos) override;
@@ -17,6 +17,7 @@ public:
     void setPosition(const Vector2D<int>& pos) override;
     void setSize(const Vector2D<int>& size) override;
     void setState(const WidgetState &state) override;
+    void addWidget(Widget* child);
 
 private:
     sf::RectangleShape m_background;
