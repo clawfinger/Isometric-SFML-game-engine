@@ -65,6 +65,8 @@ void Layout::setPosition(const Vector2D<int> &pos)
     Widget::setPosition(pos);
     Vector2D<int> global = getGlobalPosition();
     m_background.setPosition(global.x, global.y);
+    for (auto child: m_children)
+        child.second->setPosition(child.second->getPosition());
 }
 
 void Layout::setSize(const Vector2D<int> &size)

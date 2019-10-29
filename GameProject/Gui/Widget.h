@@ -29,6 +29,7 @@ public:
     Vector2D<int> getGlobalPosition() const;
     bool isInside(const Vector2D<int> pos) const;
     const std::string& getName() const;
+    void updatePosition() const;
 
     WidgetState getState() const;
     virtual void setState(const WidgetState &state);
