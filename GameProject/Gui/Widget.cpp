@@ -11,6 +11,41 @@ Widget::~Widget()
 
 }
 
+void Widget::onMousePress(const Vector2D<int> &mousePos)
+{
+    if (isMovable())
+        m_nowMoved = true;
+}
+
+void Widget::onMouseRelease(const Vector2D<int> &mousePos)
+{
+    if (isMovable())
+        m_nowMoved = false;
+}
+
+void Widget::onMouseHover(const Vector2D<int> &mousePos)
+{
+    if (isHoverable())
+        setState(WidgetState::HOVER);
+}
+
+void Widget::onMouseLeave()
+{
+    if (isHoverable())
+        setState(WidgetState::IDLE);
+}
+
+void Widget::update(sf::Time deltaTime, const Vector2D<int> &mousePos)
+{
+    if (m_nowMoved)
+    {
+        Vector2D<int> delta = m_lastMousePos - mousePos;
+        const Vector2D<int>& pos = getPosition();
+        setPosition(pos - delta);
+    }
+    m_lastMousePos = mousePos;
+}
+
 void Widget::setPosition(const Vector2D<int> &pos)
 {
     m_position = pos;

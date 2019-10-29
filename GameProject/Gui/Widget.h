@@ -9,8 +9,7 @@ enum class WidgetState
 {
     IDLE = 0,
     HOVER,
-    PRESSED,
-    MOVED
+    PRESSED
 };
 
 class Widget
@@ -18,11 +17,11 @@ class Widget
 public:
     Widget(const std::string& name, Widget* parent = nullptr);
     virtual ~Widget();
-    virtual void onMousePress(const Vector2D<int>& mousePos) = 0;
-    virtual void onMouseRelease(const Vector2D<int>& mousePos) = 0;
-    virtual void onMouseHover(const Vector2D<int>& mousePos) = 0;
-    virtual void onMouseLeave() = 0;
-    virtual void update(sf::Time deltaTime, const Vector2D<int>& mousePos) = 0;
+    virtual void onMousePress(const Vector2D<int>& mousePos);
+    virtual void onMouseRelease(const Vector2D<int>& mousePos);
+    virtual void onMouseHover(const Vector2D<int>& mousePos);
+    virtual void onMouseLeave();
+    virtual void update(sf::Time deltaTime, const Vector2D<int>& mousePos);
     virtual void draw(sf::RenderTarget* target) = 0;
     virtual void setPosition(const Vector2D<int>& pos);
     const Vector2D<int> &getPosition() const;
@@ -42,15 +41,14 @@ public:
     bool isVisible() const;
     void setVisible(bool visible);
 
-protected:
-    bool m_nowMoved;
-
 private:
     Widget* m_parent;
     std::string name;
     Vector2D<int> m_position;
+    Vector2D<int> m_lastMousePos;
     Vector2D<int> m_size;
     WidgetState m_state;
+    bool m_nowMoved;
     bool m_hoverable;
     bool m_movable;
     bool m_visible;

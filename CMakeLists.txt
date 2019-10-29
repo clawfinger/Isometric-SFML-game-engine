@@ -47,6 +47,7 @@ set(HEADERS
     GameProject/Gui/GuiManager.h
     GameProject/Gui/Widget.h
     GameProject/Gui/Layout.h
+    GameProject/Gui/Button.h
     GameProject/State/GameLevelState.h
     GameProject/State/GameStateBase.h
     GameProject/State/GameStateManager.h
@@ -92,6 +93,7 @@ set(SOURCES
     GameProject/Gui/GuiManager.cpp
     GameProject/Gui/Widget.cpp
     GameProject/Gui/Layout.cpp
+    GameProject/Gui/Button.cpp
     GameProject/State/GameLevelState.cpp
     GameProject/State/GameStateManager.cpp
     GameProject/Utils/Logger.cpp

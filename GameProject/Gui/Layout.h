@@ -21,6 +21,5 @@ public:
 private:
     sf::RectangleShape m_background;
     std::unordered_map<std::string, Widget*> m_children;
-    Vector2D<int> m_lastMousePos;
 };
 REGISTER_TYPENAME(Layout)
