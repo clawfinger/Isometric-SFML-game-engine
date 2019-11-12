@@ -19,5 +19,7 @@ public:
 
 private:
     sf::RectangleShape m_background;
+    sf::Text m_text;
+    sf::Font font;
 };
 REGISTER_TYPENAME(Button)

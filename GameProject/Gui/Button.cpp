@@ -7,6 +7,15 @@ Button::Button(const std::string &name, GuiManager *manager, Widget *parent): Wi
     m_background.setOutlineThickness(1);
     m_background.setOutlineColor(sf::Color(sf::Color::Black));
     setHoverable(true);
+
+    font.loadFromFile("arial.ttf");
+    m_text.setFont(font);
+    m_text.setCharacterSize(20);
+    m_text.setStyle(sf::Text::Bold);
+    m_text.setString("1");
+    m_text.setOrigin((m_text.getLocalBounds().width + m_text.getLocalBounds().left) / 2,
+                     (m_text.getLocalBounds().height + m_text.getLocalBounds().top) / 2);
+//    m_text.setPosition(getGlobalPosition().x + getSize().x / 2, getGlobalPosition().y + getSize().y / 2);
 }
 
 void Button::onMousePress(const Vector2D<int> &mousePos)
@@ -38,6 +47,7 @@ void Button::update(sf::Time deltaTime, const Vector2D<int> &mousePos)
 void Button::draw(sf::RenderTarget *target)
 {
     target->draw(m_background);
+    target->draw(m_text);
 }
 
 void Button::setPosition(const Vector2D<int> &pos)

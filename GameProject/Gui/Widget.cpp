@@ -126,3 +126,8 @@ void Widget::setVisible(bool visible)
 {
     m_visible = visible;
 }
+
+const Vector2D<int> &Widget::getSize() const
+{
+    return m_size;
+}

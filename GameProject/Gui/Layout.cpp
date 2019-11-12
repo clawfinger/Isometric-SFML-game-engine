@@ -92,7 +92,6 @@ void Layout::addWidget(Widget *child)
     if (m_children.count(child->getName()) > 1)
     {
         LOG("Layout already have widget with name " + child->getName());
-        delete m_children[child->getName()];
     }
     m_children[child->getName()] = child;
 }

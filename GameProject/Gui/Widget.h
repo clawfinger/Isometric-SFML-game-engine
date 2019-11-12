@@ -27,6 +27,7 @@ public:
     virtual void setPosition(const Vector2D<int>& pos);
     const Vector2D<int> &getPosition() const;
     virtual void setSize(const Vector2D<int>& size);
+    const Vector2D<int>& getSize() const;
 
     Vector2D<int> getGlobalPosition() const;
     bool isInside(const Vector2D<int> pos) const;
@@ -44,6 +45,7 @@ public:
 
     bool isVisible() const;
     void setVisible(bool visible);
+
 protected:
     GuiManager* m_manager;
 
