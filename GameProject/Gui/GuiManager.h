@@ -19,13 +19,14 @@ public:
 	GuiManager(std::shared_ptr<EventDispatcher> dispatcher, std::shared_ptr<Window> window);
 	void update(sf::Time deltaTime);
 	void render();
-    bool handlePlayerInput(sf::Event& event);
+	bool handlePlayerInput(sf::Event& event);
+    void elementPressed(const std::string& name);
 
 private:
-    Vector2D<int> m_lastMousePos;
-    GameStateId m_currentState;
+	Vector2D<int> m_lastMousePos;
+	GameStateId m_currentState;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<Window> m_window;
-    std::unordered_map<GameStateId, std::vector<Widget*>> m_screenContainer;
+	std::unordered_map<GameStateId, std::vector<Widget*>> m_screenContainer;
 };
 REGISTER_TYPENAME(GuiManager)

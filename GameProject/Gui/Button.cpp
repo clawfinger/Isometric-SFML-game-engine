@@ -1,6 +1,7 @@
 #include "Button.h"
+#include "GuiManager.h"
 
-Button::Button(const std::string &name, Widget *parent): Widget(name, parent)
+Button::Button(const std::string &name, GuiManager *manager, Widget *parent): Widget(name, manager, parent)
 {
     m_background.setFillColor(sf::Color(0, 0, 0, 95));
     m_background.setOutlineThickness(1);
@@ -11,6 +12,7 @@ Button::Button(const std::string &name, Widget *parent): Widget(name, parent)
 void Button::onMousePress(const Vector2D<int> &mousePos)
 {
     Widget::onMousePress(mousePos);
+    m_manager->elementPressed(getName());
 }
 
 void Button::onMouseRelease(const Vector2D<int> &mousePos)

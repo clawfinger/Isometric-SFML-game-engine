@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.14)
 set(CMAKE_CXX_STANDARD 14)
 project(GameProject LANGUAGES CXX)
 
-set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML REQUIRED COMPONENTS main graphics window system)
 
 set(HEADERS

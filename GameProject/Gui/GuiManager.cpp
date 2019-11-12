@@ -2,6 +2,7 @@
 #include "GuiManager.h"
 #include "../Events/Events.h"
 #include "../Window.h"
+#include "../Utils/Logger.h"
 #include "Layout.h"
 #include "Button.h"
 
@@ -10,10 +11,10 @@ GuiManager::GuiManager(std::shared_ptr<EventDispatcher> dispatcher, std::shared_
     m_window(window)
 {
     m_currentState = GameStateId::level;
-    Layout* layout = new Layout("Layout");
+    Layout* layout = new Layout("Layout", this);
     layout->setSize(Vector2D<int>(80, 120));
     layout->setPosition(Vector2D<int>(10, 10));
-    Widget* button = new Button("Button", layout);
+    Widget* button = new Button("Button", this, layout);
     button->setSize(Vector2D<int>(60, 30));
     button->setPosition(Vector2D<int>(10, 10));
     layout->addWidget(button);
@@ -91,4 +92,9 @@ bool GuiManager::handlePlayerInput(sf::Event& event)
         return false;
     }
     return result;
+}
+
+void GuiManager::elementPressed(const std::string &name)
+{
+    LOG("GuiManager: element " + name + " pressed!");
 }
