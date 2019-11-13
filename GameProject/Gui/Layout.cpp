@@ -44,6 +44,10 @@ void Layout::onMouseHover(const Vector2D<int> &mousePos)
 void Layout::onMouseLeave()
 {
     Widget::onMouseLeave();
+    for (auto child: m_children)
+    {
+        child.second->onMouseLeave();
+    }
 }
 
 void Layout::update(sf::Time deltaTime, const Vector2D<int> &mousePos)

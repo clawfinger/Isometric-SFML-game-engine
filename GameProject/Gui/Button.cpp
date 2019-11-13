@@ -1,12 +1,13 @@
 #include "Button.h"
 #include "GuiManager.h"
+#include "../Utils/Logger.h"
 
 Button::Button(const std::string &name, GuiManager *manager, Widget *parent): Widget(name, manager, parent)
 {
     m_background.setFillColor(sf::Color(0, 0, 0, 95));
     m_background.setOutlineThickness(1);
     m_background.setOutlineColor(sf::Color::Black);
-//    setHoverable(true);
+    setHoverable(true);
 
     font.loadFromFile("arial.ttf");
     m_text.setFont(font);
@@ -29,11 +30,14 @@ void Button::onMouseRelease(const Vector2D<int> &mousePos)
 
 void Button::onMouseHover(const Vector2D<int> &mousePos)
 {
+    LOG("Mouse hover");
     Widget::onMouseHover(mousePos);
 }
 
 void Button::onMouseLeave()
 {
+    LOG("Mouse leave");
+
     Widget::onMouseLeave();
 }
 

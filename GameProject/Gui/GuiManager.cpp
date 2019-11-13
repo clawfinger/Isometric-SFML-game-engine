@@ -87,7 +87,7 @@ bool GuiManager::handlePlayerInput(sf::Event& event)
             {
                 widget->onMouseHover(coords);
             }
-            else if (widget->getState() == WidgetState::HOVER)
+            else
             {
                 widget->onMouseLeave();
             }
