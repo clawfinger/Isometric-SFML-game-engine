@@ -30,14 +30,11 @@ void Button::onMouseRelease(const Vector2D<int> &mousePos)
 
 void Button::onMouseHover(const Vector2D<int> &mousePos)
 {
-    LOG("Mouse hover");
     Widget::onMouseHover(mousePos);
 }
 
 void Button::onMouseLeave()
 {
-    LOG("Mouse leave");
-
     Widget::onMouseLeave();
 }
 

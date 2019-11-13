@@ -1,4 +1,4 @@
-#include "game.h"
+#include "Game.h"
 #include <iostream>
 #include <fstream>
 #include "State/GameLevelState.h"
@@ -56,8 +56,14 @@ void Game::processEvents()
 			return;
 		}
 		else if (event.type == sf::Event::KeyPressed)
+        {
 			if (event.key.code == sf::Keyboard::F1)
 				m_window->toggleFullScreen();
+        }
+        else if (event.type == sf::Event::Resized)
+        {
+            LOG(std::to_string(event.size.width) + "x" + std::to_string(event.size.height));
+        }
 
         if (!m_guiManager->handlePlayerInput(event))
             m_stateManager->currentState()->handlePlayerInput(event);
