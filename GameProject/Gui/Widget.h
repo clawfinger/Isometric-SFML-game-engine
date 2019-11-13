@@ -27,6 +27,7 @@ public:
     virtual void setPosition(const Vector2D<int>& pos);
     const Vector2D<int> &getPosition() const;
     virtual void setSize(const Vector2D<int>& size);
+    virtual void adjustContent();
     const Vector2D<int>& getSize() const;
 
     Vector2D<int> getGlobalPosition() const;

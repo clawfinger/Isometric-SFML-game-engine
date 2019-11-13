@@ -5,17 +5,15 @@ Button::Button(const std::string &name, GuiManager *manager, Widget *parent): Wi
 {
     m_background.setFillColor(sf::Color(0, 0, 0, 95));
     m_background.setOutlineThickness(1);
-    m_background.setOutlineColor(sf::Color(sf::Color::Black));
-    setHoverable(true);
+    m_background.setOutlineColor(sf::Color::Black);
+//    setHoverable(true);
 
     font.loadFromFile("arial.ttf");
     m_text.setFont(font);
     m_text.setCharacterSize(20);
+    m_text.setOutlineColor(sf::Color::Black);
+    m_text.setOutlineThickness(1);
     m_text.setStyle(sf::Text::Bold);
-    m_text.setString("1");
-    m_text.setOrigin((m_text.getLocalBounds().width + m_text.getLocalBounds().left) / 2,
-                     (m_text.getLocalBounds().height + m_text.getLocalBounds().top) / 2);
-//    m_text.setPosition(getGlobalPosition().x + getSize().x / 2, getGlobalPosition().y + getSize().y / 2);
 }
 
 void Button::onMousePress(const Vector2D<int> &mousePos)
@@ -53,14 +51,13 @@ void Button::draw(sf::RenderTarget *target)
 void Button::setPosition(const Vector2D<int> &pos)
 {
     Widget::setPosition(pos);
-    Vector2D<int> global = getGlobalPosition();
-    m_background.setPosition(global.x, global.y);
+    adjustContent();
 }
 
 void Button::setSize(const Vector2D<int> &size)
 {
     Widget::setSize(size);
-    m_background.setSize(sf::Vector2f(size.x, size.y));
+    adjustContent();
 }
 
 void Button::setState(const WidgetState &state)
@@ -73,4 +70,20 @@ void Button::setState(const WidgetState &state)
         m_background.setFillColor(sf::Color(255, 0, 0, 95));
     else
         m_background.setFillColor(sf::Color(0, 0, 0, 95));
+}
+
+void Button::setText(const std::string &text)
+{
+    m_text.setString(text);
+    adjustContent();
+}
+
+void Button::adjustContent()
+{
+    m_background.setSize(sf::Vector2f(getSize().x, getSize().y));
+    Vector2D<int> global = getGlobalPosition();
+    m_background.setPosition(global.x, global.y);
+    m_text.setPosition(global.x + getSize().x / 2, global.y + getSize().y / 2);
+    m_text.setOrigin(m_text.getLocalBounds().left + m_text.getLocalBounds().width / 2,
+                     m_text.getLocalBounds().top + m_text.getLocalBounds().height / 2);
 }

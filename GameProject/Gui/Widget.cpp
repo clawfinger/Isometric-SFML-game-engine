@@ -40,9 +40,9 @@ void Widget::update(sf::Time deltaTime, const Vector2D<int> &mousePos)
 {
     if (m_nowMoved)
     {
-        Vector2D<int> delta = m_lastMousePos - mousePos;
+        Vector2D<int> delta = mousePos - m_lastMousePos;
         const Vector2D<int>& pos = getPosition();
-        setPosition(pos - delta);
+        setPosition(pos + delta);
     }
     m_lastMousePos = mousePos;
 }
@@ -62,6 +62,11 @@ const Vector2D<int>& Widget::getPosition() const
 void Widget::setSize(const Vector2D<int> &size)
 {
     m_size = size;
+}
+
+void Widget::adjustContent()
+{
+
 }
 
 Vector2D<int> Widget::getGlobalPosition() const

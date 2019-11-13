@@ -36,7 +36,7 @@ void Layout::onMouseHover(const Vector2D<int> &mousePos)
     {
         if (child.second->isInside(mousePos))
             child.second->onMouseHover(mousePos);
-        else
+        else if (child.second->getState() == WidgetState::HOVER)
             child.second->onMouseLeave();
     }
 }
@@ -63,16 +63,13 @@ void Layout::draw(sf::RenderTarget *target)
 void Layout::setPosition(const Vector2D<int> &pos)
 {
     Widget::setPosition(pos);
-    Vector2D<int> global = getGlobalPosition();
-    m_background.setPosition(global.x, global.y);
-    for (auto child: m_children)
-        child.second->setPosition(child.second->getPosition());
+    adjustContent();
 }
 
 void Layout::setSize(const Vector2D<int> &size)
 {
     Widget::setSize(size);
-    m_background.setSize(sf::Vector2f(size.x, size.y));
+    adjustContent();
 }
 
 void Layout::setState(const WidgetState &state)
@@ -94,4 +91,13 @@ void Layout::addWidget(Widget *child)
         LOG("Layout already have widget with name " + child->getName());
     }
     m_children[child->getName()] = child;
+}
+
+void Layout::adjustContent()
+{
+    m_background.setSize(sf::Vector2f(getSize().x, getSize().y));
+    Vector2D<int> global = getGlobalPosition();
+    m_background.setPosition(global.x, global.y);
+    for (auto child: m_children)
+        child.second->adjustContent();
 }

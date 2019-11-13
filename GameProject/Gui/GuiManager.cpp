@@ -12,11 +12,17 @@ GuiManager::GuiManager(std::shared_ptr<EventDispatcher> dispatcher, std::shared_
 {
     m_currentState = GameStateId::level;
     Layout* layout = new Layout("Layout", this);
-    layout->setSize(Vector2D<int>(80, 120));
+    layout->setSize(Vector2D<int>(80, 150));
     layout->setPosition(Vector2D<int>(10, 10));
-    Widget* button = new Button("Button", this, layout);
-    button->setSize(Vector2D<int>(60, 30));
+    Button* button = new Button("Button1", this, layout);
+    button->setText("1");
+    button->setSize(Vector2D<int>(60, 60));
     button->setPosition(Vector2D<int>(10, 10));
+    layout->addWidget(button);
+    button = new Button("Button2", this, layout);
+    button->setText("2");
+    button->setSize(Vector2D<int>(60, 60));
+    button->setPosition(Vector2D<int>(10, 80));
     layout->addWidget(button);
     m_screenContainer[m_currentState].push_back(layout);
 }
@@ -81,7 +87,7 @@ bool GuiManager::handlePlayerInput(sf::Event& event)
             {
                 widget->onMouseHover(coords);
             }
-            else
+            else if (widget->getState() == WidgetState::HOVER)
             {
                 widget->onMouseLeave();
             }

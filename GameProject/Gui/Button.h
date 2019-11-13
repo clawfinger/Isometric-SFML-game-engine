@@ -16,6 +16,8 @@ public:
     void setPosition(const Vector2D<int>& pos) override;
     void setSize(const Vector2D<int>& size) override;
     void setState(const WidgetState &state) override;
+    void setText(const std::string& text);
+    void adjustContent() override;
 
 private:
     sf::RectangleShape m_background;

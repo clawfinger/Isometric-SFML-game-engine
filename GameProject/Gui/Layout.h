@@ -18,6 +18,7 @@ public:
     void setSize(const Vector2D<int>& size) override;
     void setState(const WidgetState &state) override;
     void addWidget(Widget* child);
+    virtual void adjustContent() override;
 
 private:
     sf::RectangleShape m_background;
