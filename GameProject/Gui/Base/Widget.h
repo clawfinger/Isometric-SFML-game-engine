@@ -2,8 +2,8 @@
 #include <vector>
 #include <string>
 #include "SFML/Graphics.hpp"
-#include "../Utils/Vector2D.h"
-#include "../Utils/Meta.h"
+#include "../../Utils/Vector2D.h"
+#include "../../Utils/Meta.h"
 
 class GuiManager;
 

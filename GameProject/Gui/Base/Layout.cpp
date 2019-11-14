@@ -1,5 +1,5 @@
 #include "Layout.h"
-#include "../Utils/Logger.h"
+#include "../../Utils/Logger.h"
 
 Layout::Layout(const std::string &name, GuiManager* manager, Widget *parent):
     Widget(name, manager, parent)

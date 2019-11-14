@@ -1,13 +1,12 @@
 #pragma once
-#include <unordered_map>
 #include "Widget.h"
-#include "SFML/Graphics.hpp"
-#include "../Utils/Meta.h"
+#include "../../Utils/Meta.h"
 
-class Layout : public Widget
+class Button : public Widget
 {
 public:
-    Layout(const std::string& m_name, GuiManager *manager, Widget* parent = nullptr);
+    Button(const std::string& m_name, GuiManager *manager, Widget* parent = nullptr);
+    virtual ~Button() override = default;
     void onMousePress(const Vector2D<int>& mousePos) override;
     void onMouseRelease(const Vector2D<int>& mousePos) override;
     void onMouseHover(const Vector2D<int>& mousePos) override;
@@ -17,11 +16,12 @@ public:
     void setPosition(const Vector2D<int>& pos) override;
     void setSize(const Vector2D<int>& size) override;
     void setState(const WidgetState &state) override;
-    void addWidget(Widget* child);
-    virtual void adjustContent() override;
+    void setText(const std::string& text);
+    void adjustContent() override;
 
 private:
     sf::RectangleShape m_background;
-    std::unordered_map<std::string, Widget*> m_children;
+    sf::Text m_text;
+    sf::Font font;
 };
-REGISTER_TYPENAME(Layout)
+REGISTER_TYPENAME(Button)

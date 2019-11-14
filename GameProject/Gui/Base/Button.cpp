@@ -1,6 +1,6 @@
 #include "Button.h"
 #include "GuiManager.h"
-#include "../Utils/Logger.h"
+#include "../../Utils/Logger.h"
 
 Button::Button(const std::string &name, GuiManager *manager, Widget *parent): Widget(name, manager, parent)
 {

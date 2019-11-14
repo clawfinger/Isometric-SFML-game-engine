@@ -1,5 +1,5 @@
 #include "Widget.h"
-#include "../Utils/Logger.h"
+#include "../../Utils/Logger.h"
 
 Widget::Widget(const std::string &name, GuiManager *manager, Widget *parent): m_manager(manager), m_nowMoved(false), m_parent(parent),
     m_name(name), m_state(WidgetState::IDLE),

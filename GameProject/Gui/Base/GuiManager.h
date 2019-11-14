@@ -5,9 +5,9 @@
 #include <vector>
 #include "SFML/System/Clock.hpp"
 #include "SFML/Window/Event.hpp"
-#include "../GameState.h"
-#include "../Utils/Meta.h"
-#include "../Utils/Vector2D.h"
+#include "../../GameState.h"
+#include "../../Utils/Meta.h"
+#include "../../Utils/Vector2D.h"
 
 class EventDispatcher;
 class Window;

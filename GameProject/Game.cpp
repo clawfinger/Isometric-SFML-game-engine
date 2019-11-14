@@ -6,7 +6,7 @@
 #include "Utils/Logger.h"
 #include "ECS/EntityManager.h"
 #include "ECS/EntityContainer.h"
-#include "Gui/GuiManager.h"
+#include "Gui/Base/GuiManager.h"
 #include "DiContainer/ConstructingFunctions.h"
 
 Game::Game() : isRunning(true)

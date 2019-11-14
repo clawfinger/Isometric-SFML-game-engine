@@ -1,8 +1,8 @@
 #include "SFML/Main.hpp"
 #include "GuiManager.h"
-#include "../Events/Events.h"
-#include "../Window.h"
-#include "../Utils/Logger.h"
+#include "../../Events/Events.h"
+#include "../../Window.h"
+#include "../../Utils/Logger.h"
 #include "Layout.h"
 #include "Button.h"
 

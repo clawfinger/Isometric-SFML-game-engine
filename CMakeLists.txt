@@ -43,10 +43,10 @@ set(HEADERS
     GameProject/Events/Events.h
     GameProject/Events/Observer.h
     GameProject/Events/Subscription.h
-    GameProject/Gui/GuiManager.h
-    GameProject/Gui/Widget.h
-    GameProject/Gui/Layout.h
-    GameProject/Gui/Button.h
+    GameProject/Gui/Base/GuiManager.h
+    GameProject/Gui/Base/Widget.h
+    GameProject/Gui/Base/Layout.h
+    GameProject/Gui/Base/Button.h
     GameProject/State/GameLevelState.h
     GameProject/State/GameStateBase.h
     GameProject/State/GameStateManager.h
@@ -89,10 +89,10 @@ set(SOURCES
     GameProject/Events/EventDispatcher.cpp
     GameProject/Events/Events.cpp
     GameProject/Events/Subscription.cpp
-    GameProject/Gui/GuiManager.cpp
-    GameProject/Gui/Widget.cpp
-    GameProject/Gui/Layout.cpp
-    GameProject/Gui/Button.cpp
+    GameProject/Gui/Base/GuiManager.cpp
+    GameProject/Gui/Base/Widget.cpp
+    GameProject/Gui/Base/Layout.cpp
+    GameProject/Gui/Base/Button.cpp
     GameProject/State/GameLevelState.cpp
     GameProject/State/GameStateManager.cpp
     GameProject/Utils/Logger.cpp
