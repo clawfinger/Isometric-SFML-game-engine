@@ -1,6 +1,6 @@
 #include "SFML/Main.hpp"
 #include "GuiManager.h"
-#include "../../Events/Events.h"
+#include "../../Events/EventDispatcher.h"
 #include "../../Window.h"
 #include "Layout.h"
 #include "Button.h"
@@ -9,21 +9,8 @@ GuiManager::GuiManager(std::shared_ptr<EventDispatcher> dispatcher, std::shared_
     m_controller(dispatcher), m_eventDispatcher(dispatcher),
     m_window(window)
 {
-    m_currentState = GameStateId::level;
-    Layout* layout = new Layout("Layout", m_controller);
-    layout->setSize(Vector2D<int>(80, 150));
-    layout->setPosition(Vector2D<int>(10, 10));
-    Button* button = new Button("Button1", m_controller, layout);
-    button->setText("1");
-    button->setSize(Vector2D<int>(60, 60));
-    button->setPosition(Vector2D<int>(10, 10));
-    layout->addWidget(button);
-    button = new Button("Button2", m_controller, layout);
-    button->setText("2");
-    button->setSize(Vector2D<int>(60, 60));
-    button->setPosition(Vector2D<int>(10, 80));
-    layout->addWidget(button);
-    m_screenContainer[m_currentState].push_back(layout);
+    m_eventDispatcher->subscribe(typeName<GameStateActivatedEvent>(), this);
+    registerCallBack(typeName<GameStateActivatedEvent>(), std::bind(&GuiManager::handleGameStateChangeEvent, this, std::placeholders::_1));
 }
 
 void GuiManager::update(sf::Time deltaTime)
@@ -97,4 +84,37 @@ bool GuiManager::handlePlayerInput(sf::Event& event)
         return false;
     }
     return result;
+}
+
+void GuiManager::handleGameStateChangeEvent(IEvent *event)
+{
+    GameStateActivatedEvent* stateEvent = dynamic_cast<GameStateActivatedEvent*>(event);
+    if (stateEvent == nullptr)
+    {
+        LOG("handleGameStateChangeEvent: wrong event type!");
+        return;
+    }
+    m_currentState = stateEvent->state;
+    if (m_screenContainer.count(m_currentState) == 0)
+        createStateGui();
+}
+
+void GuiManager::createStateGui()
+{
+    LOG("Create GUI!");
+
+    Layout* layout = new Layout("Layout", m_controller);
+    layout->setSize(Vector2D<int>(80, 150));
+    layout->setPosition(Vector2D<int>(10, 10));
+    Button* button = new Button("Button1", m_controller, layout);
+    button->setText("1");
+    button->setSize(Vector2D<int>(60, 60));
+    button->setPosition(Vector2D<int>(10, 10));
+    layout->addWidget(button);
+    button = new Button("Button2", m_controller, layout);
+    button->setText("2");
+    button->setSize(Vector2D<int>(60, 60));
+    button->setPosition(Vector2D<int>(10, 80));
+    layout->addWidget(button);
+    m_screenContainer[m_currentState].push_back(layout);
 }
