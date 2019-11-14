@@ -2,24 +2,23 @@
 #include "GuiManager.h"
 #include "../../Events/Events.h"
 #include "../../Window.h"
-#include "../../Utils/Logger.h"
 #include "Layout.h"
 #include "Button.h"
 
 GuiManager::GuiManager(std::shared_ptr<EventDispatcher> dispatcher, std::shared_ptr<Window> window):
-	m_eventDispatcher(dispatcher),
+    m_controller(dispatcher), m_eventDispatcher(dispatcher),
     m_window(window)
 {
     m_currentState = GameStateId::level;
-    Layout* layout = new Layout("Layout", this);
+    Layout* layout = new Layout("Layout", m_controller);
     layout->setSize(Vector2D<int>(80, 150));
     layout->setPosition(Vector2D<int>(10, 10));
-    Button* button = new Button("Button1", this, layout);
+    Button* button = new Button("Button1", m_controller, layout);
     button->setText("1");
     button->setSize(Vector2D<int>(60, 60));
     button->setPosition(Vector2D<int>(10, 10));
     layout->addWidget(button);
-    button = new Button("Button2", this, layout);
+    button = new Button("Button2", m_controller, layout);
     button->setText("2");
     button->setSize(Vector2D<int>(60, 60));
     button->setPosition(Vector2D<int>(10, 80));
@@ -98,9 +97,4 @@ bool GuiManager::handlePlayerInput(sf::Event& event)
         return false;
     }
     return result;
-}
-
-void GuiManager::elementPressed(const std::string &name)
-{
-    LOG("GuiManager: element " + name + " pressed!");
 }

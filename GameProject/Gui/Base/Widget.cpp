@@ -1,8 +1,9 @@
 #include "Widget.h"
 #include "../../Utils/Logger.h"
 
-Widget::Widget(const std::string &name, GuiManager *manager, Widget *parent): m_manager(manager), m_nowMoved(false), m_parent(parent),
-    m_name(name), m_state(WidgetState::IDLE),
+Widget::Widget(const std::string &name, const GuiEventController& controller, Widget *parent):
+    m_controller(controller),m_parent(parent),
+    m_name(name), m_state(WidgetState::IDLE), m_nowMoved(false),
     m_hoverable(false), m_movable(false), m_visible(true)
 {
 }

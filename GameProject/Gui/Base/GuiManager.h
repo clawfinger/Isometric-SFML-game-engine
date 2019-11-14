@@ -8,6 +8,7 @@
 #include "../../GameState.h"
 #include "../../Utils/Meta.h"
 #include "../../Utils/Vector2D.h"
+#include "GuiEventController.h"
 
 class EventDispatcher;
 class Window;
@@ -20,9 +21,9 @@ public:
 	void update(sf::Time deltaTime);
 	void render();
 	bool handlePlayerInput(sf::Event& event);
-    void elementPressed(const std::string& name);
 
 private:
+    GuiEventController m_controller;
 	Vector2D<int> m_lastMousePos;
 	GameStateId m_currentState;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;

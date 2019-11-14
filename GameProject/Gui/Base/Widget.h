@@ -5,7 +5,7 @@
 #include "../../Utils/Vector2D.h"
 #include "../../Utils/Meta.h"
 
-class GuiManager;
+class GuiEventController;
 
 enum class WidgetState
 {
@@ -16,7 +16,8 @@ enum class WidgetState
 class Widget
 {
 public:
-    Widget(const std::string& m_name, GuiManager* manager, Widget* parent = nullptr);
+    Widget(const std::string& m_name, const GuiEventController& controller,
+           Widget* parent = nullptr);
     virtual ~Widget();
     virtual void onMousePress(const Vector2D<int>& mousePos);
     virtual void onMouseRelease(const Vector2D<int>& mousePos);
@@ -48,7 +49,7 @@ public:
     void setVisible(bool visible);
 
 protected:
-    GuiManager* m_manager;
+    const GuiEventController& m_controller;
 
 private:
     Widget* m_parent;

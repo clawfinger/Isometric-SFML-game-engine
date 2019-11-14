@@ -5,7 +5,7 @@
 class Button : public Widget
 {
 public:
-    Button(const std::string& m_name, GuiManager *manager, Widget* parent = nullptr);
+    Button(const std::string& m_name, const GuiEventController& controller, Widget* parent = nullptr);
     virtual ~Button() override = default;
     void onMousePress(const Vector2D<int>& mousePos) override;
     void onMouseRelease(const Vector2D<int>& mousePos) override;

@@ -7,7 +7,7 @@
 class Layout : public Widget
 {
 public:
-    Layout(const std::string& m_name, GuiManager *manager, Widget* parent = nullptr);
+    Layout(const std::string& m_name, const GuiEventController& controller, Widget* parent = nullptr);
     void onMousePress(const Vector2D<int>& mousePos) override;
     void onMouseRelease(const Vector2D<int>& mousePos) override;
     void onMouseHover(const Vector2D<int>& mousePos) override;

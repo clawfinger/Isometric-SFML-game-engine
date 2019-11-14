@@ -1,8 +1,8 @@
 #include "Layout.h"
 #include "../../Utils/Logger.h"
 
-Layout::Layout(const std::string &name, GuiManager* manager, Widget *parent):
-    Widget(name, manager, parent)
+Layout::Layout(const std::string &name, const GuiEventController &controller, Widget *parent):
+    Widget(name, controller, parent)
 {
     m_background.setFillColor(sf::Color(0, 0, 0, 95));
     m_background.setOutlineThickness(2);
