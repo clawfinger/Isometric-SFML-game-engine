@@ -111,8 +111,8 @@ void Window::create()
 	if (m_isFullScreen)
 		style = sf::Style::Fullscreen;
 	else
-		style = sf::Style::Default;
+        style = sf::Style::Close ;
 	//uniform initialisation of sf::VideoMode
-	m_window.create({ m_windowSize.x, m_windowSize.y, 32 }, m_windowTitle, style);
+    m_window.create({ m_windowSize.x, m_windowSize.y, 32 }, m_windowTitle, style, sf::ContextSettings(0, 0, 8));
 	//m_window.setVerticalSyncEnabled(true);
 }

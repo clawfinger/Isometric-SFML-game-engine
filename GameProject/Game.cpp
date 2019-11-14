@@ -63,6 +63,11 @@ void Game::processEvents()
         else if (event.type == sf::Event::Resized)
         {
             LOG(std::to_string(event.size.width) + "x" + std::to_string(event.size.height));
+//            sf::View mainView = m_window->getRenderWindow().getView();
+//            mainView.setSize(event.size.width, event.size.height);
+//            m_window->getRenderWindow().setView(mainView);
+            sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+            m_window->getView() = sf::View(visibleArea);
         }
 
         if (!m_guiManager->handlePlayerInput(event))
