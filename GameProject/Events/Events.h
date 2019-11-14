@@ -4,6 +4,7 @@
 #include "../Utils/Vector2D.h"
 #include "../ECS/Entity.h"
 #include "../LevelInfo.h"
+#include "../GameState.h"
 
 class IEvent
 {
@@ -69,3 +70,12 @@ public:
 	std::vector<EntityId> enemies;
 };
 REGISTER_TYPENAME(BattleStartedEvent)
+
+class GameStateActivatedEvent : public IEvent
+{
+public:
+    GameStateActivatedEvent(GameStateId state) : state(state) {}
+    std::string name();
+    GameStateId state;
+};
+REGISTER_TYPENAME(GameStateActivatedEvent)

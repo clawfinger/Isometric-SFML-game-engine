@@ -2,8 +2,10 @@
 #include "GameLevelState.h"
 #include <string>
 #include "../Utils/Logger.h"
+#include "../Events/EventDispatcher.h"
+#include "../Events/Events.h"
 
-GameStateManager::GameStateManager()
+GameStateManager::GameStateManager(std::shared_ptr<EventDispatcher> dispatcher): m_dispatcher(dispatcher)
 {
 	registerStateFactory<GameLevelState>(GameStateId::level);
 }
@@ -37,6 +39,7 @@ void GameStateManager::activateState(GameStateId state)
 		LOG("ERROR: Cannot find factory for state: " + std::to_string(state));
 	else
 		m_statesStack.push(stateFactory->second());
+    m_dispatcher->dispatch<GameStateActivatedEvent>(state);
 }
 
 void GameStateManager::deactivateCurrentState()

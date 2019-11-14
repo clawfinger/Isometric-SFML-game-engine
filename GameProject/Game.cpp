@@ -101,7 +101,7 @@ void Game::registerClassFactories()
 	m_container.registerClass<EventDispatcher>(constructingFunction);
 	m_container.registerClass<Map>(constructingFunction<TextureManager, EventDispatcher>);
 	m_container.registerClass<Window>(constructingFunction);
-	m_container.registerClass<GameStateManager>(constructingFunction);
+    m_container.registerClass<GameStateManager>(constructingFunction<EventDispatcher>);
 	m_container.registerClass<EntityContainer>(constructingFunction);
 	m_container.registerClass<EntityManager>(constructingFunction<EntityContainer, EventDispatcher, TextureManager, Map>);
 	m_container.registerClass<GuiManager>(constructingFunction<EventDispatcher, Window>);

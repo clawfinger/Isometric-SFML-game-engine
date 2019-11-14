@@ -1,17 +1,19 @@
 #pragma once
 #include <stack>
 #include <map>
+#include <memory>
 #include <functional>
 #include "../GameState.h"
 #include "../Utils/Meta.h"
 
 class GameStateBase;
 class DiContainer;
+class EventDispatcher;
 
 class GameStateManager
 {
 public:
-	GameStateManager();
+    GameStateManager(std::shared_ptr<EventDispatcher> dispatcher);
 	~GameStateManager();
 	GameStateBase* currentState();
 	void setContainer(DiContainer* container);
@@ -21,6 +23,7 @@ public:
 	void registerStateFactory(GameStateId state);
 private:
 	DiContainer* m_container;
+    std::shared_ptr<EventDispatcher> m_dispatcher;
 	std::stack<GameStateBase*> m_statesStack;
 	std::map<GameStateId, std::function<GameStateBase* (void)>> m_stateFactories;
 };
