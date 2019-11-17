@@ -8,13 +8,13 @@ class ICommand
 {
 public:
 	virtual std::string name() = 0;
-	virtual ~ICommand() {};
+    virtual ~ICommand() {}
 };
 
 class SetPathCommand: public ICommand
 {
 public:
-	~SetPathCommand() {};
+    ~SetPathCommand() {}
 	SetPathCommand(Actor* unit, int destination);
 	std::string name();
 	int m_destination;

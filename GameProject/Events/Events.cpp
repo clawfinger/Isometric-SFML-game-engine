@@ -1,12 +1,17 @@
 #include "Events.h"
 
+IEvent::~IEvent()
+{
+
+}
+
 std::string EntityCreatedEvent::name()
 {
 	return typeName<EntityCreatedEvent>();
 }
 
 SetDestinationForEntityEvent::SetDestinationForEntityEvent(EntityId entity, const Vector2f& index):
-	destination(index), entity(entity)
+    entity(entity), destination(index)
 {
 }
 
@@ -33,4 +38,14 @@ std::string EntityChangedOrientationEvent::name()
 std::string BattleStartedEvent::name()
 {
 	return typeName<BattleStartedEvent>();
+}
+
+std::string GameStateActivatedEvent::name()
+{
+    return typeName<GameStateActivatedEvent>();
+}
+
+std::string PartySlotActiveEvent::name()
+{
+    return typeName<PartySlotActiveEvent>();
 }

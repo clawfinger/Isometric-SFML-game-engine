@@ -13,7 +13,7 @@
 #include "Map.h"
 #include "Window.h"
 
-GameEngine::GameEngine(DiContainer* container): m_container(container)
+GameEngine::GameEngine(DiContainer* container): m_container(container), m_activeCharacter(INVALIDID)
 {
 	initSystems();
 	m_eventDispatcher = m_container->get<EventDispatcher>();
@@ -22,11 +22,10 @@ GameEngine::GameEngine(DiContainer* container): m_container(container)
 	m_window = m_container->get<Window>();
 	m_characters = m_entityManager->loadCharacters();
 
-	if (!m_characters.empty())
-		m_activeCharacter = m_characters[0];
-
 	m_eventDispatcher->subscribe(typeName<MapCreatedEvent>(), this);
 	registerCallBack(typeName<MapCreatedEvent>(), std::bind(&GameEngine::handleMapCreatedEvent, this, std::placeholders::_1));
+    m_eventDispatcher->subscribe(typeName<PartySlotActiveEvent>(), this);
+    registerCallBack(typeName<PartySlotActiveEvent>(), std::bind(&GameEngine::handlePartySlotActiveEvent, this, std::placeholders::_1));
 }
 
 
@@ -78,7 +77,13 @@ void GameEngine::handleMapCreatedEvent(IEvent * event)
 	{
 		m_entityManager->spawnCharacters();
 		m_entityManager->spawnEnemy(currentEvent->mapType);
-	}
+    }
+}
+
+void GameEngine::handlePartySlotActiveEvent(IEvent *event)
+{
+    PartySlotActiveEvent *currentEvent = dynamic_cast<PartySlotActiveEvent *>(event);
+    m_activeCharacter = m_characters[currentEvent->pos - 1];
 }
 
 void GameEngine::handlePlayerInput(sf::Event& event)
@@ -122,18 +127,21 @@ void GameEngine::handleMouseInput(const Vector2i& mouseCoords)
 	Vector2f mapTile = m_map->orthoXYfromIsometricCoords(Vector2f(mouse.x, mouse.y));
 
 
-	EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
-	EntityId entity = EPSystem->getEntityAtCoordinates(Vector2f(mouse.x, mouse.y));
-	if (entity != INVALIDID)
-	{
-		if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
-		{
-			m_activeCharacter = entity;
-			LOG("Active entity: " + std::to_string(m_activeCharacter));
-			//send active char changed event
-			return;
-		}
-	}
+//	EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
+//	EntityId entity = EPSystem->getEntityAtCoordinates(Vector2f(mouse.x, mouse.y));
+//	if (entity != INVALIDID)
+//	{
+//		if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
+//		{
+//			m_activeCharacter = entity;
+//			LOG("Active entity: " + std::to_string(m_activeCharacter));
+//			//send active char changed event
+//			return;
+//		}
+//	}
+
+    if (m_activeCharacter == INVALIDID)
+        return;
 
 	if (m_map->isWalkable(mapTile))
 	{

@@ -37,6 +37,7 @@ private:
 	void handleMouseInput(const Vector2i& mouseCoords);
 
 	void handleMapCreatedEvent(IEvent* event);
+    void handlePartySlotActiveEvent(IEvent* event);
 
 private:
 	EntityId m_activeCharacter;

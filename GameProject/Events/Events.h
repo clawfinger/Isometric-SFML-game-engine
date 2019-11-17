@@ -4,19 +4,20 @@
 #include "../Utils/Vector2D.h"
 #include "../ECS/Entity.h"
 #include "../LevelInfo.h"
+#include "../GameState.h"
 
 class IEvent
 {
 public:
 	virtual std::string name() = 0;
-	virtual ~IEvent() {};
+    virtual ~IEvent();
 };
 
 class EntityCreatedEvent : public IEvent
 {
 public:
 	EntityCreatedEvent(EntityId id, StringList components)
-		: id(id), components(components) {};
+        : id(id), components(components) {}
 	std::string name();
 	EntityId id;
 	StringList components;
@@ -69,3 +70,21 @@ public:
 	std::vector<EntityId> enemies;
 };
 REGISTER_TYPENAME(BattleStartedEvent)
+
+class GameStateActivatedEvent : public IEvent
+{
+public:
+    GameStateActivatedEvent(GameStateId state) : state(state) {}
+    std::string name();
+    GameStateId state;
+};
+REGISTER_TYPENAME(GameStateActivatedEvent)
+
+class PartySlotActiveEvent : public IEvent
+{
+public:
+    PartySlotActiveEvent(int pos) : pos(pos) {}
+    std::string name();
+    int pos;
+};
+REGISTER_TYPENAME(PartySlotActiveEvent)
