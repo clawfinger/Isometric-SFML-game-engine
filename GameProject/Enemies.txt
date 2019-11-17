@@ -1,8 +1,8 @@
 #begin
 name Rat
 movementSpeed 150
-textureId Rat
-spriteOrigin 0 0
+textureId ratman
+spriteOrigin 64 126
 spriteSize 128 128
 vision 3
 #end

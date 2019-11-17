@@ -4,7 +4,7 @@
 
 namespace EnemyId
 {
-	static const std::string Rat = "Rat";
+    static const std::string Rat = "ratman";
 };
 
 namespace CharacterId

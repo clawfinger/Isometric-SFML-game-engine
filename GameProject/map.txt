@@ -14,4 +14,4 @@ AAAAAAAAAA
 AAAAAAAAAA
 
 playerSpawnPosition 0 1
-enemySpawnPosition 5 10
+enemySpawnPosition 5 9

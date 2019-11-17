@@ -25,7 +25,7 @@ void TextureManager::preloadTextures()
 	}
 	load(CharacterId::Toughguy, "images/toughguy.png");
 	load(CharacterId::frog, "images/frog.png");
-	//load(EnemyId::Rat, "images/rat.png");
+    load(EnemyId::Rat, "images/ratman.png");
 }
 
 void TextureManager::load(std::string id, const std::string & filename)

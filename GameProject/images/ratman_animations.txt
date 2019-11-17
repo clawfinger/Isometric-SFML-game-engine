@@ -1,0 +1,13 @@
+2
+moving
+name ratmanMoving
+frameCount 12
+frameTime 0.060
+row 2
+infinite 1
+idle
+name ratmanIdle
+frameCount 12
+frameTime 0.080
+row 0
+infinite 1

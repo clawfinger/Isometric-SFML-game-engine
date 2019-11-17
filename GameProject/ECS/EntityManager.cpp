@@ -50,9 +50,6 @@ void EntityManager::spawnCharacters()
 
 void EntityManager::spawnEnemy(LevelTypes mapType)
 {
-	//-----------
-	return;
-	//-----------
 	loadEnemies();
 	EnemyData data = getRandomEnemyData();
 
@@ -63,8 +60,8 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
 	{
 		spriteComp->create(m_textureManager->get(data.textureId));
 		std::stringstream ss;
-		ss << data.spriteOrigin.x << data.spriteOrigin.y << data.spriteSize.x << data.spriteSize.y;
-		spriteComp->readData(ss);
+        ss << data.spriteOrigin.x << " " << data.spriteOrigin.y << " " << data.spriteSize.x << " " << data.spriteSize.y;
+        spriteComp->readData(ss);
 	}
 	PositionComponent* positionComponent =
 		m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
