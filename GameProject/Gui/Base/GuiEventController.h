@@ -7,8 +7,9 @@ class GuiEventController
 {
 public:
     GuiEventController(std::shared_ptr<EventDispatcher> dispatcher);
-    void elementPressed(const std::string& name) const;
+    virtual ~GuiEventController() = default;
+    void virtual elementPressed(const std::string& name) const = 0;
 
-private:
+protected:
     std::shared_ptr<EventDispatcher> m_eventDispatcher;
 };

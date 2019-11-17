@@ -49,6 +49,7 @@ set(HEADERS
     GameProject/Gui/Base/Button.h
     GameProject/Gui/ToggledButtonLayout.h
     GameProject/Gui/Base/GuiEventController.h
+    GameProject/Gui/GameLevelController.h
     GameProject/State/GameLevelState.h
     GameProject/State/GameStateBase.h
     GameProject/State/GameStateManager.h
@@ -97,6 +98,7 @@ set(SOURCES
     GameProject/Gui/Base/Button.cpp
     GameProject/Gui/Base/GuiEventController.cpp
     GameProject/Gui/ToggledButtonLayout.cpp
+    GameProject/Gui/GameLevelController.cpp
     GameProject/State/GameLevelState.cpp
     GameProject/State/GameStateManager.cpp
     GameProject/Utils/Logger.cpp

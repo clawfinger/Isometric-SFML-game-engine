@@ -29,11 +29,12 @@ private:
     void createStateGui();
 
 private:
-    GuiEventController m_controller;
+    GuiEventController* m_controller;
 	Vector2D<int> m_lastMousePos;
 	GameStateId m_currentState;
 	std::shared_ptr<EventDispatcher> m_eventDispatcher;
 	std::shared_ptr<Window> m_window;
 	std::unordered_map<GameStateId, std::vector<Widget*>> m_screenContainer;
+    std::unordered_map<GameStateId, GuiEventController*> m_controllerContainer;
 };
 REGISTER_TYPENAME(GuiManager)
