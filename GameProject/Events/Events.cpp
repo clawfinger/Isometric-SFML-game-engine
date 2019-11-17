@@ -1,5 +1,10 @@
 #include "Events.h"
 
+IEvent::~IEvent()
+{
+
+}
+
 std::string EntityCreatedEvent::name()
 {
 	return typeName<EntityCreatedEvent>();
@@ -38,4 +43,9 @@ std::string BattleStartedEvent::name()
 std::string GameStateActivatedEvent::name()
 {
     return typeName<GameStateActivatedEvent>();
+}
+
+std::string PartySlotActiveEvent::name()
+{
+    return typeName<PartySlotActiveEvent>();
 }

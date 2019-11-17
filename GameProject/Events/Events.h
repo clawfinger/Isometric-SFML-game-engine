@@ -10,14 +10,14 @@ class IEvent
 {
 public:
 	virtual std::string name() = 0;
-	virtual ~IEvent() {};
+    virtual ~IEvent();
 };
 
 class EntityCreatedEvent : public IEvent
 {
 public:
 	EntityCreatedEvent(EntityId id, StringList components)
-		: id(id), components(components) {};
+        : id(id), components(components) {}
 	std::string name();
 	EntityId id;
 	StringList components;
@@ -79,3 +79,12 @@ public:
     GameStateId state;
 };
 REGISTER_TYPENAME(GameStateActivatedEvent)
+
+class PartySlotActiveEvent : public IEvent
+{
+public:
+    PartySlotActiveEvent(int pos) : pos(pos) {}
+    std::string name();
+    int pos;
+};
+REGISTER_TYPENAME(PartySlotActiveEvent)

@@ -1,5 +1,6 @@
 #include "GuiEventController.h"
 #include "../../Events/Events.h"
+#include "../../Events/EventDispatcher.h"
 #include "../../Utils/Logger.h"
 
 GuiEventController::GuiEventController(std::shared_ptr<EventDispatcher> dispatcher):
@@ -10,5 +11,8 @@ GuiEventController::GuiEventController(std::shared_ptr<EventDispatcher> dispatch
 
 void GuiEventController::elementPressed(const std::string &name) const
 {
-    LOG("GuiEventController: element " + name + " pressed!");
+    if (name == "PartySlot_1")
+        m_eventDispatcher->dispatch<PartySlotActiveEvent>(1);
+    else if (name == "PartySlot_2")
+        m_eventDispatcher->dispatch<PartySlotActiveEvent>(2);
 }

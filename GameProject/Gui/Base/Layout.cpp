@@ -6,7 +6,7 @@ Layout::Layout(const std::string &name, const GuiEventController &controller, Wi
 {
     m_background.setFillColor(sf::Color(0, 0, 0, 95));
     m_background.setOutlineThickness(2);
-    m_background.setOutlineColor(sf::Color(sf::Color::Black));
+    m_background.setOutlineColor(sf::Color(215, 183, 64));
 }
 
 void Layout::onMousePress(const Vector2D<int>& mousePos)

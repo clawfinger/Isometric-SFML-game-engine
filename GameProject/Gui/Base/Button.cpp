@@ -6,7 +6,7 @@ Button::Button(const std::string &name, const GuiEventController& controller, Wi
 {
     m_background.setFillColor(sf::Color(0, 0, 0, 95));
     m_background.setOutlineThickness(1);
-    m_background.setOutlineColor(sf::Color::Black);
+    m_background.setOutlineColor(sf::Color(215, 183, 64));
     setHoverable(true);
 
     font.loadFromFile("arial.ttf");
@@ -87,4 +87,22 @@ void Button::adjustContent()
     m_text.setPosition(global.x + getSize().x / 2, global.y + getSize().y / 2);
     m_text.setOrigin(m_text.getLocalBounds().left + m_text.getLocalBounds().width / 2,
                      m_text.getLocalBounds().top + m_text.getLocalBounds().height / 2);
+}
+
+void Button::setToggled(bool toggled)
+{
+    m_toggled = toggled;
+    if (toggled)
+    {
+        m_background.setOutlineThickness(4);
+    }
+    else
+    {
+        m_background.setOutlineThickness(1);
+    }
+}
+
+bool Button::isToggled()
+{
+    return m_toggled;
 }

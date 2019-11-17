@@ -18,10 +18,13 @@ public:
     void setState(const WidgetState &state) override;
     void setText(const std::string& text);
     void adjustContent() override;
+    void setToggled(bool toggled);
+    bool isToggled();
 
 private:
     sf::RectangleShape m_background;
     sf::Text m_text;
     sf::Font font;
+    bool m_toggled;
 };
 REGISTER_TYPENAME(Button)
