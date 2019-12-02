@@ -7,7 +7,7 @@ void TextureManager::preloadTextures()
 {
 	std::ifstream mapFile;
 	std::string levelFileName;
-	levelFileName = "textures.txt";
+    levelFileName = "data/textures.txt";
 	mapFile.open(levelFileName);
 	if (!mapFile.is_open())
 	{

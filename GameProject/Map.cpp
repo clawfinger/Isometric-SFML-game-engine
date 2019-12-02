@@ -79,7 +79,7 @@ void Map::loadLevel(LevelTypes name)
 	switch (name)
 	{
 	case LevelTypes::dungeon:
-		levelFileName = "map.txt";
+        levelFileName = "data/map.txt";
 		break;
 	}
 	mapFile.open(levelFileName);

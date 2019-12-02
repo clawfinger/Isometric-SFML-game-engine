@@ -84,7 +84,7 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
 void EntityManager::loadEntityTypes()
 {
 	std::ifstream charFile;
-	std::string filename = "EntityTypes.txt";
+    std::string filename = "data/EntityTypes.txt";
 
 	charFile.open(filename);
 	if (!charFile.is_open())
@@ -113,7 +113,7 @@ std::vector<EntityId> EntityManager::loadCharacters()
 {
 
 	std::ifstream charactersFile;
-	std::string filename = "Characters.txt";
+    std::string filename = "data/Characters.txt";
 
 	std::string line;
 	charactersFile.open(filename);
@@ -149,7 +149,7 @@ std::vector<EntityId> EntityManager::loadCharacters()
 void EntityManager::loadEnemies()
 {
 	std::ifstream enemiesFile;
-	std::string filename = "Enemies.txt";
+    std::string filename = "data/Enemies.txt";
 
 	std::string line;
 	enemiesFile.open(filename);
