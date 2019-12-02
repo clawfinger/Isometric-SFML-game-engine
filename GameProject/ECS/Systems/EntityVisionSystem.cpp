@@ -63,18 +63,20 @@ void EntityVisionSystem::handleEntityReachTileEvent(IEvent * event)
 	PlayerReachTileEvent *currentEvent = dynamic_cast<PlayerReachTileEvent *>(event);
 	if (nullptr != currentEvent)
 	{
-		if (m_entityContainer->HasComponent(currentEvent->entity, typeName<AIControlledComponent>()))
-			LOG("Enemy " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
-		else
-			LOG("Player " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
+        if (m_entityContainer->HasComponent(currentEvent->entity, typeName<AIControlledComponent>()))
+            LOG("Enemy " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
+        else
+        {
+            LOG("Player " + std::to_string(currentEvent->entity) + " has reached coords " + std::to_string(currentEvent->pos.x) + ":" + std::to_string(currentEvent->pos.y));
 
-		std::vector<EntityId> enemiesInBattle = checkEnemyInSight(currentEvent->entity);
-		if (!enemiesInBattle.empty())
-		{
-			LOG("Battle!");
-			m_eventDispatcher->dispatch<BattleStartedEvent>(enemiesInBattle);
-		}
-	}
+            std::vector<EntityId> enemiesInBattle = checkEnemyInSight(currentEvent->entity);
+            if (!enemiesInBattle.empty())
+            {
+                LOG("Battle!");
+                m_eventDispatcher->dispatch<BattleStartedEvent>(enemiesInBattle);
+            }
+        }
+    }
 }
 
 std::vector<EntityId> EntityVisionSystem::checkEnemyInSight(EntityId character)

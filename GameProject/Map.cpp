@@ -7,9 +7,9 @@
 #include <stdlib.h>
 #include "Events/Events.h"
 #include "Utils/Logger.h"
-#include "Utils/Utility.h"
+#include "Utils/utility.h"
 
-MapTile::MapTile(): m_walkable(true), m_empty(false)
+MapTile::MapTile(): m_walkable(true), m_empty(false), m_transparent(true)
 {
 }
 
@@ -54,6 +54,7 @@ void MapTile::setEmpty(bool empty)
 
 void MapTile::setTransparent(bool transparent)
 {
+    m_transparent = transparent;
 }
 
 void MapTile::setPosition(const Vector2f & position)

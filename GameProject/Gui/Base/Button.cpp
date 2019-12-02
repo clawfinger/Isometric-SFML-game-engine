@@ -2,7 +2,7 @@
 #include "GuiManager.h"
 #include "../../Utils/Logger.h"
 
-Button::Button(const std::string &name, const GuiEventController& controller, Widget *parent): Widget(name, controller, parent)
+Button::Button(const std::string &name, const GuiEventController& controller, Widget *parent): Widget(name, controller, parent), m_toggled(false)
 {
     m_background.setFillColor(sf::Color(0, 0, 0, 95));
     m_background.setOutlineThickness(1);

@@ -127,18 +127,18 @@ void GameEngine::handleMouseInput(const Vector2i& mouseCoords)
 	Vector2f mapTile = m_map->orthoXYfromIsometricCoords(Vector2f(mouse.x, mouse.y));
 
 
-//	EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
-//	EntityId entity = EPSystem->getEntityAtCoordinates(Vector2f(mouse.x, mouse.y));
-//	if (entity != INVALIDID)
-//	{
-//		if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
-//		{
-//			m_activeCharacter = entity;
-//			LOG("Active entity: " + std::to_string(m_activeCharacter));
-//			//send active char changed event
-//			return;
-//		}
-//	}
+    EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
+    EntityId entity = EPSystem->getEntityAtCoordinates(Vector2f(mouse.x, mouse.y));
+    if (entity != INVALIDID)
+    {
+//        if (std::find(m_characters.begin(), m_characters.end(), entity) != m_characters.end())
+//        {
+            m_activeCharacter = entity;
+            LOG("Active entity: " + std::to_string(m_activeCharacter));
+            //send active char changed event
+            return;
+//        }
+    }
 
     if (m_activeCharacter == INVALIDID)
         return;
