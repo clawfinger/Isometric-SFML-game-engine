@@ -195,7 +195,8 @@ EntityId EntityManager::createCharacterFromData(const CharacterData & data) cons
 	{
 		spriteComp->create(m_textureManager->get(data.textureId));
 		std::stringstream ss;
-		ss << data.spriteOrigin.x << " " << data.spriteOrigin.y << " " << data.spriteSize.x << " " << data.spriteSize.y;
+        ss << data.spriteOrigin.x << " " << data.spriteOrigin.y << " "
+           << data.spriteSize.x << " " << data.spriteSize.y << " " << data.isCastsShadow;
 		spriteComp->readData(ss);
 	}
 	PositionComponent* positionComponent =

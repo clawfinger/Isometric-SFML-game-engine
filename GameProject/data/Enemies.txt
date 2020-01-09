@@ -5,4 +5,5 @@ textureId ratman
 spriteOrigin 64 126
 spriteSize 128 128
 vision 3
+shadow 1
 #end

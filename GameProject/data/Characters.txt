@@ -5,6 +5,7 @@ textureId Toughguy
 spriteOrigin 64 117
 spriteSize 128 128
 vision 5
+shadow 1
 #end
 #begin
 name frog
@@ -13,4 +14,5 @@ textureId frog
 spriteOrigin 64 120
 spriteSize 128 128
 vision 5
+shadow 1
 #end

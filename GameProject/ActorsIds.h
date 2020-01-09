@@ -29,6 +29,7 @@ struct EnemyData
 		ClassMetaInfo<EnemyData>::registerMember<std::string>("textureId", &EnemyData::textureId);
 		ClassMetaInfo<EnemyData>::registerMember<float>("movementSpeed", &EnemyData::movementSpeed);
 		ClassMetaInfo<EnemyData>::registerMember<int>("vision", &EnemyData::vision);
+                ClassMetaInfo<EnemyData>::registerMember<bool>("shadow", &EnemyData::isCastsShadow);
 
 	}
 	std::string name;
@@ -38,6 +39,7 @@ struct EnemyData
 	std::string textureId;
 	float movementSpeed;
 	int vision;
+        bool isCastsShadow;
 };
 
 struct CharacterData
@@ -50,6 +52,7 @@ struct CharacterData
 		ClassMetaInfo<CharacterData>::registerMember<std::string>("textureId", &CharacterData::textureId);
 		ClassMetaInfo<CharacterData>::registerMember<float>("movementSpeed", &CharacterData::movementSpeed);
 		ClassMetaInfo<CharacterData>::registerMember<int>("vision", &CharacterData::vision);
+                ClassMetaInfo<CharacterData>::registerMember<bool>("shadow", &CharacterData::isCastsShadow);
 
 	}
 	std::string name;
@@ -59,4 +62,5 @@ struct CharacterData
 	std::string textureId;
 	float movementSpeed;
 	int vision;
+        bool isCastsShadow;
 };

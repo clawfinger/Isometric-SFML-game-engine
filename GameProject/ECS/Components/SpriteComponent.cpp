@@ -2,7 +2,7 @@
 #include "SpriteComponent.h"
 
 
-SpriteComponent::SpriteComponent() : ComponentBase(typeName<SpriteComponent>())
+SpriteComponent::SpriteComponent() : ComponentBase(typeName<SpriteComponent>()), m_isCastsShadow(false)
 {
 }
 
@@ -39,11 +39,17 @@ Vector2f & SpriteComponent::getSize()
 
 void SpriteComponent::readData(std::stringstream & stream)
 {
+    //TODO remove this method and replace with setters
 	int x = 0;
 	int y = 0;
 	stream >> x >> y;
 	stream >> m_size.x >> m_size.y;
-	
+    stream >> m_isCastsShadow;
 	m_sprite.setOrigin(float(x), float(y));
-	m_sprite.setTextureRect(sf::IntRect(0, 0, m_size.x, m_size.y));
+    m_sprite.setTextureRect(sf::IntRect(0, 0, m_size.x, m_size.y));
+}
+
+bool SpriteComponent::isCastsShadow()
+{
+    return m_isCastsShadow;
 }
