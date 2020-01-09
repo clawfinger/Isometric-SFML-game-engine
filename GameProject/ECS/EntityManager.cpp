@@ -39,6 +39,7 @@ void EntityManager::spawnCharacters()
 {
 	//change map for multiple characters spawn
 	Vector2f playerSpawn = m_map->getPlayerSpawnCoordinate();
+
 	for (auto characterId : m_charactersIds)
 	{
 		PositionComponent* positionComponent =

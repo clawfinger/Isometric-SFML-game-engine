@@ -1,11 +1,14 @@
 #include "Window.h"
 
-Window::Window(): m_viewSpeed(600.0)
+static const int ZOOM_FACTOR_LIMIT = 5;
+
+Window::Window(): m_zoomFactor(0), m_viewSpeed(600.0)
 {
 	setup("Default window", sf::Vector2u(800, 600));
 }
 
-Window::Window(const std::string & windowTitle, const sf::Vector2u & size) : m_viewSpeed(300.0)
+Window::Window(const std::string & windowTitle, const sf::Vector2u & size) :
+    m_zoomFactor(0), m_viewSpeed(300.0)
 {
 	setup(windowTitle, size);
 }
@@ -54,13 +57,37 @@ void Window::toggleFullScreen()
 
 void Window::draw(sf::Drawable & drawable)
 {
-	m_window.draw(drawable);
+    m_window.draw(drawable);
+}
+
+void Window::zoomInView()
+{
+    if (m_zoomFactor >= ZOOM_FACTOR_LIMIT)
+        return;
+
+    resizeView(0.95);
+    m_zoomFactor++;
+}
+
+void Window::zoomOutView()
+{
+    if (m_zoomFactor <= -ZOOM_FACTOR_LIMIT * 2)
+        return;
+
+    resizeView(1.05);
+    m_zoomFactor--;
 }
 
 void Window::moveView(const Vector2f& movement)
 {
 	m_mainView.move(movement.x, movement.y);
-	m_window.setView(m_mainView);
+    m_window.setView(m_mainView);
+}
+
+void Window::moveViewToPoint(int x, int y)
+{
+    m_mainView.setCenter(x, y);
+    m_window.setView(m_mainView);
 }
 
 void Window::update(sf::Time deltaTime)
@@ -73,6 +100,14 @@ void Window::resizeView(const Vector2f & newSize)
 	m_mainView.setSize(newSize.x, newSize.y);
 	m_window.setView(m_mainView);
 }
+
+void Window::resizeView(float factor)
+{
+    m_mainView.zoom(factor);
+    m_window.setView(m_mainView);
+}
+
+
 
 sf::View & Window::getView()
 {

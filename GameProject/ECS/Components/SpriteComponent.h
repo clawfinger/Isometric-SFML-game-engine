@@ -16,6 +16,7 @@ public:
 	void setPosition(const Vector2f& position);
 	Vector2f& getSize();
 	void readData(std::stringstream& stream);
+
 private:
 	sf::Sprite m_sprite;
 	Vector2f m_size;

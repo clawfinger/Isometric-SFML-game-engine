@@ -78,6 +78,8 @@ void GameEngine::handleMapCreatedEvent(IEvent * event)
 		m_entityManager->spawnCharacters();
 		m_entityManager->spawnEnemy(currentEvent->mapType);
     }
+    //TODO move view to selected character
+    m_window->moveViewToPoint(0, 0);
 }
 
 void GameEngine::handlePartySlotActiveEvent(IEvent *event)
@@ -100,9 +102,16 @@ void GameEngine::handlePlayerInput(sf::Event& event)
 		{
 			Vector2i coords = Vector2i(event.mouseButton.x, event.mouseButton.y);
 			handleMouseInput(coords);
-			break;
 		}
+        break;
 	}
+    case sf::Event::MouseWheelScrolled:
+    {
+        if (event.mouseWheelScroll.delta < 0)
+            m_window->zoomInView();
+        else
+            m_window->zoomOutView();
+    }
 	}
 }
 

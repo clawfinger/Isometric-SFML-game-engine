@@ -26,7 +26,11 @@ public:
 	void update(sf::Time deltaTime);
 	void draw(sf::Drawable& drawable);
 
+    void zoomInView();
+    void zoomOutView();
+
 	void moveView(const Vector2f& movement);
+    void moveViewToPoint(int x, int y);
 	void resizeView(const Vector2f& newSize);
 	sf::View& getView();
 
@@ -36,9 +40,11 @@ public:
 private:
 	void destroy();
 	void create();
+    void resizeView(float factor);
 
 private:
 	bool m_isDone;
+    int m_zoomFactor;
 	bool m_isFullScreen;
 	sf::RenderWindow m_window;
 	std::string m_windowTitle;
