@@ -14,7 +14,7 @@ class ICommandExecutor
 {
 public:
 	virtual void execute(ICommand* command) = 0;
-	virtual ~ICommandExecutor() {}
+    virtual ~ICommandExecutor(){}
 };
 
 class SetPathCommandExecutor : public ICommandExecutor
@@ -22,7 +22,7 @@ class SetPathCommandExecutor : public ICommandExecutor
 public:
 	SetPathCommandExecutor(Map& map): m_map(map)
 	{
-	};
+    }
 	void execute(ICommand* command);
 
 private:

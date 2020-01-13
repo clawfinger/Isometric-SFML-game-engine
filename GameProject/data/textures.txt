@@ -1,3 +1,4 @@
 A tile
 B tile1
 C tile2
+shadow shadow

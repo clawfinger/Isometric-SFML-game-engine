@@ -27,10 +27,10 @@ REGISTER_TYPENAME(EntityCreatedEvent)
 class SetDestinationForEntityEvent : public IEvent
 {
 public:
-	SetDestinationForEntityEvent(EntityId entity, const Vector2f& mapIndex);
+        SetDestinationForEntityEvent(EntityId entity, const Vector2f& mapIndex);
 	std::string name();
 	EntityId entity;
-	Vector2f destination;
+        Vector2f destination;
 };
 REGISTER_TYPENAME(SetDestinationForEntityEvent)
 

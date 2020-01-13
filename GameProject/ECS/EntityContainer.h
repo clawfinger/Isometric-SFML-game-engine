@@ -20,7 +20,7 @@ public:
 	void removeEntity(EntityId id);
 	bool HasComponent(EntityId id, const std::string& componentName);
 	template<typename T>
-	T * getComponent(EntityId id, const std::string& componentName);
+    T * getComponent(EntityId id, const std::string& componentName);
 	void clearAllEntities();
 private:
 	void addComponentToEntity(EntityId id, const std::string& componentName);
@@ -38,6 +38,8 @@ REGISTER_TYPENAME(EntityContainer)
 template<typename T>
 inline T * EntityContainer::getComponent(EntityId id, const std::string & componentName)
 {
+
+//    std::string componentName = typeName<T>();
 	auto entityDataIter = m_entityContainer.find(id);
 	if (entityDataIter != m_entityContainer.end())
 	{

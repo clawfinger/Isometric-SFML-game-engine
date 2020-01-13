@@ -16,6 +16,9 @@ set(HEADERS
     GameProject/Command/Commands.h
     GameProject/Command/CommandExecutors.h
     GameProject/Command/CommandDispatcher.h
+    GameProject/CommandQueue/CommandBase.h
+    GameProject/CommandQueue/CommandQueue.h
+    GameProject/CommandQueue/SetEntityDestinatioCommand.h
     GameProject/DiContainer/DiContainer.h
     GameProject/DiContainer/Factory.h
     GameProject/DiContainer/ConstructingFunctions.h
@@ -71,6 +74,8 @@ set(SOURCES
     GameProject/Command/Commands.cpp
     GameProject/Command/CommandExecutors.cpp
     GameProject/Command/CommandDispatcher.cpp
+    GameProject/CommandQueue/CommandQueue.cpp
+    GameProject/CommandQueue/SetEntityDestinatioCommand.cpp
     GameProject/ECS/EntityContainer.cpp
     GameProject/ECS/EntityManager.cpp
     GameProject/ECS/Components/AIControlledComponent.cpp

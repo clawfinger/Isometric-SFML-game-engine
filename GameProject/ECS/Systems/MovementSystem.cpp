@@ -53,7 +53,8 @@ void MovementSystem::update(sf::Time deltatime)
 				{
 					positionComponent->setPosition(pathComponent->getPath().top());
 					//m_eventDispatcher->dispatch(new PlayerReachTileEvent(pathComponent->getPath().top(), entity));
-					m_eventDispatcher->dispatch<PlayerReachTileEvent>(pathComponent->getPath().top(), entity);
+                    m_eventDispatcher->dispatch<PlayerReachTileEvent>(
+                                m_map->orthoXYfromIsometricCoords(pathComponent->getPath().top()), entity);
 					pathComponent->getPath().pop();
 					//if entity is reached destination setting state to idle
 					if (!pathComponent->isPathSet())
@@ -99,33 +100,33 @@ void MovementSystem::handleEntitySpawnEvent(IEvent * event)
 void MovementSystem::handleSetDestinationEvent(IEvent * event)
 {
 	SetDestinationForEntityEvent *currentEvent = dynamic_cast<SetDestinationForEntityEvent *>(event);
-	if (nullptr != currentEvent)
-	{
-		PathComponent* pathComponent = 
-			m_entityContainer->getComponent<PathComponent>(currentEvent->entity, typeName<PathComponent>());
-		PositionComponent* positionComponent = 
-			m_entityContainer->getComponent<PositionComponent>(currentEvent->entity, typeName<PositionComponent>());
+    if (nullptr == currentEvent)
+        return;
 
-		//player clicked on the same destination tile twice
-		if (pathComponent->getPathEnd() == currentEvent->destination)
-			return;
+    PathComponent* pathComponent =
+        m_entityContainer->getComponent<PathComponent>(currentEvent->entity, typeName<PathComponent>());
+    PositionComponent* positionComponent =
+        m_entityContainer->getComponent<PositionComponent>(currentEvent->entity, typeName<PositionComponent>());
 
-		//player reset entity path while it was moving, finishing current movement
-		if (pathComponent->isPathSet())
-		{
-			std::stack<Vector2f> tempPath;
-			tempPath.push(pathComponent->getPath().top());
-			pathComponent->setPath(tempPath, pathComponent->getPath().top());
-			return;
-		}
-		pathComponent->setPath(m_map->calculatePath(m_map->orthoXYfromIsometricCoords(positionComponent->getPosition()), currentEvent->destination),
-			currentEvent->destination);
-		//Entity started moving. Setting state to moving
-		EntityStateComponent* stateComponent =
-			m_entityContainer->getComponent<EntityStateComponent>(currentEvent->entity, typeName<EntityStateComponent>());
-		stateComponent->setState(EntityState::moving);
-		LOG("Entity " + std::to_string(currentEvent->entity) + " state is set to moving");
-	}
+    //player clicked on the same destination tile twice
+    if (pathComponent->getPathEnd() == currentEvent->destination)
+        return;
+
+    //player reset entity path while it was moving, finishing current movement
+    if (pathComponent->isPathSet())
+    {
+        std::stack<Vector2f> tempPath;
+        tempPath.push(pathComponent->getPath().top());
+        pathComponent->setPath(tempPath, pathComponent->getPath().top());
+        return;
+    }
+    pathComponent->setPath(m_map->calculatePath(m_map->orthoXYfromIsometricCoords(positionComponent->getPosition()), currentEvent->destination),
+        currentEvent->destination);
+    //Entity started moving. Setting state to moving
+    EntityStateComponent* stateComponent =
+        m_entityContainer->getComponent<EntityStateComponent>(currentEvent->entity, typeName<EntityStateComponent>());
+    stateComponent->setState(EntityState::moving);
+    LOG("Entity " + std::to_string(currentEvent->entity) + " state is set to moving");
 }
 
 void MovementSystem::updateOrientation(const Vector2f & movement, EntityId id)

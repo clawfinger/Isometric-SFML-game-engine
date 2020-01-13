@@ -31,7 +31,16 @@ private:
 	void initSystems();
 
 	template<typename T>
-	T* getSystem(const std::string& name);
+    T* getSystem(const std::string& name)
+    {
+        auto iterator = m_systems.find(name);
+        if (iterator != m_systems.end())
+        {
+            return dynamic_cast<T*>(iterator->second);
+        }
+        else
+            return nullptr;
+    }
 
 	void handleKeyboardInput(sf::Keyboard::Key key);
 	void handleMouseInput(const Vector2i& mouseCoords);

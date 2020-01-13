@@ -133,7 +133,7 @@ void GameEngine::handleKeyboardInput(sf::Keyboard::Key key)
 void GameEngine::handleMouseInput(const Vector2i& mouseCoords)
 {
 	sf::Vector2f mouse = m_window->getRenderWindow().mapPixelToCoords(sf::Vector2i(mouseCoords.x, mouseCoords.y));
-	Vector2f mapTile = m_map->orthoXYfromIsometricCoords(Vector2f(mouse.x, mouse.y));
+    Vector2f mapTile = m_map->orthoXYfromIsometricCoords(Vector2f(mouse.x, mouse.y));
 
 
     EntityMapPositionSystem* EPSystem = getSystem<EntityMapPositionSystem>(typeName<EntityMapPositionSystem>());
@@ -157,15 +157,3 @@ void GameEngine::handleMouseInput(const Vector2i& mouseCoords)
 		m_eventDispatcher->dispatch<SetDestinationForEntityEvent>(m_activeCharacter, mapTile);
 	}
 }
-
-	template<typename T>
-	T* GameEngine::getSystem(const std::string& name)
-	{
-		auto iterator = m_systems.find(name);
-		if (iterator != m_systems.end())
-		{
-			return dynamic_cast<T*>(iterator->second);
-		}
-		else
-			return nullptr;
-	}
