@@ -6,6 +6,7 @@
 #include "Events\Observer.h"
 #include "SFML\System\Time.hpp"
 #include "ECS/Entity.h"
+#include "CommandQueue/CommandQueue.h"
 
 class Window;
 class Map;
@@ -58,5 +59,6 @@ private:
 	std::shared_ptr<Map> m_map;
 	RenderSystem* m_render;
 	std::unordered_map<std::string, SystemBase*> m_systems;
+    CommandQueue m_commandQueue;
 };
 

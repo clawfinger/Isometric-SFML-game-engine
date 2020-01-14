@@ -10,10 +10,12 @@
 #include "ECS\Systems\EntityVisionSystem.h"
 #include "ECS\Systems\EntityMapPositionSystem.h"
 #include "ECS\Systems\AnimationSystem.h"
+#include "CommandQueue/SetEntityDestinatioCommand.h"
 #include "Map.h"
 #include "Window.h"
 
-GameEngine::GameEngine(DiContainer* container): m_container(container), m_activeCharacter(INVALIDID)
+GameEngine::GameEngine(DiContainer* container):m_activeCharacter(INVALIDID),
+    m_container(container), m_commandQueue(m_container->get<EventDispatcher>())
 {
 	initSystems();
 	m_eventDispatcher = m_container->get<EventDispatcher>();
@@ -40,6 +42,7 @@ void GameEngine::draw(std::shared_ptr<Window> window)
 
 void GameEngine::update(sf::Time deltaTime)
 {
+    m_commandQueue.update(deltaTime);
 	for (auto& system : m_systems)
 	{
 		system.second->update(deltaTime);
@@ -154,6 +157,8 @@ void GameEngine::handleMouseInput(const Vector2i& mouseCoords)
 
 	if (m_map->isWalkable(mapTile))
 	{
-		m_eventDispatcher->dispatch<SetDestinationForEntityEvent>(m_activeCharacter, mapTile);
+//		m_eventDispatcher->dispatch<SetDestinationForEntityEvent>(m_activeCharacter, mapTile);
+        m_commandQueue.enqueue<SetEntityDestinatioCommand>(m_activeCharacter, mapTile);
+//        m_commandQueue.enqueue<SetEntityDestinatioCommand>(m_activeCharacter, Vector2f(mapTile.x + 1, mapTile.y));
 	}
 }

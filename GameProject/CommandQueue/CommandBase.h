@@ -17,10 +17,6 @@ public:
     virtual void execute() = 0;
     virtual bool isCompleted() = 0;
     virtual void update(sf::Time deltaTime) = 0;
-    void setEventDispatcher(std::shared_ptr<EventDispatcher> dispatcher)
-    {
-        m_dispatcher = dispatcher;
-    }
 
 protected:
     std::shared_ptr<EventDispatcher> m_dispatcher;

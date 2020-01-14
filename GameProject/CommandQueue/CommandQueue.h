@@ -13,15 +13,13 @@ public:
     template <typename T, typename... Args>
     void enqueue(Args... args)
     {
-        T command(args...);
-        command.setEventDispatcher(m_dispatcher);
-        command.execute();
-        m_commandQueue.push(command);
+        m_commandQueue.push(std::make_shared<T>(m_dispatcher, args...));
     }
 
     void update(sf::Time deltaTime);
 
 private:
     std::shared_ptr<EventDispatcher> m_dispatcher;
-    std::queue<CommandBase> m_commandQueue;
+    std::queue<std::shared_ptr<CommandBase>> m_commandQueue;
+    bool m_isQueueIdling;
 };

@@ -9,6 +9,11 @@ SetEntityDestinatioCommand::SetEntityDestinatioCommand(std::shared_ptr<EventDisp
     registerCallBack(typeName<PlayerReachTileEvent>(), std::bind(&SetEntityDestinatioCommand::handleEntityReachTileEvent, this, std::placeholders::_1));
 }
 
+SetEntityDestinatioCommand::~SetEntityDestinatioCommand()
+{
+    m_dispatcher->unsubscribe(typeName<PlayerReachTileEvent>(), this);
+}
+
 void SetEntityDestinatioCommand::execute()
 {
     m_dispatcher->dispatch<SetDestinationForEntityEvent>(m_id, m_targetPos);
