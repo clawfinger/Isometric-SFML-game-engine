@@ -29,14 +29,14 @@ void AnimationSystem::update(sf::Time deltaTime)
 {
 	for (auto entity : m_entities)
 	{
-		EntityStateComponent* stateComp = m_entityContainer->getComponent<EntityStateComponent>(entity, typeName<EntityStateComponent>());
+        EntityStateComponent* stateComp = m_entityContainer->getComponent<EntityStateComponent>(entity);
 		std::string state;
 		if (stateComp == nullptr)
 			state = EntityState::idle;
 		else
 			state = stateComp->getState();
 		
-		AnimationComponent* animComp = m_entityContainer->getComponent<AnimationComponent>(entity, typeName<AnimationComponent>());
+        AnimationComponent* animComp = m_entityContainer->getComponent<AnimationComponent>(entity);
 		if (animComp != nullptr)
 		{
 			AnimationComponent::Animation& currentAnim = animComp->getStateAnimation(state);
@@ -48,10 +48,10 @@ void AnimationSystem::update(sf::Time deltaTime)
 					currentAnim.currentFrame++;
 					if (currentAnim.currentFrame >= currentAnim.frameCount)
 						currentAnim.currentFrame = 0;
-					SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+                    SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity);
 					Vector2f& size = spriteComp->getSize();
 
-					SpriteOrientationComponent* orientComp = m_entityContainer->getComponent<SpriteOrientationComponent>(entity, typeName<SpriteOrientationComponent>());
+                    SpriteOrientationComponent* orientComp = m_entityContainer->getComponent<SpriteOrientationComponent>(entity);
 
 					int row = currentAnim.row;
 					if (orientComp->orientation() == SpriteOrientation::right)

@@ -28,9 +28,9 @@ void RenderSystem::update(sf::Time deltaTime)
 	for (EntityId entity : m_entities)
 	{
 		PositionComponent* positionComponent =
-			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+            m_entityContainer->getComponent<PositionComponent>(entity);
 		SpriteComponent* spriteComponent =
-			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+            m_entityContainer->getComponent<SpriteComponent>(entity);
 
 		spriteComponent->setPosition(positionComponent->getPosition());
 	}
@@ -51,7 +51,7 @@ void RenderSystem::draw(std::shared_ptr<Window> window)
 	for (EntityId entity : m_entities)
 	{
 		SpriteComponent* spriteComponent =
-			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+            m_entityContainer->getComponent<SpriteComponent>(entity);
 
         sf::Rect<float> spriteBounds = spriteComponent->getSprite().getGlobalBounds();
 
@@ -65,9 +65,9 @@ void RenderSystem::draw(std::shared_ptr<Window> window)
 		[&](EntityId entity_l, EntityId entity_r)
 		{
 			PositionComponent* position_l =
-				m_entityContainer->getComponent<PositionComponent>(entity_l, typeName<PositionComponent>());
+                m_entityContainer->getComponent<PositionComponent>(entity_l);
 			PositionComponent* position_r =
-				m_entityContainer->getComponent<PositionComponent>(entity_r, typeName<PositionComponent>());
+                m_entityContainer->getComponent<PositionComponent>(entity_r);
 			return (position_l->getPosition().y < position_r->getPosition().y);
 		}
 
@@ -76,7 +76,7 @@ void RenderSystem::draw(std::shared_ptr<Window> window)
 	for (EntityId entity : m_toDraw)
 	{
 		SpriteComponent* spriteComponent =
-			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+            m_entityContainer->getComponent<SpriteComponent>(entity);
 		window->draw(spriteComponent->getSprite());
 	}
 }

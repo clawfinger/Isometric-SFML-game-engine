@@ -56,9 +56,9 @@ EntityId EntityMapPositionSystem::getEntityAtCoordinates(const Vector2f & mouse)
 	for (EntityId entity : m_entities)
 	{
 		PositionComponent* positionComponent =
-			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+            m_entityContainer->getComponent<PositionComponent>(entity);
 		SpriteComponent* spriteComponent =
-			m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+            m_entityContainer->getComponent<SpriteComponent>(entity);
 
 		if (isInside(mouse.x, mouse.y,
 			spriteComponent->getSprite().getGlobalBounds().top,

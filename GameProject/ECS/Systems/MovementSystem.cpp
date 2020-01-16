@@ -31,9 +31,9 @@ void MovementSystem::update(sf::Time deltatime)
 	for (EntityId entity : m_entities)
 	{
 		PathComponent* pathComponent =
-			m_entityContainer->getComponent<PathComponent>(entity, typeName<PathComponent>());
+            m_entityContainer->getComponent<PathComponent>(entity);
 		PositionComponent* positionComponent =
-			m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+            m_entityContainer->getComponent<PositionComponent>(entity);
 
 		if (pathComponent->isPathSet())
 		{
@@ -60,7 +60,7 @@ void MovementSystem::update(sf::Time deltatime)
 					if (!pathComponent->isPathSet())
 					{
 						EntityStateComponent* stateComponent =
-							m_entityContainer->getComponent<EntityStateComponent>(entity, typeName<EntityStateComponent>());
+                            m_entityContainer->getComponent<EntityStateComponent>(entity);
 						stateComponent->setState(EntityState::idle);
 						LOG("Entity " + std::to_string(entity) + " state is set to idle");
 					}
@@ -104,9 +104,9 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
         return;
 
     PathComponent* pathComponent =
-        m_entityContainer->getComponent<PathComponent>(currentEvent->entity, typeName<PathComponent>());
+        m_entityContainer->getComponent<PathComponent>(currentEvent->entity);
     PositionComponent* positionComponent =
-        m_entityContainer->getComponent<PositionComponent>(currentEvent->entity, typeName<PositionComponent>());
+        m_entityContainer->getComponent<PositionComponent>(currentEvent->entity);
 
     //player clicked on the same destination tile twice
     if (pathComponent->getPathEnd() == currentEvent->destination)
@@ -124,7 +124,7 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
         currentEvent->destination);
     //Entity started moving. Setting state to moving
     EntityStateComponent* stateComponent =
-        m_entityContainer->getComponent<EntityStateComponent>(currentEvent->entity, typeName<EntityStateComponent>());
+        m_entityContainer->getComponent<EntityStateComponent>(currentEvent->entity);
     stateComponent->setState(EntityState::moving);
     LOG("Entity " + std::to_string(currentEvent->entity) + " state is set to moving");
 }
@@ -132,7 +132,7 @@ void MovementSystem::handleSetDestinationEvent(IEvent * event)
 void MovementSystem::updateOrientation(const Vector2f & movement, EntityId id)
 {
 	SpriteOrientationComponent* orientationComponent =
-		m_entityContainer->getComponent<SpriteOrientationComponent>(id, typeName<SpriteOrientationComponent>());
+        m_entityContainer->getComponent<SpriteOrientationComponent>(id);
 
 	if (orientationComponent != nullptr)
 	{

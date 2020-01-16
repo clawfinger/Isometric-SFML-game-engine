@@ -83,13 +83,13 @@ std::vector<EntityId> EntityVisionSystem::checkEnemyInSight(EntityId character)
 {
 	std::vector<EntityId> enemiesInBattle;
 	PositionComponent* characterPositionComponent =
-		m_entityContainer->getComponent<PositionComponent>(character, typeName<PositionComponent>());
+        m_entityContainer->getComponent<PositionComponent>(character);
 	for (EntityId enemy : m_enemies)
 	{
 		PositionComponent* enemyPositionComponent =
-			m_entityContainer->getComponent<PositionComponent>(enemy, typeName<PositionComponent>());
+            m_entityContainer->getComponent<PositionComponent>(enemy);
 		VisionComponent* enemyVisionComponent =
-			m_entityContainer->getComponent<VisionComponent>(enemy, typeName<VisionComponent>());
+            m_entityContainer->getComponent<VisionComponent>(enemy);
 
 		if (isVisible(characterPositionComponent->getPosition(), enemyPositionComponent->getPosition(), enemyVisionComponent->getVision()))
 		{
@@ -102,9 +102,9 @@ std::vector<EntityId> EntityVisionSystem::checkEnemyInSight(EntityId character)
 					continue;
 
 				PositionComponent* subEnemyPositionComponent =
-					m_entityContainer->getComponent<PositionComponent>(subEnemy, typeName<PositionComponent>());
+                    m_entityContainer->getComponent<PositionComponent>(subEnemy);
 				VisionComponent* subEnemyVisionComponent =
-					m_entityContainer->getComponent<VisionComponent>(subEnemy, typeName<VisionComponent>());
+                    m_entityContainer->getComponent<VisionComponent>(subEnemy);
 				if (isVisible(enemyPositionComponent->getPosition(), subEnemyPositionComponent->getPosition(), subEnemyVisionComponent->getVision()))
 				{
 					enemiesInBattle.push_back(subEnemy);

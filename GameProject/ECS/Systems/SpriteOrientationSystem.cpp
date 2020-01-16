@@ -41,9 +41,9 @@ void SpriteOrientationSystem::handleEntitySpawnEvent(IEvent * event)
 		if (fitsRequirements(currentEvent->components))
 		{
 			SpriteComponent* spriteComponent =
-				m_entityContainer->getComponent<SpriteComponent>(currentEvent->id, typeName<SpriteComponent>());
+                m_entityContainer->getComponent<SpriteComponent>(currentEvent->id);
 			SpriteOrientationComponent* orientationComponent =
-				m_entityContainer->getComponent<SpriteOrientationComponent>(currentEvent->id, typeName<SpriteOrientationComponent>());
+                m_entityContainer->getComponent<SpriteOrientationComponent>(currentEvent->id);
 
 			updateSpriteOrientation(spriteComponent, orientationComponent);
 		}
@@ -56,9 +56,9 @@ void SpriteOrientationSystem::handleOrientationChangeEvent(IEvent * event)
 	if (nullptr != currentEvent)
 	{
 		SpriteComponent* spriteComponent =
-			m_entityContainer->getComponent<SpriteComponent>(currentEvent->entity, typeName<SpriteComponent>());
+            m_entityContainer->getComponent<SpriteComponent>(currentEvent->entity);
 		SpriteOrientationComponent* orientationComponent =
-			m_entityContainer->getComponent<SpriteOrientationComponent>(currentEvent->entity, typeName<SpriteOrientationComponent>());
+            m_entityContainer->getComponent<SpriteOrientationComponent>(currentEvent->entity);
 
 		updateSpriteOrientation(spriteComponent, orientationComponent);
 	}

@@ -43,7 +43,7 @@ void EntityManager::spawnCharacters()
 	for (auto characterId : m_charactersIds)
 	{
 		PositionComponent* positionComponent =
-			m_entityContainer->getComponent<PositionComponent>(characterId, typeName<PositionComponent>());
+            m_entityContainer->getComponent<PositionComponent>(characterId);
 		positionComponent->setPosition(playerSpawn);
 		m_eventDispatcher->dispatch<EntityCreatedEvent>(characterId, m_entityTypes[EntityType::character]);
 	}
@@ -56,7 +56,7 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
 
 	EntityId entity = m_entityContainer->createEntity(m_entityTypes[EntityType::enemy]);
 
-	SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+    SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity);
 	if (spriteComp)
 	{
 		spriteComp->create(m_textureManager->get(data.textureId));
@@ -65,7 +65,7 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
         spriteComp->readData(ss);
 	}
 	PositionComponent* positionComponent =
-		m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+        m_entityContainer->getComponent<PositionComponent>(entity);
 	if (positionComponent)
 	{
 		positionComponent->setActorSpeed(data.movementSpeed);
@@ -73,7 +73,7 @@ void EntityManager::spawnEnemy(LevelTypes mapType)
 		positionComponent->setPosition(enemySpawn);
 	}
 	VisionComponent* visionComponent =
-		m_entityContainer->getComponent<VisionComponent>(entity, typeName<VisionComponent>());
+        m_entityContainer->getComponent<VisionComponent>(entity);
 	if (visionComponent)
 	{
 		visionComponent->setVision(data.vision);
@@ -190,7 +190,7 @@ EntityId EntityManager::createCharacterFromData(const CharacterData & data) cons
 {
 	EntityId entity = m_entityContainer->createEntity(m_entityTypes.at(EntityType::character));
 
-	SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity, typeName<SpriteComponent>());
+    SpriteComponent* spriteComp = m_entityContainer->getComponent<SpriteComponent>(entity);
 	if (spriteComp)
 	{
 		spriteComp->create(m_textureManager->get(data.textureId));
@@ -200,7 +200,7 @@ EntityId EntityManager::createCharacterFromData(const CharacterData & data) cons
 		spriteComp->readData(ss);
 	}
 	PositionComponent* positionComponent =
-		m_entityContainer->getComponent<PositionComponent>(entity, typeName<PositionComponent>());
+        m_entityContainer->getComponent<PositionComponent>(entity);
 	if (positionComponent)
 	{
 		positionComponent->setActorSpeed(data.movementSpeed);
@@ -208,7 +208,7 @@ EntityId EntityManager::createCharacterFromData(const CharacterData & data) cons
 		positionComponent->setPosition(enemySpawn);
 	}
 	VisionComponent* visionComponent =
-		m_entityContainer->getComponent<VisionComponent>(entity, typeName<VisionComponent>());
+        m_entityContainer->getComponent<VisionComponent>(entity);
 	if (visionComponent)
 	{
 		visionComponent->setVision(data.vision);
@@ -229,7 +229,7 @@ void EntityManager::createAnimationComponent(EntityId entity, const std::string 
 		s_stream << animationFile.rdbuf();
 
 		AnimationComponent* animationComponent =
-			m_entityContainer->getComponent<AnimationComponent>(entity, typeName<AnimationComponent>());
+            m_entityContainer->getComponent<AnimationComponent>(entity);
 		if (animationComponent)
 		{
 			animationComponent->readData(s_stream);
