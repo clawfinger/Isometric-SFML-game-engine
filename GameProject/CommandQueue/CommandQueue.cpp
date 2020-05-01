@@ -1,12 +1,12 @@
 #include "CommandQueue.h"
 #include "../Events/EventDispatcher.h"
 
-CommandQueue::CommandQueue(std::shared_ptr<EventDispatcher> dispatcher): m_dispatcher(dispatcher), m_isQueueIdling(true)
+EntityCommandDispatcher::CommandQueue::CommandQueue(std::shared_ptr<EventDispatcher> dispatcher): m_dispatcher(dispatcher), m_isQueueIdling(true)
 {
 
 }
 
-void CommandQueue::update(sf::Time deltaTime)
+void EntityCommandDispatcher::CommandQueue::update(sf::Time deltaTime)
 {
     if (m_commandQueue.empty())
         return;
