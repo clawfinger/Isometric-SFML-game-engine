@@ -25,7 +25,7 @@ namespace Vector
 template<typename T>
 T getRandomInRange(T a, T b)
 {
-	std::random_device rd;     
+    static std::random_device rd;
 	std::mt19937 rng(rd());    
 	std::uniform_int_distribution<T> uni(a, b);
 	return uni(rng);

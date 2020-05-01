@@ -24,3 +24,21 @@ void CommandQueue::update(sf::Time deltaTime)
         m_isQueueIdling = true;
     }
 }
+
+EntityCommandDispatcher::EntityCommandDispatcher(std::shared_ptr<EventDispatcher> dispatcher): m_dispatcher(dispatcher)
+{
+
+}
+
+void EntityCommandDispatcher::update(sf::Time deltaTime)
+{
+    for (auto queue: m_entityQueues)
+    {
+        queue.second->update(deltaTime);
+    }
+}
+
+void EntityCommandDispatcher::clearQueues()
+{
+    m_entityQueues.clear();
+}

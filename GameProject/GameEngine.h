@@ -59,6 +59,6 @@ private:
 	std::shared_ptr<Map> m_map;
 	RenderSystem* m_render;
 	std::unordered_map<std::string, SystemBase*> m_systems;
-    CommandQueue m_commandQueue;
+    EntityCommandDispatcher m_commandQueue;
 };
 

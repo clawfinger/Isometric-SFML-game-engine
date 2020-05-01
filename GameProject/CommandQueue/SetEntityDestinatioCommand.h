@@ -6,7 +6,7 @@ class SetEntityDestinatioCommand : public CommandBase
 {
 public:
     SetEntityDestinatioCommand(std::shared_ptr<EventDispatcher> dispatcher, EntityId id, const Vector2f& targetPos);
-    ~SetEntityDestinatioCommand();
+    ~SetEntityDestinatioCommand() override;
     void execute() override;
     bool isCompleted() override;
     void update(sf::Time deltaTime) override;
