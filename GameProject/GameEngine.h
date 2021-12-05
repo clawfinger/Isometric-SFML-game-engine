@@ -3,8 +3,8 @@
 #include <unordered_map>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
-#include "Events\Observer.h"
-#include "SFML\System\Time.hpp"
+#include "Events/Observer.h"
+#include "SFML/System/Time.hpp"
 #include "ECS/Entity.h"
 #include "CommandQueue/CommandQueue.h"
 

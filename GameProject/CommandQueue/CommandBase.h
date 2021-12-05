@@ -1,6 +1,6 @@
 #pragma once
 #include "../Events/Observer.h"
-#include "SFML\System\Time.hpp"
+#include "SFML/System/Time.hpp"
 #include <memory>
 
 class EventDispatcher;

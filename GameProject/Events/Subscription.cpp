@@ -22,7 +22,7 @@ void Subscription::addObserver(Observer * observer)
 	}
 	else
 	{
-		LOG("Observer " + std::to_string(int(observer)) + " already in subscription list");
+        LOG("Observer " + std::to_string(uintptr_t (observer)) + " already in subscription list");
 	}
 }
 
@@ -36,7 +36,7 @@ void Subscription::removeObserver(Observer * observer)
 	}
 	else
 	{
-		LOG("Observer " + std::to_string(int(observer)) + " not found in subscribsions");
+        LOG("Observer " + std::to_string(uintptr_t (observer)) + " not found in subscribsions");
 
 	}
 }

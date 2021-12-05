@@ -3,9 +3,9 @@
 #include <unordered_map>
 #include <functional>
 #include <memory>
-#include "../Utils/utility.h"
-#include "../Utils/Logger.h"
-#include "../Utils/Meta.h"
+#include "Utils/Utility.h"
+#include "Utils/Logger.h"
+#include "Utils/Meta.h"
 #include "Components/ComponentBase.h"
 #include "Entity.h"
 

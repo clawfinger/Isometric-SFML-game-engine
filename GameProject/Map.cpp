@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include "Events/Events.h"
 #include "Utils/Logger.h"
-#include "Utils/utility.h"
+#include "Utils/Utility.h"
 
 MapTile::MapTile(): m_walkable(true), m_empty(false), m_transparent(true)
 {

@@ -3,9 +3,9 @@
 #include <map>
 #include <iostream>
 #include <memory>
-#include "..\Map.h"
+#include "Map.h"
 #include "Commands.h"
-#include "..\Window.h"
+#include "Window.h"
 
 class ICommand;
 class PathFollower;

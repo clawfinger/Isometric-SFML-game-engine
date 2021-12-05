@@ -1,5 +1,5 @@
 #pragma once
-#include "SFML\System\Time.hpp"
+#include "SFML/System/Time.hpp"
 #include "CommandBase.h"
 #include <queue>
 

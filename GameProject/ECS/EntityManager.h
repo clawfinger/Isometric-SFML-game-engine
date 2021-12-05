@@ -2,9 +2,9 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
-#include "../Utils/Utility.h"
-#include "../Utils/Meta.h"
-#include "../ActorsIds.h"
+#include "Utils/Utility.h"
+#include "Utils/Meta.h"
+#include "ActorsIds.h"
 
 class EntityContainer;
 class EventDispatcher;

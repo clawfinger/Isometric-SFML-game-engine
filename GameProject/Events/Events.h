@@ -1,10 +1,10 @@
 #pragma once
-#include "../Utils/utility.h"
-#include "../Utils/Meta.h"
-#include "../Utils/Vector2D.h"
-#include "../ECS/Entity.h"
-#include "../LevelInfo.h"
-#include "../GameState.h"
+#include "Utils/Utility.h"
+#include "Utils/Meta.h"
+#include "Utils/Vector2D.h"
+#include "ECS/Entity.h"
+#include "LevelInfo.h"
+#include "GameState.h"
 
 class IEvent
 {

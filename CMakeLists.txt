@@ -1,8 +1,14 @@
 cmake_minimum_required(VERSION 3.14)
 set(CMAKE_CXX_STANDARD 14)
+
+# set SFML root directory here
+set(MY_SFML_DIR /home/dmitry/SFML-2.5.1)
+set(SFML_ROOT ${MY_SFML_DIR})
+
 project(GameProject LANGUAGES CXX)
 
-find_package(SFML REQUIRED COMPONENTS main graphics window system)
+find_package(SFML REQUIRED COMPONENTS graphics window system)
+
 
 set(HEADERS
     GameProject/Window.h
@@ -59,7 +65,7 @@ set(HEADERS
     GameProject/Utils/Logger.h
     GameProject/Utils/Meta.h
     GameProject/Utils/StructSerialization.h
-    GameProject/Utils/utility.h
+    GameProject/Utils/Utility.h
     )
 
 set(SOURCES
@@ -107,7 +113,7 @@ set(SOURCES
     GameProject/State/GameLevelState.cpp
     GameProject/State/GameStateManager.cpp
     GameProject/Utils/Logger.cpp
-    GameProject/Utils/utility.cpp
+    GameProject/Utils/Utility.cpp
     )
 
 add_executable(GameProject
@@ -115,5 +121,5 @@ add_executable(GameProject
     ${SOURCES}
     )
 
-target_link_libraries(GameProject sfml-graphics sfml-main)
-include_directories(${SFML_INCLUDE_DIR})
+target_link_libraries(GameProject sfml-graphics)
+include_directories(${SFML_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/GameProject)

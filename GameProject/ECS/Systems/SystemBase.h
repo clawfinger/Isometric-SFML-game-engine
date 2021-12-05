@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
-#include "SFML\System\Time.hpp"
-#include "SFML\Graphics\Sprite.hpp"
-#include "../../Utils/utility.h"
-#include "../../Utils/Meta.h"
-#include "../Entity.h"
-#include "../../DiContainer/DiContainer.h"
+#include "SFML/System/Time.hpp"
+#include "SFML/Graphics/Sprite.hpp"
+#include "Utils/Utility.h"
+#include "Utils/Meta.h"
+#include "ECS/Entity.h"
+#include "DiContainer/DiContainer.h"
 
 class SystemBase
 {
